@@ -1,0 +1,41 @@
+{
+  "extends": "eslint-config-airbnb",
+  "globals": {
+    "APP": true,
+    "window": true,
+    "document": true
+  },
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-console": 0,
+    "react/no-multi-comp": 0,
+    "react/prop-types": 1,
+    "react/forbid-prop-types": 0,
+    "import/no-unresolved": [2, { "commonjs": true }],
+    "import/no-duplicates": 2,
+    "complexity": [2, 15],
+    "max-depth": [2, 3],
+    "max-statements": [2, 50],
+    "max-nested-callbacks": [2, 3],
+    "camelcase": 2,
+    "linebreak-style": 0,
+    "import/no-dynamic-require": 0,
+    "global-require": 0,
+    "func-names": 0
+  }
+}

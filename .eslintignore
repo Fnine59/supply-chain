@@ -1,0 +1,4 @@
+/node_module/*
+/bower_componenets/*
+webpack.config.js
+/public/**
