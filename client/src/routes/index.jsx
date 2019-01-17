@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
+import Login from '../containers/Login';
 import Error404 from '../containers/Error404';
-import Error405 from '../containers/Error405';
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/test" component={Error405} />
+      <Route path="/login" component={Login} />
       <Route path="/" component={Error404} />
     </Switch>
   </BrowserRouter>
