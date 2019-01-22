@@ -2,7 +2,7 @@
 
   基于React+Nodejs的餐饮供应链物资管理系统
 
-# 项目运行
+## 项目运行
 
 - 使用`git clone 项目地址`命令拷贝项目到本地
 - 运行`npm run server`命令启动后端服务
@@ -12,7 +12,7 @@
 - 开发环境前端打包命令`npm run build:dev`
 - 生产环境前端打包命令`npm run build:pro`
 
-# 项目架构说明
+## 项目架构说明
 
 ```js
 + supply-chain
@@ -53,11 +53,11 @@
    + webpack.config.js
 ```
 
-# 业务流程图
+## 业务流程图
 
 ![业务流程梳理](https://ws1.sinaimg.cn/large/006gU7ahly1fz8cv8y9cgj316w12smz1.jpg)
 
-# 项目任务看板
+## 项目任务看板
 
 - [x] 项目框架搭建
 - [ ] 登录模块
@@ -75,3 +75,4 @@
 - [ ] 总部配送订单模块
 - [ ] 供应商订单管理模块
 - [ ] 供应商发货管理模块
+
