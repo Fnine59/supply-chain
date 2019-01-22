@@ -73,7 +73,16 @@ var config = {
     devServer: {
       contentBase: path.join(__dirname, "client/dist"),
       port: 8000,
-      historyApiFallback: true
+      host: 'localhost',
+      historyApiFallback: true,
+      open: true,
+      hot: true,
+      proxy: {
+        '/api/*': {
+          target: 'http://10.10.12.199:3000',
+          secure: false,
+        }
+      },
     },
 }
 

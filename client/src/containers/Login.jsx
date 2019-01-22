@@ -2,30 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { login } from '../redux/actions/login';
+import * as action from '../redux/actions/login';
+import { updateState } from '../redux/actions/common';
+import LoginForm from '../components/Login/LoginForm';
 
-const Login = ({ props, dispatch }) => {
-  const list = {
-    user: 'aasfdsfsdf',
+const Login = ({ login, dispatch }) => {
+  const {
+    username,
+    password,
+  } = login;
+
+  const doLogin = () => {
+    dispatch(action.login('ceshi payload'));
   };
-  const logi1n = () => {
-    dispatch(login('ceshi payload'));
-  };
+
   return (
     <div>
-      login page!!!!
-      {list.user}
-      <button onClick={logi1n}>登录</button>
+      <LoginForm />
     </div>
   );
 };
 
-function mapStateToProps(props) {
-  return { props };
+function mapStateToProps(state) {
+  console.warn(state);
+  return {
+    login: state.login,
+  };
 }
 
 Login.propTypes = {
-  props: PropTypes.object,
+  login: PropTypes.object,
   dispatch: PropTypes.func,
 };
 export default connect(mapStateToProps)(Login);

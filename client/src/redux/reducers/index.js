@@ -1,25 +1,8 @@
-// import { combineReducers } from 'redux-immutable';
-
-// const appReducer = combineReducers({
-
-// });
-
-// const Reducer = (state, action) => {
-//   if (action.type === 'logout') {
-//     // history.push('/login');
-//     window.localStorage.clear();
-//     // state = undefined;
-//   }
-//   return appReducer(state, action);
-// };
-
-// export default Reducer;
-
 import { combineReducers } from 'redux';
+import login from './login';
 
-export default function createReducer(asyncReducers) {
-  const reducer = {
-    ...asyncReducers,
-  };
-  return combineReducers(reducer);
+export default function createReducer() {
+  return combineReducers({
+    login,
+  });
 }
