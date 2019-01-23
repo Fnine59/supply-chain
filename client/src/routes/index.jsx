@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import Login from '../containers/Login';
+import Login from '../containers/Login/index';
 import Error404 from '../containers/Error404';
 
 const Routes = () => (

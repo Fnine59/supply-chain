@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as action from '../redux/actions/login';
-import { updateState } from '../redux/actions/common';
-import LoginForm from '../components/Login/LoginForm';
+import * as action from '../../redux/actions/login';
+import { updateState } from '../../redux/actions/common';
+import LoginForm from './LoginForm';
 
 const Login = ({ login, dispatch }) => {
   const {
