@@ -5,8 +5,9 @@ export function login(payload) {
   return async (dispatch) => {
     console.log('action payload', payload);
     const res = await request({
-      url: '/api/user',
-      method: 'get',
+      url: '/api/login',
+      method: 'post',
+      data: payload,
     });
     console.log('res', res);
     dispatch({

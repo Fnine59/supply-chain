@@ -14,7 +14,11 @@ const request = (option) => {
         .then(response => response.json())
         .then((res) => {
           console.log('resssss', res);
-          return res;
+          if (res.code === 200 && res.success) {
+            return res.data || {};
+          }
+          message.error(res.message, 2);
+          return null;
         })
         .catch((err) => {
           console.error('fetch error =====>', err);

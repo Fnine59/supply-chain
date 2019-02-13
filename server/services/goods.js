@@ -18,12 +18,13 @@ module.exports = {
       if (data.length) {
         return res.send({
           code: 200,
+          message: '登录成功',
           data,
         });
       }
       return res.send({
         code: 500,
-        message: '出错了',
+        message: '用户不存在或密码错误',
       });
     });
   },
