@@ -21,6 +21,7 @@
     "debug": "~2.6.9",
     "express": "^4.16.4",
     "file-loader": "^3.0.1",
+    "history": "^4.7.2",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
     "less-loader": "^4.1.0",
@@ -34,10 +35,10 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
-    "style-loader": "^0.23.1",
-    "url-loader": "^1.1.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

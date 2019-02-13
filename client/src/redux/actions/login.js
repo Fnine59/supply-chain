@@ -1,19 +1,21 @@
 import request from '../../common/utils/request';
+import history from '../../common/utils/history';
 import { LOGIN, REGISTER } from './types';
 
 export function login(payload) {
   return async (dispatch) => {
-    console.log('action payload', payload);
     const res = await request({
       url: '/api/login',
       method: 'post',
       data: payload,
     });
-    console.log('res', res);
-    dispatch({
-      type: LOGIN,
-      payload,
-    });
+    if (res) {
+      dispatch({
+        type: LOGIN,
+        payload: res,
+      });
+      history.push('/error404');
+    }
   };
 }
 

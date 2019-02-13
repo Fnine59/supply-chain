@@ -1,6 +1,7 @@
 import { REGISTER, LOGIN, UPDATESTATE } from '../actions/types';
 
 const initState = {
+  userInfo: {},
 };
 
 export default function login(state = initState, action) {
@@ -9,8 +10,9 @@ export default function login(state = initState, action) {
       console.log('注册！');
       return { ...state };
     case LOGIN:
-      console.log('denglu !');
-      return { ...state };
+      console.log('======================登录======================');
+      console.log('login action.payload', action.payload);
+      return { ...state, userInfo: action.payload };
     case `login/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:

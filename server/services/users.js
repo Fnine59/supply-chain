@@ -15,15 +15,18 @@ module.exports = {
     const props = {};
     const users = new Users({ props });
     users.doLogin(req.body, (err, data) => {
-      console.log('data', data);
-      console.log('err', err);
       if (!err) {
         if (data.length > 0) {
           return res.send({
             code: 200,
             success: true,
             message: '登录成功',
-            data,
+            data: {
+              id: data[0].id,
+              username: data[0].user_name,
+              password: data[0].password,
+              nickname: data[0].nickname,
+            },
           });
         }
         return res.send({

@@ -6,15 +6,15 @@ import * as action from '../../redux/actions/login';
 import LoginForm from './LoginForm';
 
 const Login = ({ login, history, dispatch }) => {
-  const { username, password } = login;
+  const { userInfo } = login;
 
   const doLogin = (payload) => {
     dispatch(action.login(payload));
   };
 
   const loginProps = {
-    onLogin: (userInfo) => {
-      doLogin(userInfo);
+    onLogin: (user) => {
+      doLogin(user);
     },
     onRegister: () => {
       history.push('/error404');
@@ -23,6 +23,7 @@ const Login = ({ login, history, dispatch }) => {
 
   return (
     <div className="login">
+      <span>{userInfo.nickname}</span>
       <LoginForm {...loginProps} />
     </div>
   );

@@ -33,7 +33,7 @@ const LoginForm = ({
       </div>
       <Form onSubmit={handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: '用户名不能为空' }],
           })(
             <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入用户名" />,

@@ -13,7 +13,7 @@ const Users = function (users) {
 
 Users.prototype.doLogin = function (params, callback) {
   console.log(params);
-  const sql = `select * from baseinfo_user where user_name='${params.userName}' AND password='${params.password}'`;
+  const sql = `select * from baseinfo_user where user_name='${params.username}' AND password='${params.password}'`;
   helper.doSql({
     sql,
     name: 'doLogin',
