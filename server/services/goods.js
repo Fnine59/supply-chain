@@ -21,7 +21,6 @@ module.exports = {
           data,
         });
       }
-      console.log(err);
       return res.send({
         code: 500,
         message: '出错了',

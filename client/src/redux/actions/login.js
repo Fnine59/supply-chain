@@ -1,9 +1,18 @@
+import request from '../../common/utils/request';
 import { LOGIN, REGISTER } from './types';
 
 export function login(payload) {
-  return {
-    type: LOGIN,
-    payload,
+  return async (dispatch) => {
+    console.log('action payload', payload);
+    const res = await request({
+      url: '/api/user',
+      method: 'get',
+    });
+    console.log('res', res);
+    dispatch({
+      type: LOGIN,
+      payload,
+    });
   };
 }
 

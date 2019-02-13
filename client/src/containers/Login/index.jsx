@@ -3,28 +3,32 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as action from '../../redux/actions/login';
-import { updateState } from '../../redux/actions/common';
 import LoginForm from './LoginForm';
 
-const Login = ({ login, dispatch }) => {
-  const {
-    username,
-    password,
-  } = login;
+const Login = ({ login, history, dispatch }) => {
+  const { username, password } = login;
 
-  const doLogin = () => {
-    dispatch(action.login('ceshi payload'));
+  const doLogin = (payload) => {
+    dispatch(action.login(payload));
+  };
+
+  const loginProps = {
+    onLogin: (userInfo) => {
+      doLogin(userInfo);
+    },
+    onRegister: () => {
+      history.push('/error404');
+    },
   };
 
   return (
-    <div>
-      <LoginForm />
+    <div className="login">
+      <LoginForm {...loginProps} />
     </div>
   );
 };
 
 function mapStateToProps(state) {
-  console.warn(state);
   return {
     login: state.login,
   };
@@ -32,6 +36,7 @@ function mapStateToProps(state) {
 
 Login.propTypes = {
   login: PropTypes.object,
+  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 export default connect(mapStateToProps)(Login);

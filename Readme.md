@@ -7,7 +7,7 @@
 - 使用`git clone 项目地址`命令拷贝项目到本地
 - 运行`npm run server`命令启动后端服务
 - 运行`npm start`命令启动前端服务
-- 浏览器访问[localhost:8000](localhost:8000)即可查看效果
+- 浏览器访问[localhost:8000](localhost:8000)，或等待浏览器自动打开该页面，即可查看效果
 
 - 开发环境前端打包命令`npm run build:dev`
 - 生产环境前端打包命令`npm run build:pro`

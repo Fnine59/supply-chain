@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 
 import './index.less';
 
@@ -27,7 +27,10 @@ const LoginForm = ({
     });
   };
   return (
-    <div>
+    <div className="login-form-cont">
+      <div className="login-form-cont-title">
+        <h3 className="title">餐饮供应链物资管理系统</h3>
+      </div>
       <Form onSubmit={handleSubmit} className="login-form">
         <FormItem>
           {getFieldDecorator('userName', {

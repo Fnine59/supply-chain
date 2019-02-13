@@ -13,7 +13,7 @@ const Goods = function (goods) {
 
 /* 获取全部数据,测试接口使用，正式上线时请关闭*/
 Goods.prototype.getTestAllItems = function (callback) {
-  const sql = 'select * from baseinfo_user';
+  const sql = 'select * from test1';
   helper.doSql({
     sql,
     name: 'getTestAllItems',
