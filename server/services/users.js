@@ -9,6 +9,7 @@ import Users from '../models/users';
 module.exports = {
   init(app) {
     app.post('/login', this.doLogin);
+    app.post('/register', this.doRegister);
   },
   // 获取所有用户信息
   doLogin(req, res) {
@@ -33,6 +34,26 @@ module.exports = {
           code: 1001,
           success: true,
           message: '用户不存在或密码错误',
+        });
+      }
+      return res.send({
+        success: false,
+        message: '请求失败',
+      });
+    });
+  },
+
+  // 获取所有用户信息
+  doRegister(req, res) {
+    const props = {};
+    const users = new Users({ props });
+    users.doRegister(req.body, (err) => {
+      if (!err) {
+        return res.send({
+          code: 200,
+          success: true,
+          message: '注册成功',
+          data: null,
         });
       }
       return res.send({

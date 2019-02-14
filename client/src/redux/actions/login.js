@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import request from '../../common/utils/request';
 import history from '../../common/utils/history';
 import { LOGIN, REGISTER } from './types';
@@ -20,8 +21,19 @@ export function login(payload) {
 }
 
 export function register(payload) {
-  return {
-    type: REGISTER,
-    payload: payload.payload,
+  return async (dispatch) => {
+    const res = await request({
+      url: '/api/register',
+      method: 'post',
+      data: payload,
+    });
+    if (res) {
+      dispatch({
+        type: REGISTER,
+        payload: res,
+      });
+      console.log(res);
+      message.success(res.message, 2);
+    }
   };
 }

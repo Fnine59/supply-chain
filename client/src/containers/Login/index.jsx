@@ -4,27 +4,45 @@ import PropTypes from 'prop-types';
 
 import * as action from '../../redux/actions/login';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
-const Login = ({ login, history, dispatch }) => {
-  const { userInfo } = login;
-
-  const doLogin = (payload) => {
-    dispatch(action.login(payload));
-  };
+const Login = ({ login, dispatch }) => {
+  const { userInfo, loginFlag, registerFlag } = login;
 
   const loginProps = {
     onLogin: (user) => {
-      doLogin(user);
+      dispatch(action.login(user));
     },
     onRegister: () => {
-      history.push('/error404');
+      dispatch({
+        type: 'login/updateState',
+        payload: {
+          loginFlag: false,
+          registerFlag: true,
+        },
+      });
+    },
+  };
+
+  const registerProps = {
+    onRegister: (user) => {
+      dispatch(action.register(user));
+    },
+    onLogin: () => {
+      dispatch({
+        type: 'login/updateState',
+        payload: {
+          loginFlag: true,
+          registerFlag: false,
+        },
+      });
     },
   };
 
   return (
     <div className="login">
-      <span>{userInfo.nickname}</span>
-      <LoginForm {...loginProps} />
+      {loginFlag && <LoginForm {...loginProps} />}
+      {registerFlag && <RegisterForm {...registerProps} />}
     </div>
   );
 };

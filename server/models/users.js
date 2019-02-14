@@ -12,11 +12,23 @@ const Users = function (users) {
 };
 
 Users.prototype.doLogin = function (params, callback) {
-  console.log(params);
-  const sql = `select * from baseinfo_user where user_name='${params.username}' AND password='${params.password}'`;
+  const sql = `select * from baseinfo_user where user_name='${
+    params.username
+  }' AND password='${params.password}'`;
   helper.doSql({
     sql,
     name: 'doLogin',
+    callback,
+  });
+};
+
+Users.prototype.doRegister = function (params, callback) {
+  const sql = 'INSERT INTO baseinfo_user(user_name,password,nickname) VALUES(?,?,?)';
+  const sqlParams = [params.username, params.password, params.nickname];
+  helper.doSql({
+    sql,
+    params: sqlParams,
+    name: 'doRegister',
     callback,
   });
 };

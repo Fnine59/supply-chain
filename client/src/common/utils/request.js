@@ -12,7 +12,7 @@ const request = option => fetch(option.url, {
         .then(response => response.json())
         .then((res) => {
           if (res.code === 200 && res.success) {
-            return res.data || {};
+            return res.data || res;
           }
           message.error(res.message, 2);
           return null;

@@ -12,7 +12,22 @@ const helper = {
   doSql(opt) {
     db.conn((connection) => {
       console.log(`request method: ${opt.name}`);
-      connection.query(opt.sql, (err, res) => {
+      if (!opt.params) {
+        // 执行查询/删除语句
+        connection.query(opt.sql, (err, res) => {
+          if (err) {
+            console.log(`request method ${opt.name} err: + ${err}`);
+          } else {
+            console.log(`request method ${opt.name} success!`);
+            if (typeof opt.callback === 'function') {
+              opt.callback(err, res);
+            }
+          }
+        });
+        return;
+      }
+      // 执行新增/插入语句
+      connection.query(opt.sql, opt.params, (err, res) => {
         if (err) {
           console.log(`request method ${opt.name} err: + ${err}`);
         } else {

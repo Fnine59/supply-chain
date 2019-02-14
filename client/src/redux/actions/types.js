@@ -1,4 +1,4 @@
-export const UPDATESTATE = 'UPDATESTATE';
+export const UPDATESTATE = 'updateState';
 export const CLEARSTATE = 'CLEARSTATE';
 
 export const LOGIN = 'LOGIN';
