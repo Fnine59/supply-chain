@@ -8,6 +8,7 @@
               "style": "css"
           }
       ],
-      ["transform-runtime"]
+      ["transform-runtime"],
+      ["transform-decorators-legacy"]
   ]
 }

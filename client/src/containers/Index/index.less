@@ -1,5 +1,25 @@
 .main {
+  height: 100%;
+  .top {
+    height: 48px;
+  }
   &-top-bar {
     text-align: right;
+  }
+  &-top-bar-title {
+    position: absolute;
+    left: 30px;
+  }
+  .body {
+    width: 100%;
+    height: calc(100% - 48px);
+    display: flex;
+    .main-body-menu {
+      width: 256px;
+    }
+    .main-body-cont {
+      width: calc(100% - 256px);
+      height: calc(100% - 48px);
+    }
   }
 }

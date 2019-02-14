@@ -8,6 +8,8 @@ import './index.less';
 
 const store = configureStore();
 
+window.baseUrl = 'http://localhost:8000';
+
 ReactDOM.render(
   <Provider store={store}>
     <Routes />

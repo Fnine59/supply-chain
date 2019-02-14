@@ -11,7 +11,7 @@ const Routes = () => (
       <Route path="/login" component={Login} />
       <Route path="/index" component={Main} />
       <Route path="/error404" component={Error404} />
-      <Route path="/" component={Error404} />
+      <Route component={Error404} />
     </Switch>
   </Router>
 );
