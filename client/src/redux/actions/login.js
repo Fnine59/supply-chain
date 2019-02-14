@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import request from '../../common/utils/request';
 import history from '../../common/utils/history';
-import { LOGIN, REGISTER } from './types';
+import { LOGIN, REGISTER, LOGOUT } from './types';
 
 export function login(payload) {
   return async (dispatch) => {
@@ -15,7 +15,7 @@ export function login(payload) {
         type: LOGIN,
         payload: res,
       });
-      history.push('/error404');
+      history.push('/index');
     }
   };
 }
@@ -35,5 +35,14 @@ export function register(payload) {
       console.log(res);
       message.success(res.message, 2);
     }
+  };
+}
+
+export function logout() {
+  console.log(history);
+  // TODO: 后期想办法清空页面栈
+  history.push('/login');
+  return {
+    type: LOGOUT,
   };
 }

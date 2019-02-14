@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, UPDATESTATE } from '../actions/types';
+import { REGISTER, LOGIN, UPDATESTATE, LOGOUT } from '../actions/types';
 
 const initState = {
   userInfo: {},
@@ -14,6 +14,9 @@ export default function login(state = initState, action) {
     case LOGIN:
       console.log('======================登录======================');
       return { ...state, userInfo: action.payload };
+    case LOGOUT:
+      console.log('======================退出登录======================');
+      return { ...state, userInfo: {} };
     case `login/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:

@@ -55,7 +55,6 @@ function mapStateToProps(state) {
 
 Login.propTypes = {
   login: PropTypes.object,
-  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 export default connect(mapStateToProps)(Login);
