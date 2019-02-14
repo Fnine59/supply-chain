@@ -5,3 +5,7 @@ export const CLEARSTATE = 'CLEARSTATE';
 export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
+
+// 基础信息模块
+export const GETSHOPINFO = 'GETSHOPINFO';
+

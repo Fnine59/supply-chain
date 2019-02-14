@@ -71,7 +71,7 @@ var config = {
       }),
     ],
     devServer: {
-      contentBase: path.join(__dirname, "client/dist"),
+      contentBase: path.join(__dirname, "/client/dist"),
       port: 8000,
       host: 'localhost',
       historyApiFallback: true,

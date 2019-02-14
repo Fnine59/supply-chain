@@ -76,10 +76,10 @@ class Main extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="/shop/info">门店档案</Menu.Item>
-                <Menu.Item key="/hq/info">总部档案</Menu.Item>
-                <Menu.Item key="/supply/info">供应商档案</Menu.Item>
-                <Menu.Item key="/goods/info">物品档案</Menu.Item>
+                <Menu.Item key="/baseinfo/shop/info">门店档案</Menu.Item>
+                <Menu.Item key="/baseinfo/hq/info">总部档案</Menu.Item>
+                <Menu.Item key="/baseinfo/supply/info">供应商档案</Menu.Item>
+                <Menu.Item key="/baseinfo/goods/info">物品档案</Menu.Item>
                 <Menu.Item key="/baseinfo/prRelations">采购关系配置</Menu.Item>
               </SubMenu>
               <SubMenu
