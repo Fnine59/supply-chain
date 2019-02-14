@@ -3,7 +3,7 @@ import request from '../../common/utils/request';
 import history from '../../common/utils/history';
 import { LOGIN, REGISTER, LOGOUT } from './types';
 
-export function login(payload) {
+export function getShops(payload) {
   return async (dispatch) => {
     const res = await request({
       url: '/api/login',

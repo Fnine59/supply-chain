@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as action from '../../../redux/actions/shopinfo';
+import Search from './Search';
+import List from './List';
 
 const ShopInfo = ({ shopinfo, dispatch }) => {
   console.log('shopinfo');
   return (
     <div className="shopinfo">
-      mendianxinxi
+      <Search />
+      <List />
     </div>
   );
 };
