@@ -15,7 +15,7 @@ class Main extends React.Component {
       url: '/baseinfo/shop/info',
       breadCrumb: (
         <Breadcrumb>
-          <Breadcrumb.Item href="">
+          <Breadcrumb.Item>
             <Icon type="home" />
           </Breadcrumb.Item>
           <Breadcrumb.Item>基础信息配置</Breadcrumb.Item>
@@ -97,7 +97,7 @@ class Main extends React.Component {
           </Menu>
         </div>
         <div className="body">
-          <div className="main-body-menu">
+          <div>
             <Menu
               onClick={handleClick}
               style={{ width: 256 }}
@@ -163,7 +163,7 @@ class Main extends React.Component {
             </Menu>
           </div>
           <div className="main-body-cont">
-            {this.state.breadCrumb},
+            <div className="breadcrumb">{this.state.breadCrumb}</div>
             <Content src={this.state.url} />
           </div>
         </div>
