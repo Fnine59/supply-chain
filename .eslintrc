@@ -3,7 +3,8 @@
   "globals": {
     "APP": true,
     "window": true,
-    "document": true
+    "document": true,
+    "localStorage": true
   },
   "plugins": [
     "react",

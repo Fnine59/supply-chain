@@ -15,6 +15,7 @@ export function login(payload) {
         type: LOGIN,
         payload: res,
       });
+      localStorage.setItem('userInfo', JSON.stringify(res));
       history.push('/index');
     }
   };
@@ -40,6 +41,7 @@ export function register(payload) {
 
 export function logout() {
   console.log(history);
+  localStorage.removeItem('userInfo');
   // TODO: 后期想办法清空页面栈
   history.push('/login');
   return {

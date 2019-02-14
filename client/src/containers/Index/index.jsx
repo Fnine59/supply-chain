@@ -1,6 +1,5 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Content from '../Content/index';
 import * as action from '../../redux/actions/login';
@@ -9,7 +8,6 @@ import './index.less';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-@connect(state => ({ login: state.login }))
 class Main extends React.Component {
   constructor() {
     super();
@@ -19,9 +17,9 @@ class Main extends React.Component {
   }
 
   render() {
-    const { login, dispatch } = this.props;
-    console.log('this.props', this.props);
-    const { userInfo } = login;
+    const { dispatch, history } = this.props;
+    console.log(history);
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
 
     const handleClick = (e) => {
       this.setState({
@@ -32,6 +30,11 @@ class Main extends React.Component {
     const doExit = () => {
       dispatch(action.logout());
     };
+
+    const doLogin = () => {
+      history.push('/login');
+    };
+
     return (
       <div className="main">
         <div className="top">
@@ -45,16 +48,26 @@ class Main extends React.Component {
                 </span>
               }
             >
-              <MenuItemGroup>
-                <Menu.Item key="userCenter">
-                  <Icon type="home" />
-                  个人中心
-                </Menu.Item>
-                <Menu.Item key="exit" onClick={doExit}>
-                  <Icon type="logout" />
-                  退出登录
-                </Menu.Item>
-              </MenuItemGroup>
+              {userInfo.nickname && (
+                <MenuItemGroup>
+                  <Menu.Item key="userCenter">
+                    <Icon type="home" />
+                    个人中心
+                  </Menu.Item>
+                  <Menu.Item key="exit" onClick={doExit}>
+                    <Icon type="logout" />
+                    退出登录
+                  </Menu.Item>
+                </MenuItemGroup>
+              )}
+              {!userInfo.nickname && (
+                <MenuItemGroup>
+                  <Menu.Item key="userCenter" onClick={doLogin}>
+                    <Icon type="login" />
+                    去登陆
+                  </Menu.Item>
+                </MenuItemGroup>
+              )}
             </SubMenu>
           </Menu>
         </div>
@@ -123,7 +136,7 @@ class Main extends React.Component {
               </SubMenu>
             </Menu>
           </div>
-          <div className="main-body-cont" >
+          <div className="main-body-cont">
             <Content src={this.state.url} />
           </div>
         </div>
@@ -133,7 +146,6 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-  login: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
