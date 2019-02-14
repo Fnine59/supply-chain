@@ -1,26 +1,53 @@
 import { message } from 'antd';
 import request from '../../common/utils/request';
 import history from '../../common/utils/history';
-import { LOGIN, REGISTER, LOGOUT } from './types';
+import { GETSHOPLIST, UPDSHOPINFO } from './types';
 
-export function getShops(payload) {
+/**
+ * 获取门店列表
+ */
+export function getList(paylaod) {
   return async (dispatch) => {
     const res = await request({
-      url: '/api/login',
+      url: '/api/baseinfo/getShopList',
       method: 'post',
-      data: payload,
+      data: paylaod,
     });
     if (res) {
       dispatch({
-        type: LOGIN,
+        type: GETSHOPLIST,
         payload: res,
       });
-      history.push('/index');
     }
   };
 }
 
-export function login1(payload) {
+/**
+ * 新增门店
+ */
+export function doAdd(payload) {
+  return async (dispatch) => {
+    const res = await request({
+      url: '/api/baseinfo/createShop',
+      method: 'post',
+      data: payload,
+    });
+    if (res) {
+      message.success(res.message, 2);
+      dispatch({
+        type: 'shopinfo/updateState',
+        payload: {
+          modalVisible: false,
+        },
+      });
+    }
+  };
+}
+
+/**
+ * 更新门店信息
+ */
+export function doUpdShop(payload) {
   return async (dispatch) => {
     const res = await request({
       url: '/api/login',
@@ -29,7 +56,7 @@ export function login1(payload) {
     });
     if (res) {
       dispatch({
-        type: LOGIN,
+        type: UPDSHOPINFO,
         payload: res,
       });
       history.push('/index');

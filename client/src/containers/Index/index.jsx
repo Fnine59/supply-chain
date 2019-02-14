@@ -8,7 +8,7 @@ import './index.less';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-class Main extends React.Component {
+class Main extends React.PureComponent {
   constructor() {
     super();
     this.state = {

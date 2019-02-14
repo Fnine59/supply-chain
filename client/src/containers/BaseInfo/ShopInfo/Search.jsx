@@ -16,7 +16,7 @@ const formItemLayout = {
   },
 };
 
-const Search = () => {
+const Search = ({ onAdd }) => {
   console.log('shopinfo');
   const onClearSearchInfo = () => {};
   const onSearchItem = () => {};
@@ -62,7 +62,14 @@ const Search = () => {
       </Form>
       <Row>
         <Col span={12}>
-          <Button type="primary">+ 新增门店</Button>
+          <Button type="primary" className="opt-btn" onClick={onAdd}>
+            + 新增门店
+          </Button>
+          <Button className="opt-btn" onClick={onAdd}>启用</Button>
+          <Button className="opt-btn" onClick={onAdd}>停用</Button>
+          <Button className="opt-btn" type="danger" onClick={onAdd}>
+            删除门店
+          </Button>
         </Col>
       </Row>
     </div>
@@ -70,6 +77,7 @@ const Search = () => {
 };
 
 Search.propTypes = {
+  onAdd: PropTypes.func,
 };
 
 export default Search;

@@ -266,6 +266,13 @@
               "chnname": "门店状态",
               "notNull": true,
               "defaultValue": "false"
+            },
+            {
+              "name": "address",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "门店地址",
+              "notNull": true
             }
           ],
           "indexs": [],
@@ -1334,8 +1341,8 @@
                 "y": 152.72368421052633
               },
               {
-                "x": 1217.9384765625,
-                "y": 222.41666666666669
+                "x": 1215.892578125,
+                "y": 212.3409090909091
               }
             ],
             "sourceAnchor": 10,

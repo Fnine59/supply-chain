@@ -20,7 +20,7 @@ export default function login(state = initState, action) {
     case `login/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
-      console.log('Default');
+      console.warn('未匹配到相应的ACTION TYPE');
       return { ...state };
   }
 }

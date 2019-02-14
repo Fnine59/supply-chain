@@ -1,14 +1,63 @@
-html, body {
+// LINK
+@link-color: #1890ff;
+@link-hover-color: tint(@link-color, 20%);
+@link-active-color: shade(@link-color, 5%);
+@link-hover-decoration: underline;
+@btn-link-disabled-color: #cccccc;
+
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0px;
   padding: 0px;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
 }
 
 #app {
   height: 100%;
+}
+
+// link-btn
+.btn-link {
+  color: @link-color;
+  font-weight: normal;
+  border-radius: 0;
+  margin: 0 15px 0 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  &,
+  &:active,
+  &.active,
+  &[disabled],
+  fieldset[disabled] & {
+    background-color: transparent;
+  }
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: transparent;
+    outline: none;
+  }
+  &:hover,
+  &:focus {
+    color: @link-hover-color;
+    text-decoration: @link-hover-decoration;
+    background-color: transparent;
+    outline: none;
+  }
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus {
+      color: @btn-link-disabled-color;
+      text-decoration: none;
+    }
+  }
 }
