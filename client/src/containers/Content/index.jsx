@@ -27,7 +27,7 @@ class Content extends React.Component {
           });
         }}
         // eslint-disable-next-line
-        ref={(node) => { this.frameRef = node; return null; }}
+        // ref={(node) => { this.frameRef = node; return null; }}
         src={`${window.baseUrl}${this.props.src || '/'}` || '#'}
         width="100%"
         height={'100%'}

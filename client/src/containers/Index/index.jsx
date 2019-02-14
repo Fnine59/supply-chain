@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Breadcrumb } from 'antd';
 import PropTypes from 'prop-types';
 import Content from '../Content/index';
 import * as action from '../../redux/actions/login';
@@ -12,7 +12,16 @@ class Main extends React.Component {
   constructor() {
     super();
     this.state = {
-      url: '/',
+      url: '/baseinfo/shop/info',
+      breadCrumb: (
+        <Breadcrumb>
+          <Breadcrumb.Item href="">
+            <Icon type="home" />
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>基础信息配置</Breadcrumb.Item>
+          <Breadcrumb.Item>门店档案</Breadcrumb.Item>
+        </Breadcrumb>
+      ),
     };
   }
 
@@ -20,10 +29,26 @@ class Main extends React.Component {
     const { dispatch, history } = this.props;
     console.log(history);
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
-
     const handleClick = (e) => {
+      console.log('menu click', e);
+      const rules = {
+        /* eslint-disable */
+        "baseinfo": '基础信息配置',
+        "shop": '门店管理',
+        "hq": '总部管理',
+        "supply": '供应商管理',
+      };
       this.setState({
         url: e.key,
+        breadCrumb: (
+          <Breadcrumb>
+            <Breadcrumb.Item href="">
+              <Icon type="home" />
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>{rules[e.key.split('/')[1]]}</Breadcrumb.Item>
+            <Breadcrumb.Item>{e.item.props.children}</Breadcrumb.Item>
+          </Breadcrumb>
+        ),
       });
     };
 
@@ -76,9 +101,10 @@ class Main extends React.Component {
             <Menu
               onClick={handleClick}
               style={{ width: 256 }}
-              defaultSelectedKeys={['/shop/info']}
+              defaultSelectedKeys={['/baseinfo/shop/info']}
               defaultOpenKeys={['sub1']}
               mode="inline"
+              className="body-menu"
             >
               <SubMenu
                 key="sub1"
@@ -137,6 +163,7 @@ class Main extends React.Component {
             </Menu>
           </div>
           <div className="main-body-cont">
+            {this.state.breadCrumb},
             <Content src={this.state.url} />
           </div>
         </div>
