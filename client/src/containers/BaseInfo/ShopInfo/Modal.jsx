@@ -14,6 +14,7 @@ const formItemLayout = {
 };
 
 const modal = ({
+  currentItem,
   onSubmit,
   onCancel,
   form: { validateFields, getFieldDecorator, resetFields },
@@ -22,7 +23,7 @@ const modal = ({
   const handleOk = () => {
     validateFields((errors, values) => {
       if (!errors) {
-        onSubmit(values);
+        onSubmit({ ...values, id: currentItem.id });
       }
     });
   };
@@ -38,7 +39,7 @@ const modal = ({
         <Row>
           <FormItem {...formItemLayout} label="门店名称" hasFeedback>
             {getFieldDecorator('name', {
-              initialValue: '',
+              initialValue: currentItem.name || '',
               rules: [
                 {
                   required: true,
@@ -53,7 +54,7 @@ const modal = ({
           </FormItem>
           <FormItem {...formItemLayout} label="门店地址" hasFeedback>
             {getFieldDecorator('address', {
-              initialValue: '',
+              initialValue: currentItem.address || '',
               rules: [
                 {
                   required: true,
@@ -74,14 +75,9 @@ const modal = ({
 
 modal.propTypes = {
   form: PropTypes.object,
-  item: PropTypes.object,
-  // postList: PropTypes.array,
-  title: PropTypes.string,
-  realname: PropTypes.string,
-  modalVisible: PropTypes.bool,
-  loading: PropTypes.bool,
-  onCancel: PropTypes.func,
+  currentItem: PropTypes.object,
   onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
 };
 
 export default Form.create()(modal);

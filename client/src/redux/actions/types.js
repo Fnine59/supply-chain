@@ -1,4 +1,5 @@
 export const UPDATESTATE = 'updateState';
+export const GETSTATE = 'getState';
 export const CLEARSTATE = 'CLEARSTATE';
 
 // 登录注册模块
@@ -8,5 +9,4 @@ export const LOGOUT = 'LOGOUT';
 
 // 基础信息模块 —— 门店档案
 export const GETSHOPLIST = 'GETSHOPLIST';
-export const UPDSHOPINFO = 'UPDSHOPINFO';
 

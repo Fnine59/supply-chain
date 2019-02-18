@@ -17,6 +17,9 @@ const helper = {
         connection.query(opt.sql, (err, res) => {
           if (err) {
             console.log(`request method ${opt.name} err: + ${err}`);
+            if (typeof opt.callback === 'function') {
+              opt.callback(err);
+            }
           } else {
             console.log(`request method ${opt.name} success!`);
             if (typeof opt.callback === 'function') {
@@ -30,6 +33,9 @@ const helper = {
       connection.query(opt.sql, opt.params, (err, res) => {
         if (err) {
           console.log(`request method ${opt.name} err: + ${err}`);
+          if (typeof opt.callback === 'function') {
+            opt.callback(err);
+          }
         } else {
           console.log(`request method ${opt.name} success!`);
           if (typeof opt.callback === 'function') {

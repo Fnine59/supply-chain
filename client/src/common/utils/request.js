@@ -18,7 +18,7 @@ const request = option => fetch(option.url, {
           return null;
         })
         .catch((err) => {
-          console.error('fetch error =====>', err);
+          console.warn('fetch error =====>', err);
           message.error('网络请求失败', 2);
           return null;
         });
