@@ -10,3 +10,5 @@ export const LOGOUT = 'LOGOUT';
 // 基础信息模块 —— 门店档案
 export const GETSHOPLIST = 'GETSHOPLIST';
 
+// 基础信息模块 —— 总部档案
+export const GETHQLIST = 'GETHQLIST';

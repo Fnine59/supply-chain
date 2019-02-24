@@ -1,30 +1,30 @@
 /**
- * @description 门店基础信息表控制层
+ * @description 配送中心基础信息表控制层
  * @author NaiyingZhang <fnine59@163.com>
- * @date 2019-02-14
+ * @date 2019-02-24
  */
 
-import BaseInfoShop from '../models/baseinfoShop';
+import BaseInfoHQ from '../models/BaseInfoHQ';
 
 module.exports = {
   init(app) {
-    app.post('/baseinfo/shopinfo/create', this.doCreate);
-    app.post('/baseinfo/shopinfo/getList', this.doGetList);
-    app.post('/baseinfo/shopinfo/enable', this.doEnable);
-    app.post('/baseinfo/shopinfo/disable', this.doDisable);
-    app.post('/baseinfo/shopinfo/delete', this.doDelete);
-    app.post('/baseinfo/shopinfo/update', this.doUpdate);
+    app.post('/baseinfo/hqinfo/create', this.doCreate);
+    app.post('/baseinfo/hqinfo/getList', this.doGetList);
+    app.post('/baseinfo/hqinfo/enable', this.doEnable);
+    app.post('/baseinfo/hqinfo/disable', this.doDisable);
+    app.post('/baseinfo/hqinfo/delete', this.doDelete);
+    app.post('/baseinfo/hqinfo/update', this.doUpdate);
   },
-  // 新增门店
+  // 新增配送中心
   doCreate(req, res) {
     const props = {};
-    const baseinfo = new BaseInfoShop({ props });
+    const baseinfo = new BaseInfoHQ({ props });
     baseinfo.doCreate(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '新增门店成功',
+          message: '新增配送中心成功',
           data: null,
         });
       }
@@ -35,16 +35,16 @@ module.exports = {
     });
   },
 
-  // 获取所有门店信息
+  // 获取所有配送中心信息
   doGetList(req, res) {
     const props = {};
-    const baseinfo = new BaseInfoShop({ props });
+    const baseinfo = new BaseInfoHQ({ props });
     baseinfo.doGetList(req.body, (err, data) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '查询门店成功',
+          message: '查询配送中心成功',
           data,
         });
       }
@@ -55,16 +55,16 @@ module.exports = {
     });
   },
 
-  // 启用门店
+  // 启用配送中心
   doEnable(req, res) {
     const props = {};
-    const baseinfo = new BaseInfoShop({ props });
+    const baseinfo = new BaseInfoHQ({ props });
     baseinfo.doEnable(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '启用门店成功',
+          message: '启用配送中心成功',
         });
       }
       return res.send({
@@ -74,16 +74,16 @@ module.exports = {
     });
   },
 
-  // 停用门店
+  // 停用配送中心
   doDisable(req, res) {
     const props = {};
-    const baseinfo = new BaseInfoShop({ props });
+    const baseinfo = new BaseInfoHQ({ props });
     baseinfo.doDisable(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '停用门店成功',
+          message: '停用配送中心成功',
         });
       }
       return res.send({
@@ -93,16 +93,16 @@ module.exports = {
     });
   },
 
-  // 删除门店
+  // 删除配送中心
   doDelete(req, res) {
     const props = {};
-    const baseinfo = new BaseInfoShop({ props });
+    const baseinfo = new BaseInfoHQ({ props });
     baseinfo.doDelete(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '删除门店成功',
+          message: '删除配送中心成功',
         });
       }
       return res.send({
@@ -113,16 +113,16 @@ module.exports = {
   },
 
 
-  // 更新门店
+  // 更新配送中心
   doUpdate(req, res) {
     const props = {};
-    const baseinfo = new BaseInfoShop({ props });
+    const baseinfo = new BaseInfoHQ({ props });
     baseinfo.doUpdate(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '更新门店信息成功',
+          message: '更新配送中心信息成功',
         });
       }
       return res.send({

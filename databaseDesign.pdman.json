@@ -26,12 +26,6 @@
               "relationNoShow": false
             },
             {
-              "name": "class_id",
-              "type": "Integer",
-              "remark": "物品关联的类别id",
-              "chnname": "类别id"
-            },
-            {
               "name": "name",
               "type": "LongString",
               "remark": "",
@@ -174,72 +168,6 @@
           "chnname": "物品单位表"
         },
         {
-          "title": "baseinfo_good_class",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "类别id",
-              "pk": true,
-              "notNull": true,
-              "autoIncrement": true,
-              "defaultValue": ""
-            },
-            {
-              "name": "name",
-              "type": "MiddleString",
-              "remark": "",
-              "chnname": "类别名称",
-              "notNull": true
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "物品类别表"
-        },
-        {
           "title": "baseinfo_store",
           "fields": [
             {
@@ -347,6 +275,12 @@
               "chnname": "使用状态",
               "notNull": true,
               "defaultValue": "false"
+            },
+            {
+              "name": "address",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "配送中心地址"
             }
           ],
           "indexs": [],
@@ -477,93 +411,6 @@
           "chnname": "供应商表"
         },
         {
-          "title": "baseinfo_pr_relationship",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "id",
-              "pk": true,
-              "notNull": true,
-              "autoIncrement": true,
-              "defaultValue": ""
-            },
-            {
-              "name": "dispatch_id",
-              "type": "Integer",
-              "remark": "关联的配送中心id，有此id则门店可以请购",
-              "chnname": "配送中心id",
-              "notNull": false
-            },
-            {
-              "name": "supplier_id",
-              "type": "Integer",
-              "remark": "关联的供应商id，有此id则",
-              "chnname": "供应商id",
-              "notNull": false
-            },
-            {
-              "name": "goods_id",
-              "type": "Integer",
-              "remark": "关联的物品id",
-              "chnname": "物品id",
-              "notNull": true
-            },
-            {
-              "name": "store_id",
-              "type": "Integer",
-              "remark": "关联的门店id",
-              "chnname": "门店id",
-              "notNull": true
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "采购关系表"
-        },
-        {
           "title": "baseinfo_user",
           "fields": [
             {
@@ -647,14 +494,6 @@
         "nodes": [
           {
             "shape": "table",
-            "title": "baseinfo_good_class",
-            "moduleName": false,
-            "x": 140,
-            "y": 210,
-            "id": "1cd5b9b2"
-          },
-          {
-            "shape": "table",
             "title": "baseinfo_unit",
             "moduleName": false,
             "x": 140,
@@ -663,130 +502,46 @@
           },
           {
             "shape": "table",
-            "title": "baseinfo_goods",
+            "title": "baseinfo_user",
             "moduleName": false,
-            "x": 440,
-            "y": 190,
-            "id": "351defa6"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_pr_relationship",
-            "moduleName": false,
-            "x": 820,
-            "y": 160,
-            "id": "dddc3f24"
+            "x": 130,
+            "y": -40,
+            "id": "087a1581"
           },
           {
             "shape": "table",
             "title": "baseinfo_dispatch",
             "moduleName": false,
-            "x": 1210,
-            "y": 40,
+            "x": 850,
+            "y": 0,
             "id": "45d8190f"
           },
           {
             "shape": "table",
             "title": "baseinfo_supplier",
             "moduleName": false,
-            "x": 1210,
-            "y": 180,
+            "x": 850,
+            "y": 170,
             "id": "000f32bc"
           },
           {
             "shape": "table",
             "title": "baseinfo_store",
             "moduleName": false,
-            "x": 1210,
-            "y": 330,
+            "x": 850,
+            "y": 350,
             "id": "3e3dbde8"
           },
           {
             "shape": "table",
-            "title": "baseinfo_user",
+            "title": "baseinfo_goods",
             "moduleName": false,
-            "x": 130,
-            "y": -40,
-            "id": "087a1581"
+            "x": 440,
+            "y": 130,
+            "id": "351defa6"
           }
         ],
         "edges": [
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "351defa6",
-            "target": "1cd5b9b2",
-            "id": "ab91e41b",
-            "controlPoints": [
-              {
-                "x": 321.8818359375,
-                "y": 182.45588235294116
-              },
-              {
-                "x": 243.7685546875,
-                "y": 212.53571428571428
-              }
-            ],
-            "sourceAnchor": 4,
-            "targetAnchor": 1
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "dddc3f24",
-            "target": "45d8190f",
-            "id": "fb073f4d",
-            "controlPoints": [
-              {
-                "x": 936.0361328125,
-                "y": 152.44230769230768
-              },
-              {
-                "x": 1093.232421875,
-                "y": 32.41666666666667
-              }
-            ],
-            "sourceAnchor": 3,
-            "targetAnchor": 0
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "dddc3f24",
-            "target": "000f32bc",
-            "id": "783c11bf",
-            "controlPoints": [
-              {
-                "x": 936.0361328125,
-                "y": 172.59615384615384
-              },
-              {
-                "x": 1099.232421875,
-                "y": 182.52272727272728
-              }
-            ],
-            "sourceAnchor": 5,
-            "targetAnchor": 2
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "dddc3f24",
-            "target": "3e3dbde8",
-            "id": "2b0cc3fc",
-            "controlPoints": [
-              {
-                "x": 936.0361328125,
-                "y": 212.90384615384616
-              },
-              {
-                "x": 1105.232421875,
-                "y": 322.4166666666667
-              }
-            ],
-            "sourceAnchor": 9,
-            "targetAnchor": 0
-          },
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
@@ -796,7 +551,7 @@
             "controlPoints": [
               {
                 "x": 321.8818359375,
-                "y": 162.33823529411765
+                "y": 112.38333333333334
               },
               {
                 "x": 243.7685546875,
@@ -809,50 +564,6 @@
         ]
       },
       "associations": [
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "baseinfo_goods",
-            "field": "class_id"
-          },
-          "to": {
-            "entity": "baseinfo_good_class",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "baseinfo_pr_relationship",
-            "field": "dispatch_id"
-          },
-          "to": {
-            "entity": "baseinfo_dispatch",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "baseinfo_pr_relationship",
-            "field": "supplier_id"
-          },
-          "to": {
-            "entity": "baseinfo_supplier",
-            "field": "name"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "baseinfo_pr_relationship",
-            "field": "store_id"
-          },
-          "to": {
-            "entity": "baseinfo_store",
-            "field": "id"
-          }
-        },
         {
           "relation": "0,n:1",
           "from": {
@@ -957,94 +668,6 @@
           "chnname": "门店物品采购关系表"
         },
         {
-          "title": "store_indepot_order",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "id",
-              "pk": true,
-              "notNull": true,
-              "autoIncrement": true,
-              "defaultValue": ""
-            },
-            {
-              "name": "order_no",
-              "type": "IdOrKey",
-              "remark": "",
-              "chnname": "入库单号",
-              "notNull": true
-            },
-            {
-              "name": "type",
-              "type": "ShortString",
-              "remark": "1->请购入库;2->自采入库",
-              "chnname": "入库类型",
-              "notNull": true,
-              "defaultValue": "1"
-            },
-            {
-              "name": "date",
-              "type": "Date",
-              "remark": "",
-              "chnname": "入库日期",
-              "notNull": true
-            },
-            {
-              "name": "acceptance_order_id",
-              "type": "IdOrKey",
-              "remark": "关联的门店验收单id",
-              "chnname": "验收单id",
-              "notNull": true
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "门店入库单表"
-        },
-        {
           "title": "store_purchase_order",
           "fields": [
             {
@@ -1061,14 +684,14 @@
               "name": "order_no",
               "type": "IdOrKey",
               "remark": "",
-              "chnname": "采购单号",
+              "chnname": "请购单号",
               "notNull": true
             },
             {
               "name": "create_time",
               "type": "DateTime",
               "remark": "创建此采购单的时间",
-              "chnname": "采购日期",
+              "chnname": "请购日期",
               "notNull": true
             },
             {
@@ -1083,7 +706,7 @@
               "name": "amount",
               "type": "Money",
               "remark": "依据单据的物品单价及数量计算出的采购总金额",
-              "chnname": "采购金额",
+              "chnname": "请购金额",
               "defaultValue": "0.00",
               "notNull": true
             },
@@ -1092,13 +715,6 @@
               "type": "Integer",
               "remark": "关联的门店id",
               "chnname": "门店id"
-            },
-            {
-              "name": "type",
-              "type": "ShortString",
-              "remark": "1->门店请购;2->门店自采",
-              "chnname": "采购类型",
-              "notNull": true
             },
             {
               "name": "update_time",
@@ -1151,7 +767,7 @@
               "relationNoShow": true
             }
           ],
-          "chnname": "门店采购订单表"
+          "chnname": "门店请购订单表"
         },
         {
           "title": "store_acceptance_order",
@@ -1174,10 +790,19 @@
               "notNull": false
             },
             {
-              "name": "dispatch_order_id",
-              "type": "Integer",
-              "remark": "关联的总部配送单id或供应商发货单id",
-              "chnname": "配送单id"
+              "name": "create_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "创建时间",
+              "pk": false,
+              "notNull": true
+            },
+            {
+              "name": "status",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "单据状态",
+              "notNull": true
             }
           ],
           "indexs": [],
@@ -1223,221 +848,476 @@
               "relationNoShow": true
             }
           ],
-          "chnname": "门店验收单表"
+          "chnname": "门店请购验收单表"
+        },
+        {
+          "title": "store_depot",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true,
+              "defaultValue": ""
+            },
+            {
+              "name": "goods_id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "物品id",
+              "notNull": true
+            },
+            {
+              "name": "count",
+              "type": "BigInt",
+              "remark": "",
+              "chnname": "库存数量",
+              "notNull": true,
+              "defaultValue": "0"
+            },
+            {
+              "name": "accept_order_id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "验收单id",
+              "notNull": true
+            },
+            {
+              "name": "accept_type",
+              "type": "ShortString",
+              "remark": "1->请购验收；2->自采验收",
+              "chnname": "验收类型"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "门店库存表"
+        },
+        {
+          "title": "store_self_purchase_order",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true,
+              "defaultValue": ""
+            },
+            {
+              "name": "order_no",
+              "type": "IdOrKey",
+              "remark": "",
+              "chnname": "自采单号",
+              "notNull": true
+            },
+            {
+              "name": "create_time",
+              "type": "DateTime",
+              "remark": "创建此采购单的时间",
+              "chnname": "自采日期",
+              "notNull": true
+            },
+            {
+              "name": "status",
+              "type": "ShortString",
+              "remark": "1->待处理;2->已提交;3->已完成",
+              "chnname": "单据状态",
+              "notNull": true,
+              "defaultValue": "1"
+            },
+            {
+              "name": "amount",
+              "type": "Money",
+              "remark": "依据单据的物品单价及数量计算出的采购总金额",
+              "chnname": "自采金额",
+              "defaultValue": "0.00",
+              "notNull": true
+            },
+            {
+              "name": "store_id",
+              "type": "Integer",
+              "remark": "关联的门店id",
+              "chnname": "门店id"
+            },
+            {
+              "name": "update_time",
+              "type": "DateTime",
+              "remark": "每次单据状态更新时改变该字段为当前时间",
+              "chnname": "状态更新时间",
+              "notNull": true
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "门店自采订单表"
+        },
+        {
+          "title": "store_self_acceptance_order",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true,
+              "defaultValue": ""
+            },
+            {
+              "name": "store_order_id",
+              "type": "Integer",
+              "remark": "关联的门店采购单id",
+              "chnname": "来源订单id",
+              "notNull": false
+            },
+            {
+              "name": "create_time",
+              "type": "DateTime",
+              "remark": "",
+              "chnname": "创建时间",
+              "pk": false,
+              "notNull": true
+            },
+            {
+              "name": "status",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "单据状态",
+              "notNull": true
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "门店自采验收单表"
         }
       ],
       "graphCanvas": {
         "nodes": [
           {
             "shape": "table",
-            "title": "store_goods_relations",
-            "moduleName": false,
-            "x": 630,
-            "y": 180,
-            "id": "b8569e24"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_goods",
-            "moduleName": "baseinfo",
-            "x": 270,
-            "y": 70,
-            "id": "dc6b3520"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_supplier",
-            "moduleName": "baseinfo",
-            "x": 270,
-            "y": 260,
-            "id": "9295f5f8"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_dispatch",
-            "moduleName": "baseinfo",
-            "x": 250,
-            "y": 420,
-            "id": "d73ba608"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_store",
-            "moduleName": "baseinfo",
-            "x": 1330,
-            "y": 230,
-            "id": "b6aa907c"
+            "title": "hq_order",
+            "moduleName": "hq",
+            "x": 1010,
+            "y": 0,
+            "id": "42690a1a"
           },
           {
             "shape": "table",
             "title": "store_purchase_order",
             "moduleName": false,
-            "x": 970,
-            "y": 110,
-            "id": "7c7575a2"
+            "x": 650,
+            "y": 30,
+            "id": "5979f4f4"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_dispatch",
+            "moduleName": "baseinfo",
+            "x": 1360,
+            "y": 20,
+            "id": "76fd95d8"
+          },
+          {
+            "shape": "table",
+            "title": "store_goods_relations",
+            "moduleName": false,
+            "x": 300,
+            "y": 10,
+            "id": "a7de9291"
+          },
+          {
+            "shape": "table",
+            "title": "store_self_purchase_order",
+            "moduleName": false,
+            "x": 650,
+            "y": 310,
+            "id": "25c3ddfa"
+          },
+          {
+            "shape": "table",
+            "title": "supplier_order",
+            "moduleName": "supplier",
+            "x": 1020,
+            "y": 300,
+            "id": "db33dff6"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_supplier",
+            "moduleName": "baseinfo",
+            "x": 1350,
+            "y": 290,
+            "id": "981ae961"
+          },
+          {
+            "shape": "table",
+            "title": "store_goods_relations:1",
+            "moduleName": false,
+            "x": 310,
+            "y": 310,
+            "id": "aacee23d"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_goods",
+            "moduleName": "baseinfo",
+            "x": -70,
+            "y": -80,
+            "id": "67896a45"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_dispatch:1",
+            "moduleName": "baseinfo",
+            "x": -100,
+            "y": 70,
+            "id": "a77ab9cd"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_goods:1",
+            "moduleName": "baseinfo",
+            "x": -80,
+            "y": 260,
+            "id": "3f2bbe4e"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_supplier:1",
+            "moduleName": "baseinfo",
+            "x": -70,
+            "y": 410,
+            "id": "69adc275"
           },
           {
             "shape": "table",
             "title": "store_acceptance_order",
             "moduleName": false,
-            "x": 620,
-            "y": 440,
-            "id": "82d25f14"
+            "x": 650,
+            "y": 590,
+            "id": "cad20b86"
           },
           {
             "shape": "table",
-            "title": "dispatch_order",
+            "title": "hq_order:1",
             "moduleName": "hq",
-            "x": 1030,
-            "y": 430,
-            "id": "21170cd7"
+            "x": 1040,
+            "y": 600,
+            "id": "225c5817"
           },
           {
             "shape": "table",
-            "title": "supplier_send_goods_order",
+            "title": "store_depot",
+            "moduleName": false,
+            "x": 660,
+            "y": 1110,
+            "id": "6c01a493"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_goods:2",
+            "moduleName": "baseinfo",
+            "x": 320,
+            "y": 1100,
+            "id": "8164c9cf"
+          },
+          {
+            "shape": "table",
+            "title": "store_self_acceptance_order",
+            "moduleName": false,
+            "x": 650,
+            "y": 840,
+            "id": "d79cd9b2"
+          },
+          {
+            "shape": "table",
+            "title": "supplier_order:1",
             "moduleName": "supplier",
             "x": 1060,
-            "y": 600,
-            "id": "ac4fd0cd"
+            "y": 830,
+            "id": "01eb38bd"
           },
           {
             "shape": "table",
-            "title": "store_indepot_order",
+            "title": "store_acceptance_order:1",
             "moduleName": false,
-            "x": 250,
-            "y": 570,
-            "id": "1e422390"
+            "x": 1030,
+            "y": 1010,
+            "id": "7741989f"
+          },
+          {
+            "shape": "table",
+            "title": "store_self_acceptance_order:1",
+            "moduleName": false,
+            "x": 1030,
+            "y": 1160,
+            "id": "803b0c9e"
           }
         ],
         "edges": [
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "b8569e24",
-            "target": "d73ba608",
-            "id": "0d640ac5",
+            "source": "42690a1a",
+            "target": "5979f4f4",
+            "id": "3fc6b7f2",
             "controlPoints": [
               {
-                "x": 502.6259765625,
-                "y": 212.75
+                "x": 853.201171875,
+                "y": -7.557692307692307
               },
               {
-                "x": 395.0703125,
-                "y": 412.4166666666667
+                "x": 787.78515625,
+                "y": -17.779411764705884
               }
             ],
-            "sourceAnchor": 6,
+            "sourceAnchor": 2,
             "targetAnchor": 1
           },
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "7c7575a2",
-            "target": "b6aa907c",
-            "id": "9ec280f9",
+            "source": "42690a1a",
+            "target": "76fd95d8",
+            "id": "314425a2",
             "controlPoints": [
               {
-                "x": 832.21484375,
-                "y": 152.72368421052633
+                "x": 1166.798828125,
+                "y": 52.90384615384616
               },
               {
-                "x": 1215.892578125,
-                "y": 212.3409090909091
-              }
-            ],
-            "sourceAnchor": 10,
-            "targetAnchor": 0
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "b8569e24",
-            "target": "7c7575a2",
-            "id": "950f9735",
-            "controlPoints": [
-              {
-                "x": 757.3740234375,
-                "y": 172.44230769230768
-              },
-              {
-                "x": 832.21484375,
-                "y": 52.19736842105263
-              }
-            ],
-            "sourceAnchor": 3,
-            "targetAnchor": 0
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "82d25f14",
-            "target": "21170cd7",
-            "id": "d0cc8fb4",
-            "controlPoints": [
-              {
-                "x": 753.3798828125,
-                "y": 472.8611111111111
-              },
-              {
-                "x": 901.220703125,
-                "y": 402.28846153846155
-              }
-            ],
-            "sourceAnchor": 5,
-            "targetAnchor": 0
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "82d25f14",
-            "target": "ac4fd0cd",
-            "id": "8f961392",
-            "controlPoints": [
-              {
-                "x": 753.3798828125,
-                "y": 472.8611111111111
-              },
-              {
-                "x": 902.583984375,
-                "y": 572.2884615384615
-              }
-            ],
-            "targetAnchor": 0,
-            "sourceAnchor": 5
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "82d25f14",
-            "target": "7c7575a2",
-            "id": "dd90e59c",
-            "controlPoints": [
-              {
-                "x": 753.3798828125,
-                "y": 452.6388888888889
-              },
-              {
-                "x": 832.21484375,
-                "y": 52.19736842105263
-              }
-            ],
-            "sourceAnchor": 3,
-            "targetAnchor": 0
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "1e422390",
-            "target": "82d25f14",
-            "id": "0be63dec",
-            "controlPoints": [
-              {
-                "x": 394.798828125,
-                "y": 622.9038461538462
-              },
-              {
-                "x": 486.6201171875,
-                "y": 432.4166666666667
+                "x": 1214.9296875,
+                "y": 12.416666666666671
               }
             ],
             "sourceAnchor": 9,
@@ -1446,17 +1326,17 @@
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "b8569e24",
-            "target": "dc6b3520",
-            "id": "63c8fd5e",
+            "source": "a7de9291",
+            "target": "67896a45",
+            "id": "98559968",
             "controlPoints": [
               {
-                "x": 502.6259765625,
-                "y": 192.59615384615384
+                "x": 172.6259765625,
+                "y": 22.59615384615384
               },
               {
-                "x": 388.1181640625,
-                "y": 22.220588235294116
+                "x": 48.1181640625,
+                "y": -117.75
               }
             ],
             "sourceAnchor": 4,
@@ -1465,21 +1345,230 @@
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "b8569e24",
-            "target": "9295f5f8",
-            "id": "cba74a55",
+            "source": "a7de9291",
+            "target": "a77ab9cd",
+            "id": "62053857",
             "controlPoints": [
               {
-                "x": 502.6259765625,
-                "y": 212.75
+                "x": 172.6259765625,
+                "y": 42.75
               },
               {
-                "x": 383.734375,
-                "y": 242.3409090909091
+                "x": 50.07421875,
+                "y": 62.41666666666667
               }
             ],
             "sourceAnchor": 6,
             "targetAnchor": 1
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "a7de9291",
+            "target": "5979f4f4",
+            "id": "0f740a69",
+            "controlPoints": [
+              {
+                "x": 427.3740234375,
+                "y": 2.4423076923076934
+              },
+              {
+                "x": 512.21484375,
+                "y": 2.338235294117652
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 2
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "db33dff6",
+            "target": "981ae961",
+            "id": "1a804a82",
+            "controlPoints": [
+              {
+                "x": 1189.47265625,
+                "y": 352.9038461538462
+              },
+              {
+                "x": 1236.265625,
+                "y": 272.34090909090907
+              }
+            ],
+            "sourceAnchor": 9,
+            "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "db33dff6",
+            "target": "25c3ddfa",
+            "id": "634117e5",
+            "controlPoints": [
+              {
+                "x": 850.52734375,
+                "y": 292.4423076923077
+              },
+              {
+                "x": 787.78515625,
+                "y": 262.22058823529414
+              }
+            ],
+            "sourceAnchor": 2,
+            "targetAnchor": 1
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "aacee23d",
+            "target": "25c3ddfa",
+            "id": "d9f92419",
+            "controlPoints": [
+              {
+                "x": 437.3740234375,
+                "y": 302.4423076923077
+              },
+              {
+                "x": 512.21484375,
+                "y": 282.3382352941177
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 2
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "aacee23d",
+            "target": "3f2bbe4e",
+            "id": "74ff4f09",
+            "controlPoints": [
+              {
+                "x": 182.6259765625,
+                "y": 322.5961538461538
+              },
+              {
+                "x": 38.1181640625,
+                "y": 222.25
+              }
+            ],
+            "sourceAnchor": 4,
+            "targetAnchor": 1
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "aacee23d",
+            "target": "69adc275",
+            "id": "c0ec5935",
+            "controlPoints": [
+              {
+                "x": 182.6259765625,
+                "y": 342.75
+              },
+              {
+                "x": 48.73828125,
+                "y": 392.34090909090907
+              }
+            ],
+            "sourceAnchor": 6,
+            "targetAnchor": 1
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "6c01a493",
+            "target": "8164c9cf",
+            "id": "23497ed2",
+            "controlPoints": [
+              {
+                "x": 528.2119140625,
+                "y": 1102.4423076923076
+              },
+              {
+                "x": 438.1181640625,
+                "y": 1062.25
+              }
+            ],
+            "sourceAnchor": 2,
+            "targetAnchor": 1
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "d79cd9b2",
+            "target": "01eb38bd",
+            "id": "fae00217",
+            "controlPoints": [
+              {
+                "x": 786.12109375,
+                "y": 842.5227272727273
+              },
+              {
+                "x": 890.52734375,
+                "y": 802.2884615384615
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "cad20b86",
+            "target": "225c5817",
+            "id": "760e502f",
+            "controlPoints": [
+              {
+                "x": 786.12109375,
+                "y": 592.5227272727273
+              },
+              {
+                "x": 883.201171875,
+                "y": 572.2884615384615
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "6c01a493",
+            "target": "7741989f",
+            "id": "d997dfc0",
+            "controlPoints": [
+              {
+                "x": 791.7880859375,
+                "y": 1142.75
+              },
+              {
+                "x": 893.87890625,
+                "y": 992.3409090909091
+              }
+            ],
+            "sourceAnchor": 7,
+            "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "6c01a493",
+            "target": "803b0c9e",
+            "id": "42f6ccd6",
+            "controlPoints": [
+              {
+                "x": 791.7880859375,
+                "y": 1142.75
+              },
+              {
+                "x": 893.87890625,
+                "y": 1142.340909090909
+              }
+            ],
+            "sourceAnchor": 7,
+            "targetAnchor": 0
           }
         ]
       },
@@ -1487,77 +1576,22 @@
         {
           "relation": "0,n:1",
           "from": {
-            "entity": "store_goods_relations",
+            "entity": "hq_order",
+            "field": "purchase_order_no"
+          },
+          "to": {
+            "entity": "store_purchase_order",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "hq_order",
             "field": "dispatch_id"
           },
           "to": {
             "entity": "baseinfo_dispatch",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_purchase_order",
-            "field": "store_id"
-          },
-          "to": {
-            "entity": "baseinfo_store",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_goods_relations",
-            "field": "order_id"
-          },
-          "to": {
-            "entity": "store_purchase_order",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_acceptance_order",
-            "field": "dispatch_order_id"
-          },
-          "to": {
-            "entity": "dispatch_order",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_acceptance_order",
-            "field": "dispatch_order_id"
-          },
-          "to": {
-            "entity": "supplier_send_goods_order",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_acceptance_order",
-            "field": "store_order_id"
-          },
-          "to": {
-            "entity": "store_purchase_order",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_indepot_order",
-            "field": "acceptance_order_id"
-          },
-          "to": {
-            "entity": "store_acceptance_order",
             "field": "id"
           }
         },
@@ -1579,7 +1613,117 @@
             "field": "dispatch_id"
           },
           "to": {
+            "entity": "baseinfo_dispatch",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_goods_relations",
+            "field": "order_id"
+          },
+          "to": {
+            "entity": "store_purchase_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "supplier_order",
+            "field": "supply_id"
+          },
+          "to": {
             "entity": "baseinfo_supplier",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "supplier_order",
+            "field": "self_purchase_order_no"
+          },
+          "to": {
+            "entity": "store_self_purchase_order",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_goods_relations",
+            "field": "order_id"
+          },
+          "to": {
+            "entity": "store_self_purchase_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_goods_relations",
+            "field": "dispatch_id"
+          },
+          "to": {
+            "entity": "baseinfo_supplier",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_depot",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "baseinfo_goods",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_self_acceptance_order",
+            "field": "store_order_id"
+          },
+          "to": {
+            "entity": "supplier_order",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_acceptance_order",
+            "field": "store_order_id"
+          },
+          "to": {
+            "entity": "hq_order",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_depot",
+            "field": "accept_order_id"
+          },
+          "to": {
+            "entity": "store_acceptance_order",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_depot",
+            "field": "accept_order_id"
+          },
+          "to": {
+            "entity": "store_self_acceptance_order",
             "field": "id"
           }
         }
@@ -1618,99 +1762,18 @@
               "defaultValue": "1"
             },
             {
-              "name": "disptach_order_id",
-              "type": "Integer",
-              "remark": "提交本单据后生成的总部配送单id",
-              "chnname": "总部配送单id",
-              "notNull": false
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "总部订单表"
-        },
-        {
-          "title": "dispatch_order",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "id",
-              "pk": true,
-              "notNull": true,
-              "autoIncrement": true,
-              "defaultValue": ""
-            },
-            {
-              "name": "order_id",
-              "type": "IdOrKey",
-              "remark": "关联的总部订单id",
-              "chnname": "总部订单id",
-              "notNull": true
-            },
-            {
               "name": "create_time",
               "type": "DateTime",
-              "remark": "总部订单提交并生成此配送单的时间",
+              "remark": "",
               "chnname": "创建时间",
               "notNull": true
             },
             {
               "name": "dispatch_id",
               "type": "Integer",
-              "remark": "关联的配送中心id",
+              "remark": "",
               "chnname": "配送中心id",
               "notNull": true
-            },
-            {
-              "name": "status",
-              "type": "ShortString",
-              "remark": "1->待出库;2->已出库;",
-              "chnname": "状态",
-              "notNull": true,
-              "defaultValue": "1"
             }
           ],
           "indexs": [],
@@ -1763,94 +1826,67 @@
         "nodes": [
           {
             "shape": "table",
-            "title": "store_purchase_order",
-            "moduleName": "store",
-            "x": 190,
-            "y": 180,
-            "id": "8d08cc15"
-          },
-          {
-            "shape": "table",
-            "title": "dispatch_order",
-            "moduleName": false,
-            "x": 940,
-            "y": 160,
-            "id": "2659a303"
-          },
-          {
-            "shape": "table",
             "title": "hq_order",
             "moduleName": false,
-            "x": 580,
-            "y": 160,
-            "id": "94089e22"
+            "x": 600,
+            "y": 290,
+            "id": "398d84cf"
+          },
+          {
+            "shape": "table",
+            "title": "store_purchase_order",
+            "moduleName": "store",
+            "x": 1010,
+            "y": 290,
+            "id": "d3860d8b"
           },
           {
             "shape": "table",
             "title": "baseinfo_dispatch",
             "moduleName": "baseinfo",
-            "x": 1290,
-            "y": 90,
-            "id": "b66a72c6"
+            "x": 200,
+            "y": 300,
+            "id": "eb4536b2"
           }
         ],
         "edges": [
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "94089e22",
-            "target": "8d08cc15",
-            "id": "ef5041cf",
+            "source": "398d84cf",
+            "target": "d3860d8b",
+            "id": "6e3bb662",
             "controlPoints": [
               {
-                "x": 427.203125,
-                "y": 162.52272727272728
+                "x": 756.798828125,
+                "y": 282.4423076923077
               },
               {
-                "x": 327.78515625,
-                "y": 122.19736842105263
+                "x": 872.21484375,
+                "y": 262.3382352941177
               }
             ],
-            "sourceAnchor": 2,
+            "sourceAnchor": 3,
+            "targetAnchor": 2
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "398d84cf",
+            "target": "eb4536b2",
+            "id": "4f550537",
+            "controlPoints": [
+              {
+                "x": 443.201171875,
+                "y": 342.9038461538462
+              },
+              {
+                "x": 345.0703125,
+                "y": 292.4166666666667
+              }
+            ],
+            "sourceAnchor": 8,
             "targetAnchor": 1
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "94089e22",
-            "target": "2659a303",
-            "id": "9ccd6ba0",
-            "controlPoints": [
-              {
-                "x": 732.796875,
-                "y": 202.88636363636363
-              },
-              {
-                "x": 811.220703125,
-                "y": 132.28846153846155
-              }
-            ],
-            "sourceAnchor": 7,
-            "targetAnchor": 0
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "2659a303",
-            "target": "b66a72c6",
-            "id": "e6000665",
-            "controlPoints": [
-              {
-                "x": 1068.779296875,
-                "y": 192.75
-              },
-              {
-                "x": 1144.9296875,
-                "y": 82.41666666666667
-              }
-            ],
-            "sourceAnchor": 7,
-            "targetAnchor": 0
           }
         ]
       },
@@ -1859,10 +1895,21 @@
           "relation": "0,n:1",
           "from": {
             "entity": "hq_order",
-            "field": "disptach_order_id"
+            "field": "purchase_order_no"
           },
           "to": {
-            "entity": "dispatch_order",
+            "entity": "store_purchase_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "hq_order",
+            "field": "dispatch_id"
+          },
+          "to": {
+            "entity": "baseinfo_dispatch",
             "field": "id"
           }
         }
@@ -1901,99 +1948,18 @@
               "defaultValue": "1"
             },
             {
-              "name": "send_goods_order_id",
-              "type": "Integer",
-              "remark": "提交本单据后生成的供应商发货单id",
-              "chnname": "发货单id",
-              "notNull": false
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "供应商订单表"
-        },
-        {
-          "title": "supplier_send_goods_order",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "id",
-              "pk": true,
-              "notNull": true,
-              "autoIncrement": true,
-              "defaultValue": ""
-            },
-            {
-              "name": "order_id",
-              "type": "IdOrKey",
-              "remark": "关联的供应商订单id",
-              "chnname": "供应商订单id",
-              "notNull": true
-            },
-            {
               "name": "create_time",
               "type": "DateTime",
-              "remark": "供应商订单提交后生成本单据的时间",
+              "remark": "",
               "chnname": "创建时间",
               "notNull": true
             },
             {
-              "name": "dispatch_id",
+              "name": "supply_id",
               "type": "Integer",
-              "remark": "关联的供应商id",
+              "remark": "",
               "chnname": "供应商id",
               "notNull": true
-            },
-            {
-              "name": "status",
-              "type": "ShortString",
-              "remark": "1->待出库;2->已出库;",
-              "chnname": "状态",
-              "notNull": true,
-              "defaultValue": "1"
             }
           ],
           "indexs": [],
@@ -2039,74 +2005,74 @@
               "relationNoShow": true
             }
           ],
-          "chnname": "供应商发货单表"
+          "chnname": "供应商发货订单表"
         }
       ],
       "graphCanvas": {
         "nodes": [
           {
             "shape": "table",
+            "title": "baseinfo_supplier",
+            "moduleName": "baseinfo",
+            "x": 260,
+            "y": 390,
+            "id": "fc734c4d"
+          },
+          {
+            "shape": "table",
             "title": "supplier_order",
             "moduleName": false,
-            "x": 205.546875,
-            "y": 273.15625,
+            "x": 650,
+            "y": 390,
             "id": "32af9600"
           },
           {
             "shape": "table",
-            "title": "supplier_send_goods_order",
-            "moduleName": false,
-            "x": 730,
-            "y": 270,
-            "id": "16e6f311"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_supplier",
-            "moduleName": "baseinfo",
-            "x": 260,
-            "y": 410,
-            "id": "fc734c4d"
+            "title": "store_self_purchase_order",
+            "moduleName": "store",
+            "x": 1080,
+            "y": 400,
+            "id": "38e8ffe1"
           }
         ],
         "edges": [
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "16e6f311",
-            "target": "32af9600",
-            "id": "55864ff4",
+            "source": "32af9600",
+            "target": "fc734c4d",
+            "id": "7c24a6c8",
             "controlPoints": [
               {
-                "x": 595.220703125,
-                "y": 262.4423076923077
+                "x": 480.52734375,
+                "y": 442.9038461538462
               },
               {
-                "x": 371.017578125,
-                "y": 255.4971590909091
+                "x": 373.734375,
+                "y": 372.34090909090907
               }
             ],
-            "sourceAnchor": 2,
+            "sourceAnchor": 8,
             "targetAnchor": 1
           },
           {
             "shape": "erdRelation",
             "relation": "0,n:1",
-            "source": "16e6f311",
-            "target": "fc734c4d",
-            "id": "be18c77b",
+            "source": "32af9600",
+            "target": "38e8ffe1",
+            "id": "17eb59e6",
             "controlPoints": [
               {
-                "x": 595.220703125,
-                "y": 302.75
+                "x": 819.47265625,
+                "y": 382.4423076923077
               },
               {
-                "x": 373.734375,
-                "y": 392.34090909090907
+                "x": 933.2685546875,
+                "y": 372.3382352941177
               }
             ],
-            "sourceAnchor": 6,
-            "targetAnchor": 1
+            "sourceAnchor": 3,
+            "targetAnchor": 2
           }
         ]
       },
@@ -2114,23 +2080,23 @@
         {
           "relation": "0,n:1",
           "from": {
-            "entity": "supplier_send_goods_order",
-            "field": "order_id"
+            "entity": "supplier_order",
+            "field": "supply_id"
           },
           "to": {
-            "entity": "supplier_order",
+            "entity": "baseinfo_supplier",
             "field": "id"
           }
         },
         {
           "relation": "0,n:1",
           "from": {
-            "entity": "supplier_send_goods_order",
-            "field": "dispatch_id"
+            "entity": "supplier_order",
+            "field": "self_purchase_order_no"
           },
           "to": {
-            "entity": "baseinfo_supplier",
-            "field": "id"
+            "entity": "store_self_purchase_order",
+            "field": "order_no"
           }
         }
       ]

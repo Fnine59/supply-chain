@@ -1,5 +1,5 @@
 /**
- * @description 基础信息表数据模型层
+ * @description 门店基础信息表数据模型层
  * @author NaiyingZhang <fnine59@163.com>
  * @date 2019-02-14
  */

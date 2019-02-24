@@ -6,6 +6,7 @@ import Main from '../containers/Index/index';
 import Error404 from '../containers/Error404/index';
 
 import ShopInfo from '../containers/BaseInfo/ShopInfo/index';
+import HQInfo from '../containers/BaseInfo/HQInfo/index';
 
 const Routes = () => (
   <Router history={history}>
@@ -13,6 +14,7 @@ const Routes = () => (
       <Route path="/login" component={Login} />
       <Route path="/index" component={Main} />
       <Route path="/baseinfo/shop/info" component={ShopInfo} />
+      <Route path="/baseinfo/hq/info" component={HQInfo} />
       <Route path="/error404" component={Error404} />
       <Route component={Error404} />
     </Switch>
