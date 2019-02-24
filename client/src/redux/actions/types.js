@@ -12,3 +12,6 @@ export const GETSHOPLIST = 'GETSHOPLIST';
 
 // 基础信息模块 —— 总部档案
 export const GETHQLIST = 'GETHQLIST';
+
+// 基础信息模块 —— 供应商档案
+export const GETSUPPLYLIST = 'GETSUPPLYLIST';

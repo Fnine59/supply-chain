@@ -17,7 +17,7 @@ BaseInfoHQ.prototype.doCreate = function (params, callback) {
   helper.doSql({
     sql,
     params: sqlParams,
-    name: 'doCreateShop',
+    name: 'doCreate',
     callback,
   });
 };
@@ -30,7 +30,7 @@ BaseInfoHQ.prototype.doGetList = function (params, callback) {
   }%' ${params.status !== '' ? `AND status='${params.status}'` : ''}`;
   helper.doSql({
     sql,
-    name: 'doGetShopList',
+    name: 'doGetList',
     callback,
   });
 };

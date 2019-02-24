@@ -30,26 +30,26 @@ const Search = ({
 }) => {
   const showConfirm = (e) => {
     const info = e.target.value;
-    let shopNumber = 0;
+    let hqNumber = 0;
     let content = '';
     switch (info) {
       case '+ 新增配送中心':
         onAdd();
         break;
       case '启用':
-        shopNumber = selectItems.filter(item => item.status === '0').length;
+        hqNumber = selectItems.filter(item => item.status === '0').length;
         content = `当前选中${
           selectKeys.length
-        }个配送中心，可启用${shopNumber}个配送中心！`;
+        }个配送中心，可启用${hqNumber}个配送中心！`;
         break;
       case '停用':
-        shopNumber = selectItems.filter(item => item.status === '1').length;
+        hqNumber = selectItems.filter(item => item.status === '1').length;
         content = `当前选中${
           selectKeys.length
-        }个配送中心，可停用${shopNumber}个配送中心！`;
+        }个配送中心，可停用${hqNumber}个配送中心！`;
         break;
       case '删除配送中心':
-        shopNumber = selectKeys.length;
+        hqNumber = selectKeys.length;
         content = `当前选中${selectKeys.length}个配送中心，确认删除吗？`;
         break;
       default:

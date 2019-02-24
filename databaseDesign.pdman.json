@@ -280,7 +280,8 @@
               "name": "address",
               "type": "DefaultString",
               "remark": "",
-              "chnname": "配送中心地址"
+              "chnname": "配送中心地址",
+              "notNull": true
             }
           ],
           "indexs": [],
@@ -363,6 +364,13 @@
               "chnname": "启用状态",
               "notNull": true,
               "defaultValue": "false"
+            },
+            {
+              "name": "address",
+              "type": "DefaultString",
+              "remark": "",
+              "chnname": "供应商地址",
+              "notNull": true
             }
           ],
           "indexs": [],
