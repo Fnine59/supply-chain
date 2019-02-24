@@ -5,11 +5,11 @@
 ```sql
 CREATE TABLE baseinfo_goods(
     id INT NOT NULL AUTO_INCREMENT  COMMENT '物品id' ,
-    unit_id INT    COMMENT '单位id 物品关联的单位id' ,
+    unit VARCHAR(128)    COMMENT '单位名称' ,
     name VARCHAR(3072) NOT NULL   COMMENT '物品名称' ,
     spec VARCHAR(128) NOT NULL   COMMENT '物品规格' ,
     unit_price DECIMAL(32,8) NOT NULL   COMMENT '物品单价' ,
-    delete_flag VARCHAR(1) NOT NULL  DEFAULT false COMMENT '是否删除 true -> 已删除; false -> 未删除' ,
+    status VARCHAR(1)    COMMENT '启用状态 true->已启用;false->已停用' ,
     PRIMARY KEY (id)
 ) COMMENT = '物品表';/*SQL@Run*/
 ALTER TABLE baseinfo_goods COMMENT '物品表';/*SQL@Run*/
@@ -31,7 +31,7 @@ CREATE TABLE baseinfo_dispatch(
     id INT NOT NULL AUTO_INCREMENT  COMMENT '配送中心id' ,
     name VARCHAR(3072) NOT NULL   COMMENT '配送中心名称' ,
     status VARCHAR(1) NOT NULL  DEFAULT false COMMENT '使用状态 true->使用中;false->已停用' ,
-    address VARCHAR(32)    COMMENT '配送中心地址' ,
+    address VARCHAR(32) NOT NULL   COMMENT '配送中心地址' ,
     PRIMARY KEY (id)
 ) COMMENT = '配送中心（总部）表 ';/*SQL@Run*/
 ALTER TABLE baseinfo_dispatch COMMENT '配送中心（总部）表';/*SQL@Run*/
@@ -40,6 +40,7 @@ CREATE TABLE baseinfo_supplier(
     name VARCHAR(3072) NOT NULL   COMMENT '供应商名称' ,
     type VARCHAR(128) NOT NULL  DEFAULT 1 COMMENT '经营类型 1->公司;2->个人' ,
     status VARCHAR(1) NOT NULL  DEFAULT false COMMENT '启用状态 true->已启用;false->已停用' ,
+    address VARCHAR(32) NOT NULL   COMMENT '供应商地址' ,
     PRIMARY KEY (id)
 ) COMMENT = '供应商表 ';/*SQL@Run*/
 ALTER TABLE baseinfo_supplier COMMENT '供应商表';/*SQL@Run*/
@@ -133,11 +134,11 @@ ALTER TABLE supplier_order COMMENT '供应商发货订单表';/*SQL@Run*/
 DROP TABLE baseinfo_goods;/*SQL@Run*//*SkipError*/
 CREATE TABLE baseinfo_goods(
     id INT NOT NULL AUTO_INCREMENT  COMMENT '物品id' ,
-    unit_id INT    COMMENT '单位id 物品关联的单位id' ,
+    unit VARCHAR(128)    COMMENT '单位名称' ,
     name VARCHAR(3072) NOT NULL   COMMENT '物品名称' ,
     spec VARCHAR(128) NOT NULL   COMMENT '物品规格' ,
     unit_price DECIMAL(32,8) NOT NULL   COMMENT '物品单价' ,
-    delete_flag VARCHAR(1) NOT NULL  DEFAULT false COMMENT '是否删除 true -> 已删除; false -> 未删除' ,
+    status VARCHAR(1)    COMMENT '启用状态 true->已启用;false->已停用' ,
     PRIMARY KEY (id)
 ) COMMENT = '物品表';/*SQL@Run*/
 ALTER TABLE baseinfo_goods COMMENT '物品表';/*SQL@Run*/
@@ -162,7 +163,7 @@ CREATE TABLE baseinfo_dispatch(
     id INT NOT NULL AUTO_INCREMENT  COMMENT '配送中心id' ,
     name VARCHAR(3072) NOT NULL   COMMENT '配送中心名称' ,
     status VARCHAR(1) NOT NULL  DEFAULT false COMMENT '使用状态 true->使用中;false->已停用' ,
-    address VARCHAR(32)    COMMENT '配送中心地址' ,
+    address VARCHAR(32) NOT NULL   COMMENT '配送中心地址' ,
     PRIMARY KEY (id)
 ) COMMENT = '配送中心（总部）表 ';/*SQL@Run*/
 ALTER TABLE baseinfo_dispatch COMMENT '配送中心（总部）表';/*SQL@Run*/
@@ -172,6 +173,7 @@ CREATE TABLE baseinfo_supplier(
     name VARCHAR(3072) NOT NULL   COMMENT '供应商名称' ,
     type VARCHAR(128) NOT NULL  DEFAULT 1 COMMENT '经营类型 1->公司;2->个人' ,
     status VARCHAR(1) NOT NULL  DEFAULT false COMMENT '启用状态 true->已启用;false->已停用' ,
+    address VARCHAR(32) NOT NULL   COMMENT '供应商地址' ,
     PRIMARY KEY (id)
 ) COMMENT = '供应商表 ';/*SQL@Run*/
 ALTER TABLE baseinfo_supplier COMMENT '供应商表';/*SQL@Run*/
