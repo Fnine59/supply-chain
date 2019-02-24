@@ -19,10 +19,10 @@
               "relationNoShow": false
             },
             {
-              "name": "unit_id",
-              "type": "Integer",
-              "remark": "物品关联的单位id",
-              "chnname": "单位id",
+              "name": "unit",
+              "type": "ShortString",
+              "remark": "",
+              "chnname": "单位名称",
               "relationNoShow": false
             },
             {
@@ -47,12 +47,10 @@
               "notNull": true
             },
             {
-              "name": "delete_flag",
+              "name": "status",
               "type": "YesNo",
-              "remark": "true -> 已删除; false -> 未删除",
-              "chnname": "是否删除",
-              "notNull": true,
-              "defaultValue": "false"
+              "remark": "true->已启用;false->已停用",
+              "chnname": "启用状态"
             }
           ],
           "indexs": [],
@@ -502,14 +500,6 @@
         "nodes": [
           {
             "shape": "table",
-            "title": "baseinfo_unit",
-            "moduleName": false,
-            "x": 140,
-            "y": 110,
-            "id": "2f5a8bf1"
-          },
-          {
-            "shape": "table",
             "title": "baseinfo_user",
             "moduleName": false,
             "x": 130,
@@ -518,72 +508,40 @@
           },
           {
             "shape": "table",
+            "title": "baseinfo_goods",
+            "moduleName": false,
+            "x": 450,
+            "y": 120,
+            "id": "351defa6"
+          },
+          {
+            "shape": "table",
+            "title": "baseinfo_store",
+            "moduleName": false,
+            "x": 130,
+            "y": 90,
+            "id": "3e3dbde8"
+          },
+          {
+            "shape": "table",
             "title": "baseinfo_dispatch",
             "moduleName": false,
-            "x": 850,
-            "y": 0,
+            "x": 140,
+            "y": 220,
             "id": "45d8190f"
           },
           {
             "shape": "table",
             "title": "baseinfo_supplier",
             "moduleName": false,
-            "x": 850,
-            "y": 170,
+            "x": 460,
+            "y": -30,
             "id": "000f32bc"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_store",
-            "moduleName": false,
-            "x": 850,
-            "y": 350,
-            "id": "3e3dbde8"
-          },
-          {
-            "shape": "table",
-            "title": "baseinfo_goods",
-            "moduleName": false,
-            "x": 440,
-            "y": 130,
-            "id": "351defa6"
           }
         ],
-        "edges": [
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "351defa6",
-            "target": "2f5a8bf1",
-            "id": "a089acf5",
-            "controlPoints": [
-              {
-                "x": 321.8818359375,
-                "y": 112.38333333333334
-              },
-              {
-                "x": 243.7685546875,
-                "y": 112.53571428571428
-              }
-            ],
-            "sourceAnchor": 2,
-            "targetAnchor": 1
-          }
-        ]
+        "edges": []
       },
-      "associations": [
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "baseinfo_goods",
-            "field": "unit_id"
-          },
-          "to": {
-            "entity": "baseinfo_unit",
-            "field": "id"
-          }
-        }
-      ]
+      "associations": []
     },
     {
       "name": "store",

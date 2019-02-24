@@ -8,6 +8,7 @@ import Error404 from '../containers/Error404/index';
 import ShopInfo from '../containers/BaseInfo/ShopInfo/index';
 import HQInfo from '../containers/BaseInfo/HQInfo/index';
 import SupplyInfo from '../containers/BaseInfo/SupplyInfo/index';
+import GoodsInfo from '../containers/BaseInfo/GoodsInfo/index';
 
 const Routes = () => (
   <Router history={history}>
@@ -17,6 +18,7 @@ const Routes = () => (
       <Route path="/baseinfo/shop/info" component={ShopInfo} />
       <Route path="/baseinfo/hq/info" component={HQInfo} />
       <Route path="/baseinfo/supply/info" component={SupplyInfo} />
+      <Route path="/baseinfo/goods/info" component={GoodsInfo} />
       <Route path="/error404" component={Error404} />
       <Route component={Error404} />
     </Switch>

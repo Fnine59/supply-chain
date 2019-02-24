@@ -119,7 +119,6 @@ class Main extends React.PureComponent {
                 <Menu.Item key="/baseinfo/hq/info">总部档案</Menu.Item>
                 <Menu.Item key="/baseinfo/supply/info">供应商档案</Menu.Item>
                 <Menu.Item key="/baseinfo/goods/info">物品档案</Menu.Item>
-                <Menu.Item key="/baseinfo/prRelations">采购关系配置</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub2"

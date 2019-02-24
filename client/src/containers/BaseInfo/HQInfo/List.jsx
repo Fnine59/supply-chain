@@ -58,7 +58,7 @@ const List = ({
               }
               onEnable([record.id]);
             }}
-          >{`${record.status === '1' ? '关停' : '启用'}配送中心`}</button>
+          >{`${record.status === '1' ? '停用' : '启用'}配送中心`}</button>
           <button
             className="btn-link"
             onClick={(e) => {
