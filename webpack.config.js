@@ -79,8 +79,8 @@ var config = {
       hot: true,
       proxy: {
         '/api/*': {
-          // target: 'http://10.10.12.23:3000',
-          target: 'http://192.168.2.102:3000',
+          target: 'http://10.10.12.23:3000',
+          // target: 'http://192.168.2.102:3000',
           secure: false,
         }
       },
