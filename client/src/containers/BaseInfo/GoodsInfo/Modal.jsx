@@ -20,6 +20,7 @@ const modal = ({
   form: { validateFields, getFieldDecorator, resetFields },
   ...modalProps
 }) => {
+  console.log('currentItem', currentItem);
   const handleOk = () => {
     validateFields((errors, values) => {
       if (!errors) {
@@ -66,21 +67,6 @@ const modal = ({
                 },
               ],
             })(<Input type="text" placeholder="不多于4个字符" />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="物品规格" hasFeedback>
-            {getFieldDecorator('spec', {
-              initialValue: currentItem.spec || '',
-              rules: [
-                {
-                  required: true,
-                  message: '请输入物品规格',
-                },
-                {
-                  pattern: /^.{1,10}$/,
-                  message: '不多于10个字符',
-                },
-              ],
-            })(<Input type="text" placeholder="不多于10个字符，如500克/瓶" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="物品单价" hasFeedback>
             {getFieldDecorator('unitPrice', {

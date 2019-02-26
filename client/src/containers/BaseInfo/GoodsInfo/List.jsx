@@ -30,9 +30,9 @@ const List = ({
       key: 'unit',
     },
     {
-      title: '物品规格',
-      dataIndex: 'spec',
-      key: 'spec',
+      title: '物品单价',
+      dataIndex: 'unit_price',
+      key: 'unit_price',
     },
     {
       title: '物品状态',
@@ -48,11 +48,6 @@ const List = ({
             return '---';
         }
       },
-    },
-    {
-      title: '物品单价',
-      dataIndex: 'unit_price',
-      key: 'unit_price',
     },
     {
       title: '操作',

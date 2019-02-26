@@ -13,14 +13,8 @@ const BaseInfoGoods = function (item) {
 
 BaseInfoGoods.prototype.doCreate = function (params, callback) {
   const sql =
-    'INSERT INTO baseinfo_goods(unit,name,status,spec,unit_price) VALUES(?,?,?,?,?)';
-  const sqlParams = [
-    params.unit,
-    params.name,
-    params.status,
-    params.spec,
-    params.unitPrice,
-  ];
+    'INSERT INTO baseinfo_goods(unit,name,status,unit_price) VALUES(?,?,?,?)';
+  const sqlParams = [params.unit, params.name, params.status, params.unitPrice];
   helper.doSql({
     sql,
     params: sqlParams,
@@ -35,7 +29,6 @@ BaseInfoGoods.prototype.doGetList = function (params, callback) {
   const sql = `select * from baseinfo_goods where name LIKE '%${
     params.name
   }%' ${params.status !== '' ? `AND status='${params.status}'` : ''}`;
-  console.log(sql);
   helper.doSql({
     sql,
     name: 'doGetList',
@@ -75,9 +68,9 @@ BaseInfoGoods.prototype.doDelete = function (params, callback) {
 };
 
 BaseInfoGoods.prototype.doUpdate = function (params, callback) {
-  const sql = `UPDATE baseinfo_goods SET name='${params.name}',type='${
-    params.type
-  }' WHERE id=${params.id}`;
+  const sql = `UPDATE baseinfo_goods SET name='${params.name}',unit='${
+    params.unit
+  }',unit_price='${params.unitPrice}' WHERE id=${params.id}`;
   helper.doSql({
     sql,
     name: 'doUpdate',

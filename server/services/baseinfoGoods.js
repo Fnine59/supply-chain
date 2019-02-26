@@ -41,11 +41,15 @@ module.exports = {
     const baseinfo = new BaseInfoGoods({ props });
     baseinfo.doGetList(req.body, (err, data) => {
       if (!err) {
+        const result = JSON.parse(JSON.stringify(data));
         return res.send({
           code: 200,
           success: true,
           message: '查询物品成功',
-          data,
+          data: result.map(item => ({
+            ...item,
+            unitPrice: item.unit_price,
+          })),
         });
       }
       return res.send({
@@ -111,7 +115,6 @@ module.exports = {
       });
     });
   },
-
 
   // 更新物品
   doUpdate(req, res) {

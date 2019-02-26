@@ -33,13 +33,6 @@
               "notNull": true
             },
             {
-              "name": "spec",
-              "type": "ShortString",
-              "remark": "",
-              "chnname": "物品规格",
-              "notNull": true
-            },
-            {
               "name": "unit_price",
               "type": "Money",
               "remark": "",

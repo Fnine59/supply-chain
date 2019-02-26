@@ -3,7 +3,7 @@ import request from '../../common/utils/request';
 import { GETGOODSLIST } from './types';
 
 /**
- * 获取供应商列表
+ * 获取物品列表
  */
 export function getList(payload) {
   return async (dispatch) => {
@@ -40,7 +40,7 @@ export function getList(payload) {
 }
 
 /**
- * 新增供应商
+ * 新增物品
  */
 export function doAdd(payload) {
   return async (dispatch) => {
@@ -63,7 +63,7 @@ export function doAdd(payload) {
 }
 
 /**
- * 启用供应商
+ * 启用物品
  */
 export function doEnable(payload) {
   return async (dispatch) => {
@@ -87,7 +87,7 @@ export function doEnable(payload) {
 }
 
 /**
- * 停用供应商
+ * 停用物品
  */
 export function doDisable(payload) {
   return async (dispatch) => {
@@ -111,7 +111,7 @@ export function doDisable(payload) {
 }
 
 /**
- * 删除供应商
+ * 删除物品
  */
 export function doDelete(payload) {
   return async (dispatch) => {
@@ -135,7 +135,7 @@ export function doDelete(payload) {
 }
 
 /**
- * 更新供应商信息
+ * 更新物品信息
  */
 export function doUpdate(payload) {
   return async (dispatch) => {
