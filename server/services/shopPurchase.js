@@ -68,8 +68,9 @@ module.exports = {
   doCreate(req, res) {
     const props = {};
     const shopinfo = new ShopPurchase({ props });
-    shopinfo.doCreate(req.body, (err) => {
+    shopinfo.doCreate(req.body, (err, data) => {
       if (!err) {
+        console.log('最终返回data', data);
         return res.send({
           code: 200,
           success: true,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Row, Col, Input, Select } from 'antd';
+import { Button, Form, Row, Col, InputNumber, Select } from 'antd';
 import PropTypes from 'prop-types';
 
 import EditableTable from './EditableTable';
@@ -60,14 +60,16 @@ const orderForm = ({
                   ],
                 })(
                   <Select placeholder="请选择门店">
-                    {shopList.map(d => (<Option value={d.id}>{d.name}</Option>))}
+                    {shopList.map(d => (
+                      <Option value={d.id}>{d.name}</Option>
+                    ))}
                   </Select>,
                 )}
               </FormItem>
             </Col>
             <Col span={8}>
               <FormItem label="请购总金额" {...formItemLayout}>
-                <Input disabled value={amount} />
+                <InputNumber disabled precision={2} min={0} value={amount} />
               </FormItem>
             </Col>
           </Row>
@@ -82,8 +84,12 @@ const orderForm = ({
         <div className="footer">
           <Row>
             <Col span={8}>
-              <Button className="footer-opt" type="primary" htmlType="submit">请购</Button>
-              <Button className="footer-opt" onClick={handleBack}>返回</Button>
+              <Button className="footer-opt" type="primary" htmlType="submit">
+                请购
+              </Button>
+              <Button className="footer-opt" onClick={handleBack}>
+                返回
+              </Button>
             </Col>
           </Row>
         </div>

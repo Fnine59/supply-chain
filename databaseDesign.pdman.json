@@ -433,7 +433,7 @@
               "pk": true,
               "notNull": true,
               "autoIncrement": true,
-              "defaultValue": ""
+              "defaultValue": "0"
             },
             {
               "name": "number",
@@ -538,6 +538,14 @@
             "x": 460,
             "y": -30,
             "id": "000f32bc"
+          },
+          {
+            "shape": "table",
+            "title": "util_order_no",
+            "moduleName": false,
+            "x": 440,
+            "y": 260,
+            "id": "8e68a902"
           }
         ],
         "edges": []

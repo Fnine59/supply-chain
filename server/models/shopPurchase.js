@@ -29,16 +29,42 @@ ShopPurchase.prototype.doGetShopList = function (callback) {
   });
 };
 
-
 ShopPurchase.prototype.doCreate = function (params, callback) {
-  const sql =
-    'INSERT INTO store_purchase_order(unit,name,status,unit_price) VALUES(?,?,?,?)';
-  const sqlParams = [params.unit, params.name, params.status, params.unitPrice];
-  helper.doSql({
+  const date = helper.getDateString(new Date());
+  const sql = `select MAX(number) as number from util_order_no where date='${date}'`;
+  helper.doSqls({
     sql,
-    params: sqlParams,
-    name: 'doCreate',
-    callback,
+    name: 'getNo',
+    callback: (err, res) => {
+      const result = JSON.parse(JSON.stringify(res))[0].number;
+      const no = result ? result + 1 : 0;
+
+      const sqlParamsEntity = [];
+      const updNo = 'insert into util_order_no(number,date) values (?,?);';
+      const param1 = [no, date];
+      sqlParamsEntity.push(helper.getNewSqlParamEntity(updNo, param1));
+
+      const updOrder =
+        'insert into store_purchase_order(order_no, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?)';
+      sqlParamsEntity.push(
+        helper.getNewSqlParamEntity(updOrder, [
+          `QG${date}${no}`,
+          helper.getTimeString(new Date()),
+          1,
+          params.amount,
+          params.storeId.storeId,
+          helper.getTimeString(new Date()),
+        ]),
+      );
+      helper.execTrans(sqlParamsEntity, (err, info) => {
+        if (err) {
+          console.error('事务执行失败', err);
+        } else {
+          console.log('done.', info);
+          callback(err, info);
+        }
+      });
+    },
   });
 };
 

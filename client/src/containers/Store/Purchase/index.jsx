@@ -207,6 +207,7 @@ class Purchase extends React.PureComponent {
           storeId: id,
           amount,
         };
+        console.warn('params', params);
         this.props.dispatch(action.doAdd(params));
       },
       onBack: () => {

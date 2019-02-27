@@ -14,6 +14,15 @@ const pool = mysql.createPool({
   database: 'supply_chain',
 });
 
+const multiPool = mysql.createPool({
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '19970628',
+  database: 'supply_chain',
+  multipleStatements: true,
+});
+
 const db = {};
 
 /**
@@ -28,6 +37,22 @@ db.conn = function (callback) {
       callback(connection);
     }
     connection.release(); // 释放连接
+    console.log('connect end...');
+  });
+};
+
+/**
+ * 从允许执行多条语句的数据库连接池中获取数据库连接的方法
+ */
+db.multiConn = function (callback) {
+  multiPool.getConnection((err, connection) => {
+    console.log('connect start...');
+    if (err) {
+      throw err;
+    } else if (typeof callback === 'function') {
+      callback(connection);
+    }
+    // connection.release(); // 释放连接
     console.log('connect end...');
   });
 };
