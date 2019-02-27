@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table as AntdTable, Popconfirm, Form, Input } from 'antd';
+import { Table as AntdTable, Popconfirm, Form, Input, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;
@@ -25,6 +25,7 @@ class EditableCell extends React.PureComponent {
     };
   }
 
+  // eslint-disable-next-line no-undef
   toggleEdit = () => {
     const editing = !this.state.editing;
     this.setState({ editing }, () => {
@@ -34,6 +35,7 @@ class EditableCell extends React.PureComponent {
     });
   };
 
+  // eslint-disable-next-line no-undef
   save = () => {
     const { record, handleSave } = this.props;
     this.form.validateFields((error, values) => {
@@ -48,15 +50,7 @@ class EditableCell extends React.PureComponent {
 
   render() {
     const { editing } = this.state;
-    const {
-      editable,
-      dataIndex,
-      title,
-      record,
-      index,
-      handleSave,
-      ...restProps
-    } = this.props;
+    const { editable, dataIndex, title, record, ...restProps } = this.props;
     return (
       <td ref={node => (this.cell = node)} {...restProps}>
         {editable ? (
@@ -74,10 +68,12 @@ class EditableCell extends React.PureComponent {
                     ],
                     initialValue: record[dataIndex],
                   })(
-                    <Input
+                    <InputNumber
                       ref={node => (this.input = node)}
                       onPressEnter={this.save}
                       onBlur={this.save}
+                      precision={2}
+                      min={0}
                     />,
                   )}
                 </FormItem>
@@ -99,6 +95,14 @@ class EditableCell extends React.PureComponent {
     );
   }
 }
+
+EditableCell.propTypes = {
+  editable: PropTypes.bool,
+  dataIndex: PropTypes.string,
+  title: PropTypes.string,
+  record: PropTypes.object,
+  handleSave: PropTypes.func,
+};
 
 class EditableTable extends React.PureComponent {
   constructor(props) {
@@ -159,11 +163,20 @@ class EditableTable extends React.PureComponent {
     });
   }
 
+  // eslint-disable-next-line no-undef
   handleDelete = (id) => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.id !== id) });
+
+    // 调用业务处理方法来同步数据
+    this.props.onSetSelectItems(
+      this.props.selectGoodsKeys.filter(item => item !== id),
+      this.props.selectGoodsItems.filter(item => item.id !== id),
+    );
+    this.props.onSetDataSource(dataSource.filter(item => item.id !== id));
   };
 
+  // eslint-disable-next-line no-undef
   handleSave = (row) => {
     const newData = [...this.state.dataSource];
     const index = newData.findIndex(item => row.id === item.id);
@@ -173,6 +186,13 @@ class EditableTable extends React.PureComponent {
       ...row,
     });
     this.setState({ dataSource: newData });
+
+    // 调用业务处理方法来同步数据
+    const calcNewData = newData.map(item => ({
+      ...item,
+      goodsAmount: item.goodsCount * item.unitPrice,
+    }));
+    this.props.onSetDataSource(calcNewData);
   };
 
   render() {
@@ -211,4 +231,13 @@ class EditableTable extends React.PureComponent {
     );
   }
 }
+
+EditableTable.propTypes = {
+  selectGoodsKeys: PropTypes.array,
+  selectGoodsItems: PropTypes.array,
+  dataSource: PropTypes.array,
+  onSetDataSource: PropTypes.func,
+  onSetSelectItems: PropTypes.func,
+};
+
 export default EditableTable;

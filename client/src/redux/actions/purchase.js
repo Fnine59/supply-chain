@@ -14,7 +14,11 @@ export function getGoodsList() {
     if (res) {
       dispatch({
         type: GETPURCHASEGOODSLIST,
-        payload: res,
+        payload: res.map(item => ({
+          ...item,
+          goodsCount: 0,
+          goodsAmount: 0,
+        })),
       });
     }
   };

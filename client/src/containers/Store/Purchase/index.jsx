@@ -202,28 +202,54 @@ class Purchase extends React.PureComponent {
             this.props.dispatch({
               type: 'purchase/updateState',
               payload: {
-                selectGoodsKeys: [],
-                selectGoodsItems: [],
                 goodsModalVisible: false,
               },
             });
             return;
           }
+          const newList = [];
+          selectGoodsItems.forEach((s) => {
+            let flag = true;
+            formDataList.forEach((d) => {
+              if (d.id === s.id) {
+                flag = false;
+                newList.push(d);
+              }
+            });
+            if (flag) {
+              newList.push(s);
+            }
+          });
           this.props.dispatch({
             type: 'purchase/updateState',
             payload: {
-              formDataList: selectGoodsItems,
+              formDataList: newList,
               goodsModalVisible: false,
             },
           });
         },
       },
       tableProps: {
-        dataSource: formDataList.map(item => ({
-          ...item,
-          goodsCount: 0,
-          goodsAmount: 0,
-        })),
+        dataSource: formDataList,
+        selectGoodsKeys,
+        selectGoodsItems,
+        onSetDataSource: (newDataList) => {
+          this.props.dispatch({
+            type: 'purchase/updateState',
+            payload: {
+              formDataList: newDataList,
+            },
+          });
+        },
+        onSetSelectItems: (newKeys, newItems) => {
+          this.props.dispatch({
+            type: 'purchase/updateState',
+            payload: {
+              selectGoodsKeys: newKeys,
+              selectGoodsItems: newItems,
+            },
+          });
+        },
       },
       onAdd: () => {
         this.props.dispatch({
