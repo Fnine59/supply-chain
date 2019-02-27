@@ -93,72 +93,6 @@
           "remark": ""
         },
         {
-          "title": "baseinfo_unit",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "单位id",
-              "pk": true,
-              "notNull": true,
-              "autoIncrement": true,
-              "defaultValue": ""
-            },
-            {
-              "name": "name",
-              "type": "MiddleString",
-              "remark": "",
-              "chnname": "单位名称",
-              "notNull": true
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "物品单位表"
-        },
-        {
           "title": "baseinfo_store",
           "fields": [
             {
@@ -487,6 +421,80 @@
             }
           ],
           "chnname": "用户表"
+        },
+        {
+          "title": "util_order_no",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true,
+              "defaultValue": ""
+            },
+            {
+              "name": "number",
+              "type": "BigInt",
+              "remark": "",
+              "chnname": "流水号",
+              "notNull": true,
+              "autoIncrement": false
+            },
+            {
+              "name": "date",
+              "type": "Date",
+              "remark": "",
+              "chnname": "流水日期",
+              "notNull": true
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "流水号"
         }
       ],
       "graphCanvas": {
@@ -579,6 +587,14 @@
               "remark": "采购该物品的数量",
               "chnname": "采购物品数量",
               "notNull": true
+            },
+            {
+              "name": "goods_amount",
+              "type": "Money",
+              "remark": "依据物品单价及数量计算出的采购总金额",
+              "chnname": "物品金额",
+              "notNull": true,
+              "defaultValue": "0.00"
             }
           ],
           "indexs": [],
@@ -664,9 +680,8 @@
             {
               "name": "amount",
               "type": "Money",
-              "remark": "依据单据的物品单价及数量计算出的采购总金额",
+              "remark": "单据总金额",
               "chnname": "请购金额",
-              "defaultValue": "0.00",
               "notNull": true
             },
             {
@@ -934,9 +949,8 @@
             {
               "name": "amount",
               "type": "Money",
-              "remark": "依据单据的物品单价及数量计算出的采购总金额",
+              "remark": "单据总金额",
               "chnname": "自采金额",
-              "defaultValue": "0.00",
               "notNull": true
             },
             {
@@ -1276,7 +1290,7 @@
               },
               {
                 "x": 1214.9296875,
-                "y": 12.416666666666671
+                "y": 2.3409090909090864
               }
             ],
             "sourceAnchor": 9,
@@ -1290,12 +1304,12 @@
             "id": "98559968",
             "controlPoints": [
               {
-                "x": 172.6259765625,
-                "y": 22.59615384615384
+                "x": 167.291015625,
+                "y": 12.51666666666668
               },
               {
-                "x": 48.1181640625,
-                "y": -117.75
+                "x": 44.775390625,
+                "y": -107.71153846153847
               }
             ],
             "sourceAnchor": 4,
@@ -1309,12 +1323,12 @@
             "id": "62053857",
             "controlPoints": [
               {
-                "x": 172.6259765625,
-                "y": 42.75
+                "x": 167.291015625,
+                "y": 32.650000000000006
               },
               {
                 "x": 50.07421875,
-                "y": 62.41666666666667
+                "y": 52.340909090909086
               }
             ],
             "sourceAnchor": 6,
@@ -1328,8 +1342,8 @@
             "id": "0f740a69",
             "controlPoints": [
               {
-                "x": 427.3740234375,
-                "y": 2.4423076923076934
+                "x": 432.708984375,
+                "y": -7.61666666666666
               },
               {
                 "x": 512.21484375,
@@ -1351,8 +1365,8 @@
                 "y": 352.9038461538462
               },
               {
-                "x": 1236.265625,
-                "y": 272.34090909090907
+                "x": 1229.892578125,
+                "y": 262.28846153846155
               }
             ],
             "sourceAnchor": 9,
@@ -1385,8 +1399,8 @@
             "id": "d9f92419",
             "controlPoints": [
               {
-                "x": 437.3740234375,
-                "y": 302.4423076923077
+                "x": 442.708984375,
+                "y": 292.3833333333333
               },
               {
                 "x": 512.21484375,
@@ -1404,12 +1418,12 @@
             "id": "74ff4f09",
             "controlPoints": [
               {
-                "x": 182.6259765625,
-                "y": 322.5961538461538
+                "x": 177.291015625,
+                "y": 312.51666666666665
               },
               {
-                "x": 38.1181640625,
-                "y": 222.25
+                "x": 34.775390625,
+                "y": 232.28846153846155
               }
             ],
             "sourceAnchor": 4,
@@ -1423,12 +1437,12 @@
             "id": "c0ec5935",
             "controlPoints": [
               {
-                "x": 182.6259765625,
-                "y": 342.75
+                "x": 177.291015625,
+                "y": 332.65
               },
               {
-                "x": 48.73828125,
-                "y": 392.34090909090907
+                "x": 50.107421875,
+                "y": 382.28846153846155
               }
             ],
             "sourceAnchor": 6,
@@ -1446,8 +1460,8 @@
                 "y": 1102.4423076923076
               },
               {
-                "x": 438.1181640625,
-                "y": 1062.25
+                "x": 434.775390625,
+                "y": 1072.2884615384614
               }
             ],
             "sourceAnchor": 2,
@@ -1841,7 +1855,7 @@
               },
               {
                 "x": 345.0703125,
-                "y": 292.4166666666667
+                "y": 282.34090909090907
               }
             ],
             "sourceAnchor": 8,

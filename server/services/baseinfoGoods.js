@@ -47,7 +47,10 @@ module.exports = {
           success: true,
           message: '查询物品成功',
           data: result.map(item => ({
-            ...item,
+            id: item.id,
+            name: item.name,
+            unit: item.unit,
+            status: item.status,
             unitPrice: item.unit_price,
           })),
         });

@@ -15,27 +15,32 @@ const List = ({
 }) => {
   const columns = [
     {
-      title: '物品编码',
+      title: '请购单编码',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '物品名称',
-      dataIndex: 'name',
-      key: 'name',
+      title: '请购单号',
+      dataIndex: 'orderNo',
+      key: 'orderNo',
     },
     {
-      title: '物品单位',
-      dataIndex: 'unit',
-      key: 'unit',
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     },
     {
-      title: '物品单价',
-      dataIndex: 'unitPrice',
-      key: 'unitPrice',
+      title: '请购金额',
+      dataIndex: 'amount',
+      key: 'amount',
     },
     {
-      title: '物品状态',
+      title: '请购门店',
+      dataIndex: 'storeName',
+      key: 'storeName',
+    },
+    {
+      title: '单据状态',
       dataIndex: 'status',
       key: 'status',
       render: (status) => {
@@ -63,22 +68,21 @@ const List = ({
               }
               onEnable([record.id]);
             }}
-          >{`${record.status === '1' ? '停用' : '启用'}物品`}</button>
+          >{`${record.status === '1' ? '停用' : '启用'}请购单`}</button>
           <button
             className="btn-link"
             onClick={(e) => {
-              console.log(e, record);
               onUpdate(record);
             }}
           >
-            编辑物品
+            编辑
           </button>
           <button
             className="btn-link"
             onClick={(e) => {
               confirm({
                 title: '警告',
-                content: '确定删除该物品吗？',
+                content: '确定删除该请购单吗？',
                 cancelText: '取消',
                 okText: '确定',
                 onOk() {
@@ -88,7 +92,7 @@ const List = ({
               });
             }}
           >
-            删除物品
+            删除
           </button>
         </span>
       ),

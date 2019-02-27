@@ -5,10 +5,14 @@ import Login from '../containers/Login/index';
 import Main from '../containers/Index/index';
 import Error404 from '../containers/Error404/index';
 
+// 基础信息模块
 import ShopInfo from '../containers/BaseInfo/ShopInfo/index';
 import HQInfo from '../containers/BaseInfo/HQInfo/index';
 import SupplyInfo from '../containers/BaseInfo/SupplyInfo/index';
 import GoodsInfo from '../containers/BaseInfo/GoodsInfo/index';
+
+// 门店管理模块
+import Purchase from '../containers/Store/Purchase/index';
 
 const Routes = () => (
   <Router history={history}>
@@ -19,6 +23,7 @@ const Routes = () => (
       <Route path="/baseinfo/hq/info" component={HQInfo} />
       <Route path="/baseinfo/supply/info" component={SupplyInfo} />
       <Route path="/baseinfo/goods/info" component={GoodsInfo} />
+      <Route path="/shop/pr" component={Purchase} />
       <Route path="/error404" component={Error404} />
       <Route component={Error404} />
     </Switch>
