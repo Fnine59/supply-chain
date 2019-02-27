@@ -13,6 +13,7 @@ const initState = {
   selectGoodsKeys: [],
   selectGoodsItems: [],
   formDataList: [],
+  amount: 0, // 请购总金额
   currentItem: {}, // 当前编辑项
   dataList: [],
   goodsList: [],

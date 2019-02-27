@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { message } from 'antd';
 
 import * as action from '../../../redux/actions/purchase';
 import Search from './Search';
 import List from './List';
 import Modal from './Modal';
-import Form from './Form';
+import OrderForm from './OrderForm';
 
 class Purchase extends React.PureComponent {
   constructor() {
@@ -24,6 +25,7 @@ class Purchase extends React.PureComponent {
       goodsModalVisible,
       formVisible,
       modalVisible,
+      amount,
       selectGoodsKeys,
       selectGoodsItems,
       formDataList,
@@ -34,6 +36,7 @@ class Purchase extends React.PureComponent {
       goodsList,
       shopList,
     } = this.props.purchase;
+    console.warn('index ', shopList);
     const searchProps = {
       selectKeys,
       selectItems,
@@ -42,10 +45,10 @@ class Purchase extends React.PureComponent {
         dispatch({
           type: 'purchase/updateState',
           payload: {
-            // modalVisible: true,
             formVisible: true,
           },
         });
+        dispatch(action.getShopList());
       },
       onEnable: () => {
         const { dispatch } = this.props;
@@ -183,6 +186,42 @@ class Purchase extends React.PureComponent {
       },
     };
     const formProps = {
+      // OrderForm数据
+      amount,
+      shopList,
+      onAdd: () => {
+        this.props.dispatch({
+          type: 'purchase/updateState',
+          payload: {
+            goodsModalVisible: true,
+          },
+        });
+      },
+      onSubmit: (id) => {
+        if (formDataList.length === 0) {
+          message.error('请购的物品列表不能为空');
+          return;
+        }
+        const params = {
+          goodsList: formDataList,
+          storeId: id,
+          amount,
+        };
+        this.props.dispatch(action.doAdd(params));
+      },
+      onBack: () => {
+        this.props.dispatch({
+          type: 'purchase/updateState',
+          payload: {
+            formVisible: false,
+            amount: 0,
+            formDataList: [],
+            selectGoodsKeys: [],
+            selectGoodsItems: [],
+          },
+        });
+      },
+      // OrderForm中的弹窗数据
       modalProps: {
         visible: goodsModalVisible,
         title: '添加物品',
@@ -229,15 +268,23 @@ class Purchase extends React.PureComponent {
           });
         },
       },
+      // OrderForm中的表格数据
       tableProps: {
         dataSource: formDataList,
         selectGoodsKeys,
         selectGoodsItems,
         onSetDataSource: (newDataList) => {
+          console.warn('newDataList', newDataList);
+          let money = 0;
+          newDataList.forEach((d) => {
+            money += d.goodsAmount;
+          });
+          console.warn('money', money);
           this.props.dispatch({
             type: 'purchase/updateState',
             payload: {
               formDataList: newDataList,
+              amount: money,
             },
           });
         },
@@ -251,22 +298,13 @@ class Purchase extends React.PureComponent {
           });
         },
       },
-      onAdd: () => {
-        this.props.dispatch({
-          type: 'purchase/updateState',
-          payload: {
-            goodsModalVisible: true,
-          },
-        });
-        this.props.dispatch(action.getShopList());
-      },
     };
     return (
       <div className="purchase">
         {!formVisible && <Search {...searchProps} />}
         {!formVisible && <List {...listProps} />}
         <Modal {...modalProps} />
-        {formVisible && <Form {...formProps} />}
+        {formVisible && <OrderForm {...formProps} />}
       </div>
     );
   }

@@ -139,7 +139,7 @@ class EditableTable extends React.PureComponent {
         width: '200px',
       },
       {
-        title: 'operation',
+        title: '操作',
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
@@ -226,6 +226,7 @@ class EditableTable extends React.PureComponent {
           bordered
           dataSource={dataSource}
           columns={columns}
+          pagination={false}
         />
       </div>
     );

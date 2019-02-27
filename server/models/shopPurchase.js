@@ -21,7 +21,7 @@ ShopPurchase.prototype.doGetGoodsList = function (callback) {
 };
 
 ShopPurchase.prototype.doGetShopList = function (callback) {
-  const sql = 'select * from baseinfo_store';
+  const sql = 'select * from baseinfo_store where status=1';
   helper.doSql({
     sql,
     name: 'doGetShopList',

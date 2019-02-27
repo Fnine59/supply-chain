@@ -132,7 +132,7 @@ class Main extends React.PureComponent {
                 <Menu.Item key="/shop/pr">请购</Menu.Item>
                 <Menu.Item key="/shop/selfPr">自采</Menu.Item>
                 <Menu.Item key="/shop/selfPrAcceptance">自采验收</Menu.Item>
-                <Menu.Item key="/shop/dispatchAcceptance">配送验收</Menu.Item>
+                <Menu.Item key="/shop/purchaseAcceptance">请购验收</Menu.Item>
                 <Menu.Item key="/shop/inDepot">入库管理</Menu.Item>
               </SubMenu>
               <SubMenu
@@ -145,7 +145,6 @@ class Main extends React.PureComponent {
                 }
               >
                 <Menu.Item key="/hq/orders">订单管理</Menu.Item>
-                <Menu.Item key="/hq/dispatchOrders">配送订单</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub4"
@@ -157,7 +156,6 @@ class Main extends React.PureComponent {
                 }
               >
                 <Menu.Item key="/supply/orders">订单管理</Menu.Item>
-                <Menu.Item key="/supply/dispatchOrders">发货管理</Menu.Item>
               </SubMenu>
             </Menu>
           </div>

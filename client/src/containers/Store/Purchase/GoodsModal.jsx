@@ -59,6 +59,7 @@ const goodsModal = ({
   const modalOpts = {
     visible,
     title,
+    width: 800,
     onOk: handleOk,
     onCancel: handleCancel,
   };
