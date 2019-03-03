@@ -5,6 +5,7 @@
  */
 
 import ShopPurchase from '../models/ShopPurchase';
+import helper from '../utils/helper';
 
 module.exports = {
   init(app) {
@@ -17,6 +18,7 @@ module.exports = {
     app.post('/shop/purchase/delete', this.doDelete);
     app.post('/shop/purchase/update', this.doUpdate);
   },
+
   // 获取物品列表
   doGetGoodsList(req, res) {
     const props = {};
@@ -98,7 +100,8 @@ module.exports = {
           message: '查询请购单成功',
           data: result.map(item => ({
             ...item,
-            unitPrice: item.unit_price,
+            createTime: helper.getTimeString(new Date(item.createTime)),
+            updateTime: helper.getTimeString(new Date(item.updateTime)),
           })),
         });
       }

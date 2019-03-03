@@ -23,7 +23,7 @@ const initState = {
   queryParams: {
     page: 1,
     rows: 10,
-    name: '',
+    orderNo: '',
     status: '',
   },
 };
