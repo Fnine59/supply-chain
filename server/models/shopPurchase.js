@@ -11,6 +11,9 @@ const ShopPurchase = function (item) {
   this.props = item.props;
 };
 
+/**
+ * 获取物品列表，用于生成门店请购单
+ */
 ShopPurchase.prototype.doGetGoodsList = function (callback) {
   const sql = 'select * from baseinfo_goods where status=1';
   helper.doSql({
@@ -20,6 +23,9 @@ ShopPurchase.prototype.doGetGoodsList = function (callback) {
   });
 };
 
+/**
+ * 获取门店列表，用于生成门店请购单
+ */
 ShopPurchase.prototype.doGetShopList = function (callback) {
   const sql = 'select * from baseinfo_store where status=1';
   helper.doSql({
@@ -29,27 +35,39 @@ ShopPurchase.prototype.doGetShopList = function (callback) {
   });
 };
 
+/**
+ * 创建门店请购单，包含如下操作：
+ * 1. 获取单据流水号
+ * 2. 更新单据流水号
+ * 3. 更新门店请购订单表，插入新数据
+ * 4. 更新门店物品采购关系表，插入新数据，记录各个物品的请购数量
+ */
 ShopPurchase.prototype.doCreate = function (params, callback) {
-  const date = helper.getDateString(new Date());
-  const fDate = helper.formatDateString(new Date());
+  const date = helper.getDateString(new Date()); // 形同2019-03-03
+  const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
   const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='pr'`;
   helper.doSql({
     sql,
     name: 'getNo',
     callback: (error, res) => {
       const result = JSON.parse(JSON.stringify(res))[0].number;
+      // 拿到当天的流水号中的最大值，如果不存在，本次使用流水号为0；如果存在，本次使用流水号为存在的最大值+1
       const no = result !== undefined && result !== null ? result + 1 : 0;
 
+      // 更新流水号表
       const sqlParamsEntity = [];
-      const updNo = 'insert into util_order_no(number,date,type) values (?,?,?);';
+      const updNo =
+        'insert into util_order_no(number,date,type) values (?,?,?);';
       const param1 = [no, date, 'pr'];
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updNo, param1));
 
+      // 更新请购订单表
       const updOrder =
         'insert into store_purchase_order(order_no, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?)';
+      const orderNo = `QG${fDate}${helper.formatNumString(no)}`;
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(updOrder, [
-          `QG${fDate}${helper.formatNumString(no)}`,
+          orderNo,
           helper.getTimeString(new Date()),
           1,
           params.amount,
@@ -58,11 +76,26 @@ ShopPurchase.prototype.doCreate = function (params, callback) {
         ]),
       );
 
+      // 更新物品列表
+      params.goodsList.forEach((it) => {
+        const updGoods =
+          'insert into relations_purchase_goods(order_no,goods_id,goods_count,goods_amount,type) values (?,?,?,?,?)';
+        sqlParamsEntity.push(
+          helper.getNewSqlParamEntity(updGoods, [
+            orderNo,
+            it.id,
+            it.goodsCount,
+            it.goodsAmount,
+            'pr',
+          ]),
+        );
+      });
+
       helper.execTrans(sqlParamsEntity, (err, info) => {
         if (err) {
           console.error('事务执行失败', err);
         } else {
-          console.log('done.', info);
+          console.log('事务执行成功', info);
           callback(err, info);
         }
       });

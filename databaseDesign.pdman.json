@@ -1121,8 +1121,8 @@
             },
             {
               "name": "order_no",
-              "type": "Integer",
-              "remark": "关联的采购单的id",
+              "type": "IdOrKey",
+              "remark": "关联的采购单号",
               "chnname": "采购单号",
               "notNull": true
             },
@@ -2013,6 +2013,39 @@
           "relation": "0,n:1",
           "from": {
             "entity": "relations_purchase_goods",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "baseinfo_goods",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_depot",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "baseinfo_goods",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "relations_delivery_goods",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "baseinfo_goods",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "relations_purchase_goods",
             "field": "order_no"
           },
           "to": {
@@ -2028,6 +2061,83 @@
           },
           "to": {
             "entity": "store_self_purchase_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "hq_order",
+            "field": "purchase_order_no"
+          },
+          "to": {
+            "entity": "store_purchase_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "hq_order",
+            "field": "dispatch_id"
+          },
+          "to": {
+            "entity": "baseinfo_dispatch",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "supplier_order",
+            "field": "self_purchase_order_no"
+          },
+          "to": {
+            "entity": "store_self_purchase_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "supplier_order",
+            "field": "supply_id"
+          },
+          "to": {
+            "entity": "baseinfo_supplier",
+            "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "relations_delivery_goods",
+            "field": "delivery_order_no"
+          },
+          "to": {
+            "entity": "supplier_order",
+            "field": "self_purchase_order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "relations_delivery_goods",
+            "field": "delivery_order_no"
+          },
+          "to": {
+            "entity": "hq_order",
+            "field": "purchase_order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_self_acceptance_order",
+            "field": "supplier_delivery_order_no"
+          },
+          "to": {
+            "entity": "supplier_order",
             "field": "order_no"
           }
         },
@@ -2051,6 +2161,17 @@
           "to": {
             "entity": "store_self_acceptance_order",
             "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "relations_acceptance_goods",
+            "field": "goods_id"
+          },
+          "to": {
+            "entity": "baseinfo_goods",
+            "field": "id"
           }
         },
         {

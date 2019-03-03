@@ -94,7 +94,11 @@ export function doAdd(payload) {
       dispatch({
         type: 'purchase/updateState',
         payload: {
-          modalVisible: false,
+          formVisible: false,
+          selectGoodsKeys: [],
+          selectGoodsItems: [],
+          formDataList: [],
+          amount: 0, // 请购总金额
         },
       });
       dispatch(getList());
