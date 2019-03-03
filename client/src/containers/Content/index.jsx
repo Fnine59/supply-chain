@@ -9,8 +9,7 @@ class Content extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     console.log('ifaram');
@@ -31,7 +30,7 @@ class Content extends React.Component {
         src={`${window.baseUrl}${this.props.src || '/'}` || '#'}
         width="100%"
         height={'100%'}
-        scrolling="no"
+        scrolling="auto"
         frameBorder="0"
       />
     );

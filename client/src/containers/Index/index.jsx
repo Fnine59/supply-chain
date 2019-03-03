@@ -33,10 +33,10 @@ class Main extends React.PureComponent {
       console.log('menu click', e);
       const rules = {
         /* eslint-disable */
-        "baseinfo": '基础信息配置',
-        "shop": '门店管理',
-        "hq": '总部管理',
-        "supply": '供应商管理',
+        baseinfo: "基础信息配置",
+        shop: "门店管理",
+        hq: "总部管理",
+        supply: "供应商管理"
       };
       this.setState({
         url: e.key,
@@ -45,10 +45,10 @@ class Main extends React.PureComponent {
             <Breadcrumb.Item href="">
               <Icon type="home" />
             </Breadcrumb.Item>
-            <Breadcrumb.Item>{rules[e.key.split('/')[1]]}</Breadcrumb.Item>
+            <Breadcrumb.Item>{rules[e.key.split("/")[1]]}</Breadcrumb.Item>
             <Breadcrumb.Item>{e.item.props.children}</Breadcrumb.Item>
           </Breadcrumb>
-        ),
+        )
       });
     };
 
@@ -57,7 +57,7 @@ class Main extends React.PureComponent {
     };
 
     const doLogin = () => {
-      history.push('/login');
+      history.push("/login");
     };
 
     return (
@@ -69,7 +69,7 @@ class Main extends React.PureComponent {
               title={
                 <span className="submenu-title-wrapper">
                   <Icon type="user" />
-                  {userInfo.nickname || '未登录'}
+                  {userInfo.nickname || "未登录"}
                 </span>
               }
             >
@@ -101,8 +101,8 @@ class Main extends React.PureComponent {
             <Menu
               onClick={handleClick}
               style={{ width: 256 }}
-              defaultSelectedKeys={['/baseinfo/shop/info']}
-              defaultOpenKeys={['sub1']}
+              defaultSelectedKeys={["/baseinfo/shop/info"]}
+              defaultOpenKeys={["sub1"]}
               mode="inline"
               className="body-menu"
             >
@@ -170,7 +170,7 @@ class Main extends React.PureComponent {
 }
 
 Main.propTypes = {
-  dispatch: PropTypes.func,
+  dispatch: PropTypes.func
 };
 
 export default Main;

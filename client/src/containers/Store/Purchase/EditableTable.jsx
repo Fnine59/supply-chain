@@ -111,32 +111,32 @@ class EditableTable extends React.PureComponent {
       {
         title: '物品编码',
         dataIndex: 'id',
-        width: '200px',
       },
       {
         title: '物品名称',
         dataIndex: 'name',
+        width: '170px',
       },
       {
         title: '物品单位',
         dataIndex: 'unit',
-        width: '200px',
+        width: '170px',
       },
       {
         title: '物品单价',
         dataIndex: 'unitPrice',
-        width: '200px',
+        width: '170px',
       },
       {
         title: '请购数量',
         dataIndex: 'goodsCount',
-        width: '200px',
+        width: '170px',
         editable: true,
       },
       {
         title: '物品采购金额',
         dataIndex: 'goodsAmount',
-        width: '200px',
+        width: '170px',
       },
       {
         title: '操作',

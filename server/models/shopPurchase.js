@@ -31,24 +31,25 @@ ShopPurchase.prototype.doGetShopList = function (callback) {
 
 ShopPurchase.prototype.doCreate = function (params, callback) {
   const date = helper.getDateString(new Date());
-  const sql = `select MAX(number) as number from util_order_no where date='${date}'`;
-  helper.doSqls({
+  const fDate = helper.formatDateString(new Date());
+  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='pr'`;
+  helper.doSql({
     sql,
     name: 'getNo',
-    callback: (err, res) => {
+    callback: (error, res) => {
       const result = JSON.parse(JSON.stringify(res))[0].number;
-      const no = result ? result + 1 : 0;
+      const no = result !== undefined && result !== null ? result + 1 : 0;
 
       const sqlParamsEntity = [];
-      const updNo = 'insert into util_order_no(number,date) values (?,?);';
-      const param1 = [no, date];
+      const updNo = 'insert into util_order_no(number,date,type) values (?,?,?);';
+      const param1 = [no, date, 'pr'];
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updNo, param1));
 
       const updOrder =
         'insert into store_purchase_order(order_no, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?)';
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(updOrder, [
-          `QG${date}${no}`,
+          `QG${fDate}${helper.formatNumString(no)}`,
           helper.getTimeString(new Date()),
           1,
           params.amount,
@@ -56,6 +57,7 @@ ShopPurchase.prototype.doCreate = function (params, callback) {
           helper.getTimeString(new Date()),
         ]),
       );
+
       helper.execTrans(sqlParamsEntity, (err, info) => {
         if (err) {
           console.error('事务执行失败', err);

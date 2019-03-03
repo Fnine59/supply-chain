@@ -16,6 +16,7 @@ const helper = {
       if (!opt.params) {
         // 执行查询/删除语句
         connection.query(opt.sql, (err, res) => {
+          console.log('run sql ======>', opt.sql);
           if (err) {
             console.log(`request method ${opt.name} err: + ${err}`);
             if (typeof opt.callback === 'function') {
@@ -32,6 +33,8 @@ const helper = {
       }
       // 执行新增/插入语句
       connection.query(opt.sql, opt.params, (err, res) => {
+        console.log('run sql ======>', opt.sql);
+        console.log('run sql params ======>', opt.sql, opt.params);
         if (err) {
           console.log(`request method ${opt.name} err: + ${err}`);
           if (typeof opt.callback === 'function') {
@@ -54,16 +57,19 @@ const helper = {
       if (!opt.params) {
         // 执行查询/删除语句
         connection.query(opt.sql, (err, res) => {
+          console.log('run sql ======>', opt.sql);
           if (err) {
             console.log(`request method ${opt.name} err: + ${err}`);
             if (typeof opt.callback === 'function') {
               opt.callback(err);
             }
+            connection.release();
           } else {
             console.log(`request method ${opt.name} success!`);
             if (typeof opt.callback === 'function') {
               opt.callback(err, res);
             }
+            connection.release();
           }
         });
         return;
@@ -75,11 +81,13 @@ const helper = {
           if (typeof opt.callback === 'function') {
             opt.callback(err);
           }
+          connection.release();
         } else {
           console.log(`request method ${opt.name} success!`);
           if (typeof opt.callback === 'function') {
             opt.callback(err, res);
           }
+          connection.release();
         }
       });
     });
@@ -168,6 +176,21 @@ const helper = {
   // 获取本地日期字符串
   getDateString(date) {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  },
+
+  // 将一位数的日期格式化为两位
+  formatDateString(date) {
+    const y = date.getFullYear();
+    const m = (date.getMonth() + 1).toString();
+    const d = (date.getDate()).toString();
+    return `${y}${m.length < 2 ? `0${m}` : m}${d.length < 2 ? `0${d}` : d}`;
+  },
+
+  // 将流水号格式化为六位
+  formatNumString(n) {
+    const data = n.toString();
+    console.log('format num', data);
+    return data.length < 6 ? `${'0'.repeat(6 - data.length)}${data}` : data;
   },
 
   // MD5加密
