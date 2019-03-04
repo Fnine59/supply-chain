@@ -11,6 +11,7 @@ module.exports = {
   init(app) {
     app.get('/shop/purchase/getGoodsList', this.doGetGoodsList);
     app.get('/shop/purchase/getShopList', this.doGetShopList);
+    app.get('/shop/purchase/getDispatchList', this.doGetDispatchList);
     app.post('/shop/purchase/create', this.doCreate);
     app.post('/shop/purchase/getList', this.doGetList);
     app.post('/shop/purchase/getDetail', this.doGetDetail);
@@ -51,6 +52,26 @@ module.exports = {
     const props = {};
     const shopinfo = new ShopPurchase({ props });
     shopinfo.doGetShopList((err, data) => {
+      if (!err) {
+        return res.send({
+          code: 200,
+          success: true,
+          message: '查询成功',
+          data,
+        });
+      }
+      return res.send({
+        success: false,
+        message: '请求失败',
+      });
+    });
+  },
+
+  // 获取配送中心列表
+  doGetDispatchList(req, res) {
+    const props = {};
+    const shopinfo = new ShopPurchase({ props });
+    shopinfo.doGetDispatchList((err, data) => {
       if (!err) {
         return res.send({
           code: 200,

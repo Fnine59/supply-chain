@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { message } from 'antd';
 
-import * as action from '../../../redux/actions/purchase';
+import * as action from '../../../redux/actions/hqDispatch';
 import Search from './Search';
 import List from './List';
 import OrderForm from './OrderForm';
@@ -14,8 +14,8 @@ class Purchase extends React.PureComponent {
     this.state = {};
   }
   componentDidMount() {
-    const { dispatch, purchase } = this.props;
-    const { queryParams } = purchase;
+    const { dispatch, hqDispatch } = this.props;
+    const { queryParams } = hqDispatch;
     dispatch(action.getList(queryParams));
     dispatch(action.getGoodsList());
   }
@@ -32,30 +32,28 @@ class Purchase extends React.PureComponent {
       dataList,
       goodsList,
       shopList,
-      dispatchList,
-    } = this.props.purchase;
+    } = this.props.hqDispatch;
     const searchProps = {
       onAdd: () => {
         const { dispatch } = this.props;
         dispatch({
-          type: 'purchase/updateState',
+          type: 'hqDispatch/updateState',
           payload: {
             formVisible: true,
             type: 'add',
           },
         });
         dispatch(action.getShopList());
-        dispatch(action.getDispatchList());
       },
       onClear: () => {
         const { dispatch } = this.props;
         dispatch(action.getList());
       },
       onSearch: (props) => {
-        const { dispatch, purchase } = this.props;
-        const { queryParams } = purchase;
+        const { dispatch, hqDispatch } = this.props;
+        const { queryParams } = hqDispatch;
         dispatch({
-          type: 'purchase/updateState',
+          type: 'hqDispatch/updateState',
           payload: {
             queryParams: {
               ...queryParams,
@@ -112,51 +110,49 @@ class Purchase extends React.PureComponent {
       type,
       orderInfo,
       shopList,
-      dispatchList,
       onAdd: () => {
         this.props.dispatch({
-          type: 'purchase/updateState',
+          type: 'hqDispatch/updateState',
           payload: {
             goodsModalVisible: true,
           },
         });
       },
-      onSubmit: (values) => {
+      onSubmit: (id) => {
         if (formDataList.length === 0) {
-          message.error('请购的物品列表不能为空');
+          message.error('配送的物品列表不能为空');
           return;
         }
         const params = {
-          ...values,
           goodsList: formDataList,
+          storeId: id,
           amount: orderInfo.amount,
         };
         this.props.dispatch(action.doAdd(params));
       },
       onUpdate: () => {
         if (formDataList.length === 0) {
-          message.error('请购的物品列表不能为空');
+          message.error('配送的物品列表不能为空');
           return;
         }
         const params = {
           goodsList: formDataList,
           orderNo: orderInfo.orderNo,
           amount: orderInfo.amount,
-          dispatchId: orderInfo.dispatchId,
           delIds,
         };
         this.props.dispatch(action.doUpdate(params));
       },
       onBack: () => {
         this.props.dispatch({
-          type: 'purchase/updateState',
+          type: 'hqDispatch/updateState',
           payload: {
             formVisible: false,
             selectGoodsKeys: [],
             selectGoodsItems: [],
             formDataList: [],
             orderInfo: {
-              amount: 0, // 请购总金额
+              amount: 0, // 配送总金额
               storeName: '', // 门店信息
             },
             delIds: [],
@@ -171,7 +167,7 @@ class Purchase extends React.PureComponent {
         selectGoodsKeys,
         onSelect: (keys, items) => {
           this.props.dispatch({
-            type: 'purchase/updateState',
+            type: 'hqDispatch/updateState',
             payload: {
               selectGoodsKeys: keys,
               selectGoodsItems: items,
@@ -181,7 +177,7 @@ class Purchase extends React.PureComponent {
         onClose: (t) => {
           if (t) {
             this.props.dispatch({
-              type: 'purchase/updateState',
+              type: 'hqDispatch/updateState',
               payload: {
                 goodsModalVisible: false,
               },
@@ -202,7 +198,7 @@ class Purchase extends React.PureComponent {
             }
           });
           this.props.dispatch({
-            type: 'purchase/updateState',
+            type: 'hqDispatch/updateState',
             payload: {
               formDataList: newList,
               goodsModalVisible: false,
@@ -223,7 +219,7 @@ class Purchase extends React.PureComponent {
           });
           console.warn('money', money);
           this.props.dispatch({
-            type: 'purchase/updateState',
+            type: 'hqDispatch/updateState',
             payload: {
               formDataList: newDataList,
               orderInfo: {
@@ -235,7 +231,7 @@ class Purchase extends React.PureComponent {
         },
         onSetSelectItems: (newKeys, newItems) => {
           this.props.dispatch({
-            type: 'purchase/updateState',
+            type: 'hqDispatch/updateState',
             payload: {
               selectGoodsKeys: newKeys,
               selectGoodsItems: newItems,
@@ -254,7 +250,7 @@ class Purchase extends React.PureComponent {
                 }
               });
               dispatch({
-                type: 'purchase/updateState',
+                type: 'hqDispatch/updateState',
                 payload: {
                   delIds: arr,
                 },
@@ -265,7 +261,7 @@ class Purchase extends React.PureComponent {
       },
     };
     return (
-      <div className="purchase">
+      <div className="hqDispatch">
         {!formVisible && <Search {...searchProps} />}
         {!formVisible && <List {...listProps} />}
         {formVisible && <OrderForm {...formProps} />}
@@ -276,12 +272,12 @@ class Purchase extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    purchase: state.purchase,
+    hqDispatch: state.hqDispatch,
   };
 }
 
 Purchase.propTypes = {
-  purchase: PropTypes.object,
+  hqDispatch: PropTypes.object,
   dispatch: PropTypes.func,
 };
 export default connect(mapStateToProps)(Purchase);

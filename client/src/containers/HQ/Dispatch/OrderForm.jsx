@@ -33,7 +33,6 @@ const orderForm = ({
   tableProps,
   modalProps,
   shopList,
-  dispatchList,
   onAdd,
   onSubmit,
   onUpdate,
@@ -49,7 +48,6 @@ const orderForm = ({
       if (!err) {
         if (type === 'add') {
           onSubmit(values);
-          console.log('values', values);
         }
         if (type === 'edit') {
           onUpdate();
@@ -66,67 +64,37 @@ const orderForm = ({
         <div className="header">
           <Row>
             {type === 'add' && (
-              <div>
-                <Col span={8}>
-                  <FormItem label="请购门店" {...formItemLayout}>
-                    {getFieldDecorator('storeId', {
-                      initialValue: '',
-                      rules: [
-                        {
-                          required: true,
-                          message: '请选择请购门店',
-                        },
-                      ],
-                    })(
-                      <Select placeholder="请选择门店">
-                        {shopList.map(d => (
-                          <Option value={d.id}>{d.name}</Option>
+              <Col span={8}>
+                <FormItem label="配送门店" {...formItemLayout}>
+                  {getFieldDecorator('storeId', {
+                    initialValue: '',
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择配送门店',
+                      },
+                    ],
+                  })(
+                    <Select placeholder="请选择门店">
+                      {shopList.map(d => (
+                        <Option value={d.id}>{d.name}</Option>
                       ))}
-                      </Select>,
+                    </Select>,
                   )}
-                  </FormItem>
-                </Col>
-                <Col span={8}>
-                  <FormItem label="配送中心" {...formItemLayout}>
-                    {getFieldDecorator('dispatchId', {
-                      initialValue: '',
-                      rules: [
-                        {
-                          required: true,
-                          message: '请选择配送中心',
-                        },
-                      ],
-                    })(
-                      <Select placeholder="请选择配送中心">
-                        {dispatchList.map(d => (
-                          <Option value={d.id}>{d.name}</Option>
-                      ))}
-                      </Select>,
-                  )}
-                  </FormItem>
-                </Col>
-              </div>
+                </FormItem>
+              </Col>
             )}
             {(type === 'view' || type === 'edit') && (
-              <div>
-                <Col span={8}>
-                  <FormItem label="请购门店" {...formItemLayout}>
-                    {getFieldDecorator('storeName', {
-                      initialValue: orderInfo.storeName || '',
-                    })(<Input disabled />)}
-                  </FormItem>
-                </Col>
-                <Col span={8}>
-                  <FormItem label="配送中心" {...formItemLayout}>
-                    {getFieldDecorator('dispatchName', {
-                      initialValue: orderInfo.dispatchName || '',
-                    })(<Input disabled />)}
-                  </FormItem>
-                </Col>
-              </div>
+              <Col span={8}>
+                <FormItem label="配送门店" {...formItemLayout}>
+                  {getFieldDecorator('storeName', {
+                    initialValue: orderInfo.storeName || '',
+                  })(<Input disabled />)}
+                </FormItem>
+              </Col>
             )}
             <Col span={8}>
-              <FormItem label="请购总金额" {...formItemLayout}>
+              <FormItem label="配送总金额" {...formItemLayout}>
                 <InputNumber
                   disabled
                   precision={2}
@@ -167,7 +135,7 @@ const orderForm = ({
                 dataIndex: 'unitPrice',
               },
               {
-                title: '请购数量',
+                title: '配送数量',
                 dataIndex: 'goodsCount',
               },
               {
@@ -204,7 +172,6 @@ orderForm.propTypes = {
   tableProps: PropTypes.object,
   modalProps: PropTypes.object,
   shopList: PropTypes.array,
-  dispatchList: PropTypes.array,
   onAdd: PropTypes.func,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,

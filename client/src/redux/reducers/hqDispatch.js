@@ -1,16 +1,15 @@
 import {
   UPDATESTATE,
+  GETDISPATCHORDERLIST,
+  GETDISPATCHGOODSLIST,
+  GETDISPATCHSHOPLIST,
   GETSTATE,
-  GETPURCHASEORDERLIST,
-  GETPURCHASEGOODSLIST,
-  GETPURCHASESHOPLIST,
-  GETPURCHASEDISPATCHLIST,
 } from '../actions/types';
 
 const initState = {
   type: 'edit',
   orderInfo: {
-    amount: 0, // 请购总金额
+    amount: 0, // 配送总金额
     storeName: '', // 门店信息
   },
   formVisible: false,
@@ -22,7 +21,6 @@ const initState = {
   dataList: [],
   goodsList: [],
   shopList: [],
-  dispatchList: [],
   queryParams: {
     page: 1,
     rows: 10,
@@ -31,25 +29,22 @@ const initState = {
   },
 };
 
-export default function purchase(state = initState, action) {
+export default function hqDispatch(state = initState, action) {
   switch (action.type) {
-    case GETPURCHASEORDERLIST:
+    case GETDISPATCHORDERLIST:
       console.log(
-        '======================获取到请购单列表======================',
+        '======================获取到配送单列表======================',
       );
       return { ...state, dataList: action.payload };
-    case GETPURCHASEGOODSLIST:
+    case GETDISPATCHGOODSLIST:
       console.log('======================获取到物品列表======================');
       return { ...state, goodsList: action.payload };
-    case GETPURCHASESHOPLIST:
+    case GETDISPATCHSHOPLIST:
       console.log('======================获取到门店列表======================');
       return { ...state, shopList: action.payload };
-    case GETPURCHASEDISPATCHLIST:
-      console.log('======================获取到配送中心列表======================');
-      return { ...state, dispatchList: action.payload };
-    case `purchase/${GETSTATE}`:
+    case `hqDispatch/${GETSTATE}`:
       return { ...state };
-    case `purchase/${UPDATESTATE}`:
+    case `hqDispatch/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
       console.warn('未匹配到相应的ACTION TYPE');

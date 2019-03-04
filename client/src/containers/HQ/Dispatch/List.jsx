@@ -20,19 +20,14 @@ const List = ({
       key: 'id',
     },
     {
-      title: '自采单号',
+      title: '配送单号',
       dataIndex: 'orderNo',
       key: 'orderNo',
     },
     {
-      title: '自采门店',
-      dataIndex: 'storeName',
-      key: 'storeName',
-    },
-    {
-      title: '供应商',
-      dataIndex: 'supplyName',
-      key: 'supplyName',
+      title: '配送机构',
+      dataIndex: 'dispatchName',
+      key: 'dispatchName',
     },
     {
       title: '创建时间',
@@ -52,9 +47,14 @@ const List = ({
       key: 'updateTime',
     },
     {
-      title: '自采金额',
+      title: '配送金额',
       dataIndex: 'amount',
       key: 'amount',
+    },
+    {
+      title: '配送差异金额',
+      dataIndex: 'diffAmount',
+      key: 'diffAmount',
     },
     {
       title: '单据状态',
@@ -111,7 +111,7 @@ const List = ({
               onClick={(e) => {
                 confirm({
                   title: '警告',
-                  content: '确定删除该自采单吗？',
+                  content: '确定删除该配送单吗？',
                   cancelText: '取消',
                   okText: '确定',
                   onOk() {

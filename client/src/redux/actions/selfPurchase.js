@@ -4,6 +4,7 @@ import {
   GETSELFPURCHASEORDERLIST,
   GETSELFPURCHASEGOODSLIST,
   GETSELFPURCHASESHOPLIST,
+  GETSELFPURCHASESUPPLYLIST,
 } from './types';
 
 /**
@@ -40,6 +41,24 @@ export function getShopList() {
     if (res) {
       dispatch({
         type: GETSELFPURCHASESHOPLIST,
+        payload: res,
+      });
+    }
+  };
+}
+
+/**
+ * 获取供应商列表
+ */
+export function getSupplyList() {
+  return async (dispatch) => {
+    const res = await request({
+      url: '/api/shop/selfPurchase/getSupplyList',
+      method: 'get',
+    });
+    if (res) {
+      dispatch({
+        type: GETSELFPURCHASESUPPLYLIST,
         payload: res,
       });
     }

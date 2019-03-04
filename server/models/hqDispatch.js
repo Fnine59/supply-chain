@@ -1,5 +1,5 @@
 /**
- * @description 请购单表数据模型层
+ * @description 配送单表数据模型层
  * @author NaiyingZhang <fnine59@163.com>
  * @date 2019-02-24
  */
@@ -7,14 +7,14 @@
 import helper from "../utils/helper";
 
 /* 构造方法 */
-const ShopPurchase = function(item) {
+const HQDispatch = function(item) {
   this.props = item.props;
 };
 
 /**
- * 获取物品列表，用于生成门店请购单
+ * 获取物品列表，用于生成门店配送单
  */
-ShopPurchase.prototype.doGetGoodsList = function(callback) {
+HQDispatch.prototype.doGetGoodsList = function(callback) {
   const sql = "select * from baseinfo_goods where status=1";
   helper.doSql({
     sql,
@@ -24,9 +24,9 @@ ShopPurchase.prototype.doGetGoodsList = function(callback) {
 };
 
 /**
- * 获取门店列表，用于生成门店请购单
+ * 获取门店列表，用于生成门店配送单
  */
-ShopPurchase.prototype.doGetShopList = function(callback) {
+HQDispatch.prototype.doGetShopList = function(callback) {
   const sql = "select * from baseinfo_store where status=1";
   helper.doSql({
     sql,
@@ -36,28 +36,16 @@ ShopPurchase.prototype.doGetShopList = function(callback) {
 };
 
 /**
- * 获取门店列表，用于生成门店请购单
- */
-ShopPurchase.prototype.doGetDispatchList = function(callback) {
-  const sql = "select * from baseinfo_dispatch where status=1";
-  helper.doSql({
-    sql,
-    name: "doGetDispatchList",
-    callback
-  });
-};
-
-/**
- * 创建门店请购单，包含如下操作：
+ * 创建门店配送单，包含如下操作：
  * 1. 获取单据流水号
  * 2. 更新单据流水号
- * 3. 更新门店请购订单表，插入新数据
- * 4. 更新门店物品采购关系表，插入新数据，记录各个物品的请购数量
+ * 3. 更新门店配送订单表，插入新数据
+ * 4. 更新门店物品采购关系表，插入新数据，记录各个物品的配送数量
  */
-ShopPurchase.prototype.doCreate = function(params, callback) {
+HQDispatch.prototype.doCreate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
-  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='pr'`;
+  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='sf'`;
   helper.doSql({
     sql,
     name: "getNo",
@@ -70,22 +58,21 @@ ShopPurchase.prototype.doCreate = function(params, callback) {
       const sqlParamsEntity = [];
       const updNo =
         "insert into util_order_no(number,date,type) values (?,?,?);";
-      const param1 = [no, date, "pr"];
+      const param1 = [no, date, "sf"];
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updNo, param1));
 
-      // 更新请购订单表
+      // 更新配送订单表
       const updOrder =
-        "insert into store_purchase_order(order_no, create_time, status, amount, store_id, update_time, dispatch_id) values (?,?,?,?,?,?,?)";
-      const orderNo = `QG${fDate}${helper.formatNumString(no)}`;
+        "insert into hq_order(order_no, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?)";
+      const orderNo = `ZC${fDate}${helper.formatNumString(no)}`;
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(updOrder, [
           orderNo,
           helper.getTimeString(new Date()),
           1,
           params.amount,
-          params.storeId,
-          helper.getTimeString(new Date()),
-          params.dispatchId
+          params.storeId.storeId,
+          helper.getTimeString(new Date())
         ])
       );
 
@@ -99,7 +86,7 @@ ShopPurchase.prototype.doCreate = function(params, callback) {
             it.id,
             it.goodsCount,
             it.goodsAmount,
-            "pr"
+            "sf"
           ])
         );
       });
@@ -117,32 +104,28 @@ ShopPurchase.prototype.doCreate = function(params, callback) {
 };
 
 /**
- * 获取请购单列表
+ * 获取配送单列表
  */
-ShopPurchase.prototype.doGetList = function(params, callback) {
+HQDispatch.prototype.doGetList = function(params, callback) {
   // const start = (params.page - 1) * params.rows;
-  // const sql = `select * from store_purchase_order limit ${start},${params.rows}`;
+  // const sql = `select * from hq_order limit ${start},${params.rows}`;
   const sql = `SELECT
-	store_purchase_order.id,
-	store_purchase_order.order_no as orderNo,
-	store_purchase_order.status,
-  store_purchase_order.amount,
-  store_purchase_order.store_id as storeId,
-  store_purchase_order.dispatch_id as dispatchId,
-	store_purchase_order.create_time as createTime,
-	store_purchase_order.update_time as updateTime,
-	baseinfo_store.name AS storeName,
-	baseinfo_dispatch.name AS dispatchName
-  FROM store_purchase_order, baseinfo_store, baseinfo_dispatch 
-  WHERE store_purchase_order.store_id = baseinfo_store.id 
-  AND store_purchase_order.dispatch_id = baseinfo_dispatch.id ${
-    params.orderNo !== ""
-      ? `AND store_purchase_order.order_no LIKE '%${params.orderNo}%'`
-      : ""
-  } ${
-    params.status !== ""
-      ? `AND store_purchase_order.status='${params.status}'`
-      : ""
+      hq_order.id,
+      hq_order.purchase_order_no as purchaseOrderNo,
+      hq_order.dispatch_id as dispatchId,
+      hq_order.order_no as orderNo,
+      hq_order.status,
+      hq_order.amount,
+      hq_order.diff_amount as diffAmount,
+      hq_order.create_time as createTime,
+      hq_order.update_time as updateTime,
+      baseinfo_dispatch.name AS storeName
+      FROM hq_order, baseinfo_dispatch WHERE hq_order.dispatch_id = baseinfo_dispatch.id ${
+        params.orderNo !== ""
+          ? `AND hq_order.order_no LIKE '%${params.orderNo}%'`
+          : ""
+      } ${
+    params.status !== "" ? `AND hq_order.status='${params.status}'` : ""
   }`;
   helper.doSql({
     sql,
@@ -151,22 +134,19 @@ ShopPurchase.prototype.doGetList = function(params, callback) {
   });
 };
 
-// 获取请购单单据详情
-ShopPurchase.prototype.doGetDetail = function(params, callback) {
+// 获取配送单单据详情
+HQDispatch.prototype.doGetDetail = function(params, callback) {
   const sql = `SELECT
-	store_purchase_order.id,
-	store_purchase_order.order_no as orderNo,
-	store_purchase_order.status,
-  store_purchase_order.amount,
-  store_purchase_order.store_id as storeId,
-  store_purchase_order.dispatch_id as dispatchId,
-	store_purchase_order.create_time as createTime,
-	store_purchase_order.update_time as updateTime,
-	baseinfo_store.name AS storeName,
-	baseinfo_dispatch.name AS dispatchName
-  FROM store_purchase_order, baseinfo_store, baseinfo_dispatch WHERE store_purchase_order.order_no='${params.orderNo}'
-  AND store_purchase_order.store_id = baseinfo_store.id 
-  AND store_purchase_order.dispatch_id = baseinfo_dispatch.id;
+	hq_order.id,
+	hq_order.order_no as orderNo,
+	hq_order.status,
+  hq_order.amount,
+  hq_order.store_id as storeId,
+	hq_order.create_time as createTime,
+	hq_order.update_time as updateTime,
+	baseinfo_store.name AS storeName
+  FROM hq_order, baseinfo_store WHERE order_no='${params.orderNo}'
+  AND hq_order.store_id = baseinfo_store.id;
 
   SELECT
   baseinfo_goods.id,
@@ -188,10 +168,8 @@ ShopPurchase.prototype.doGetDetail = function(params, callback) {
 };
 
 // 删除单据
-ShopPurchase.prototype.doDelete = function(params, callback) {
-  const sql = `DELETE FROM store_purchase_order WHERE order_no='${
-    params.orderNo
-  }';
+HQDispatch.prototype.doDelete = function(params, callback) {
+  const sql = `DELETE FROM hq_order WHERE order_no='${params.orderNo}';
   DELETE FROM relations_purchase_goods WHERE order_no='${params.orderNo}';`;
   helper.doSqls({
     sql,
@@ -201,16 +179,16 @@ ShopPurchase.prototype.doDelete = function(params, callback) {
 };
 
 /**
- * 提交门店请购单，包含如下操作：
+ * 提交门店配送单，包含如下操作：
  * 1. 获取单据流水号用于生成总部订单
  * 2. 更新单据流水号
- * 3. 更新门店请购订单表及门店物品采购关系表，将用户的修改保留，并修改单据状态为已提交
+ * 3. 更新门店配送订单表及门店物品采购关系表，将用户的修改保留，并修改单据状态为已提交
  * 4. 更新总部订单表，生成新的订单
  */
-ShopPurchase.prototype.doUpdate = function(params, callback) {
+HQDispatch.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
-  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='ps'`;
+  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='fh'`;
   helper.doSql({
     sql,
     name: "getNo",
@@ -224,24 +202,22 @@ ShopPurchase.prototype.doUpdate = function(params, callback) {
       const updNo =
         "insert into util_order_no(number,date,type) values (?,?,?);";
       sqlParamsEntity.push(
-        helper.getNewSqlParamEntity(updNo, [no, date, "ps"])
+        helper.getNewSqlParamEntity(updNo, [no, date, "fh"])
       );
 
-      // 更新请购订单表，修改单据状态和单据状态更新时间
-      const updOrder = `update store_purchase_order set status='2', amount='${
+      // 更新配送订单表，修改单据状态和单据状态更新时间
+      const updOrder = `update hq_order set status='2', amount='${
         params.amount
       }', update_time='${helper.getTimeString(new Date())}' where order_no='${
         params.orderNo
       }'`;
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updOrder, []));
 
-      if (params.delIds.length > 0) {
-        // 更新物品列表 —— 删除用户删除的数据
-        const delGoods = `delete from relations_purchase_goods where id in (${
-          params.delIds
-        })`;
-        sqlParamsEntity.push(helper.getNewSqlParamEntity(delGoods, []));
-      }
+      // 更新物品列表 —— 删除用户删除的数据
+      const delGoods = `delete from relations_purchase_goods where id in (${
+        params.delIds
+      })`;
+      sqlParamsEntity.push(helper.getNewSqlParamEntity(delGoods, []));
 
       // 更新物品列表 —— 保存用户对数据的修改
       const changeList = params.goodsList.filter(it => it.detailId);
@@ -263,19 +239,18 @@ ShopPurchase.prototype.doUpdate = function(params, callback) {
             it.id,
             it.goodsCount,
             it.goodsAmount,
-            "pr"
+            "sf"
           ])
         );
       });
 
       // 生成总部订单
-      const orderNo = `PS${fDate}${helper.formatNumString(no)}`;
+      const orderNo = `FH${fDate}${helper.formatNumString(no)}`;
       const addOrder =
-        "insert into hq_order(purchase_order_no, dispatch_id, order_no, status, create_time, update_time) values(?,?,?,?,?,?)";
+        "insert into supplier_order(self_purchase_order_no, order_no, status, create_time, update_time) values(?,?,?,?,?)";
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(addOrder, [
           params.orderNo,
-          params.dispatchId,
           orderNo,
           1,
           helper.getTimeString(new Date()),
@@ -296,13 +271,13 @@ ShopPurchase.prototype.doUpdate = function(params, callback) {
 };
 
 // 撤回单据
-ShopPurchase.prototype.doWithdraw = function(params, callback) {
-  const sql = `update store_purchase_order set status='4', update_time='${helper.getTimeString(
+HQDispatch.prototype.doWithdraw = function(params, callback) {
+  const sql = `update hq_order set status='4', update_time='${helper.getTimeString(
     new Date()
   )}' WHERE order_no='${params.orderNo}';
-  update hq_order set status='4', update_time='${helper.getTimeString(
+  update supplier_order set status='4', update_time='${helper.getTimeString(
     new Date()
-  )}' WHERE purchase_order_no='${params.orderNo}';`;
+  )}' WHERE self_purchase_order_no='${params.orderNo}';`;
   helper.doSqls({
     sql,
     name: "doWithdraw",
@@ -310,4 +285,4 @@ ShopPurchase.prototype.doWithdraw = function(params, callback) {
   });
 };
 
-module.exports = ShopPurchase;
+module.exports = HQDispatch;

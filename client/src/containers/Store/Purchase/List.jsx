@@ -30,6 +30,11 @@ const List = ({
       key: 'storeName',
     },
     {
+      title: '配送中心',
+      dataIndex: 'dispatchName',
+      key: 'dispatchName',
+    },
+    {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',

@@ -36,6 +36,18 @@ ShopSelfPurchase.prototype.doGetShopList = function(callback) {
 };
 
 /**
+ * 获取供应商列表，用于生成门店自采单
+ */
+ShopSelfPurchase.prototype.doGetSupplyList = function(callback) {
+  const sql = "select * from baseinfo_supplier where status=1";
+  helper.doSql({
+    sql,
+    name: "doGetSupplyList",
+    callback
+  });
+};
+
+/**
  * 创建门店自采单，包含如下操作：
  * 1. 获取单据流水号
  * 2. 更新单据流水号
@@ -63,15 +75,16 @@ ShopSelfPurchase.prototype.doCreate = function(params, callback) {
 
       // 更新自采订单表
       const updOrder =
-        "insert into store_self_purchase_order(order_no, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?)";
+        "insert into store_self_purchase_order(order_no, supply_id, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?,?)";
       const orderNo = `ZC${fDate}${helper.formatNumString(no)}`;
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(updOrder, [
           orderNo,
+          params.supplyId,
           helper.getTimeString(new Date()),
           1,
           params.amount,
-          params.storeId.storeId,
+          params.storeId,
           helper.getTimeString(new Date())
         ])
       );
@@ -115,10 +128,14 @@ ShopSelfPurchase.prototype.doGetList = function(params, callback) {
 	store_self_purchase_order.status,
   store_self_purchase_order.amount,
   store_self_purchase_order.store_id as storeId,
+  store_self_purchase_order.supply_id as supplyId,
 	store_self_purchase_order.create_time as createTime,
 	store_self_purchase_order.update_time as updateTime,
-	baseinfo_store.name AS storeName
-  FROM store_self_purchase_order, baseinfo_store WHERE store_self_purchase_order.store_id = baseinfo_store.id ${
+  baseinfo_store.name AS storeName,
+  baseinfo_supplier.name AS supplyName
+  FROM store_self_purchase_order, baseinfo_store, baseinfo_supplier 
+  WHERE store_self_purchase_order.store_id = baseinfo_store.id 
+  AND store_self_purchase_order.supply_id = baseinfo_supplier.id ${
     params.orderNo !== ""
       ? `AND store_self_purchase_order.order_no LIKE '%${params.orderNo}%'`
       : ""
@@ -142,11 +159,15 @@ ShopSelfPurchase.prototype.doGetDetail = function(params, callback) {
 	store_self_purchase_order.status,
   store_self_purchase_order.amount,
   store_self_purchase_order.store_id as storeId,
+  store_self_purchase_order.supply_id as supplyId,
 	store_self_purchase_order.create_time as createTime,
 	store_self_purchase_order.update_time as updateTime,
-	baseinfo_store.name AS storeName
-  FROM store_self_purchase_order, baseinfo_store WHERE order_no='${params.orderNo}'
-  AND store_self_purchase_order.store_id = baseinfo_store.id;
+  baseinfo_store.name AS storeName,
+  baseinfo_supplier.name AS supplyName
+  FROM store_self_purchase_order, baseinfo_store, baseinfo_supplier 
+  WHERE order_no='${params.orderNo}'
+  AND store_self_purchase_order.store_id = baseinfo_store.id
+  AND store_self_purchase_order.supply_id = baseinfo_supplier.id;
 
   SELECT
   baseinfo_goods.id,

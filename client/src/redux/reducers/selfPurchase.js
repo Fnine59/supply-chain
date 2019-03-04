@@ -3,6 +3,7 @@ import {
   GETSELFPURCHASEORDERLIST,
   GETSELFPURCHASEGOODSLIST,
   GETSELFPURCHASESHOPLIST,
+  GETSELFPURCHASESUPPLYLIST,
   GETSTATE,
 } from '../actions/types';
 
@@ -21,6 +22,7 @@ const initState = {
   dataList: [],
   goodsList: [],
   shopList: [],
+  supplyList: [],
   queryParams: {
     page: 1,
     rows: 10,
@@ -42,6 +44,9 @@ export default function selfPurchase(state = initState, action) {
     case GETSELFPURCHASESHOPLIST:
       console.log('======================获取到门店列表======================');
       return { ...state, shopList: action.payload };
+    case GETSELFPURCHASESUPPLYLIST:
+      console.log('======================获取到供应商列表======================');
+      return { ...state, supplyList: action.payload };
     case `selfPurchase/${GETSTATE}`:
       return { ...state };
     case `selfPurchase/${UPDATESTATE}`:

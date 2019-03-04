@@ -32,6 +32,7 @@ class Purchase extends React.PureComponent {
       dataList,
       goodsList,
       shopList,
+      supplyList,
     } = this.props.selfPurchase;
     const searchProps = {
       onAdd: () => {
@@ -44,6 +45,7 @@ class Purchase extends React.PureComponent {
           },
         });
         dispatch(action.getShopList());
+        dispatch(action.getSupplyList());
       },
       onClear: () => {
         const { dispatch } = this.props;
@@ -110,6 +112,7 @@ class Purchase extends React.PureComponent {
       type,
       orderInfo,
       shopList,
+      supplyList,
       onAdd: () => {
         this.props.dispatch({
           type: 'selfPurchase/updateState',
@@ -118,14 +121,14 @@ class Purchase extends React.PureComponent {
           },
         });
       },
-      onSubmit: (id) => {
+      onSubmit: (values) => {
         if (formDataList.length === 0) {
           message.error('自采的物品列表不能为空');
           return;
         }
         const params = {
+          ...values,
           goodsList: formDataList,
-          storeId: id,
           amount: orderInfo.amount,
         };
         this.props.dispatch(action.doAdd(params));

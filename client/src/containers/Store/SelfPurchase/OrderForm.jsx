@@ -33,6 +33,7 @@ const orderForm = ({
   tableProps,
   modalProps,
   shopList,
+  supplyList,
   onAdd,
   onSubmit,
   onUpdate,
@@ -64,34 +65,64 @@ const orderForm = ({
         <div className="header">
           <Row>
             {type === 'add' && (
-              <Col span={8}>
-                <FormItem label="自采门店" {...formItemLayout}>
-                  {getFieldDecorator('storeId', {
-                    initialValue: '',
-                    rules: [
-                      {
-                        required: true,
-                        message: '请选择自采门店',
-                      },
-                    ],
-                  })(
-                    <Select placeholder="请选择门店">
-                      {shopList.map(d => (
-                        <Option value={d.id}>{d.name}</Option>
-                      ))}
-                    </Select>,
-                  )}
-                </FormItem>
-              </Col>
+              <div>
+                <Col span={8}>
+                  <FormItem label="自采门店" {...formItemLayout}>
+                    {getFieldDecorator('storeId', {
+                      initialValue: '',
+                      rules: [
+                        {
+                          required: true,
+                          message: '请选择自采门店',
+                        },
+                      ],
+                    })(
+                      <Select placeholder="请选择门店">
+                        {shopList.map(d => (
+                          <Option value={d.id}>{d.name}</Option>
+                        ))}
+                      </Select>,
+                    )}
+                  </FormItem>
+                </Col>
+                <Col span={8}>
+                  <FormItem label="供应商" {...formItemLayout}>
+                    {getFieldDecorator('supplyId', {
+                      initialValue: '',
+                      rules: [
+                        {
+                          required: true,
+                          message: '请选择供应商',
+                        },
+                      ],
+                    })(
+                      <Select placeholder="请选择供应商">
+                        {supplyList.map(d => (
+                          <Option value={d.id}>{d.name}</Option>
+                        ))}
+                      </Select>,
+                    )}
+                  </FormItem>
+                </Col>
+              </div>
             )}
             {(type === 'view' || type === 'edit') && (
-              <Col span={8}>
-                <FormItem label="自采门店" {...formItemLayout}>
-                  {getFieldDecorator('storeName', {
-                    initialValue: orderInfo.storeName || '',
-                  })(<Input disabled />)}
-                </FormItem>
-              </Col>
+              <div>
+                <Col span={8}>
+                  <FormItem label="自采门店" {...formItemLayout}>
+                    {getFieldDecorator('storeName', {
+                      initialValue: orderInfo.storeName || '',
+                    })(<Input disabled />)}
+                  </FormItem>
+                </Col>
+                <Col span={8}>
+                  <FormItem label="供应商" {...formItemLayout}>
+                    {getFieldDecorator('supplyName', {
+                      initialValue: orderInfo.supplyName || '',
+                    })(<Input disabled />)}
+                  </FormItem>
+                </Col>
+              </div>
             )}
             <Col span={8}>
               <FormItem label="自采总金额" {...formItemLayout}>
@@ -172,6 +203,7 @@ orderForm.propTypes = {
   tableProps: PropTypes.object,
   modalProps: PropTypes.object,
   shopList: PropTypes.array,
+  supplyList: PropTypes.array,
   onAdd: PropTypes.func,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,

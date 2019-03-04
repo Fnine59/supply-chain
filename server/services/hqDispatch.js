@@ -1,30 +1,29 @@
 /**
- * @description 自采单基础信息表控制层
+ * @description 配送单基础信息表控制层
  * @author NaiyingZhang <fnine59@163.com>
  * @date 2019-02-24
  */
 
-import ShopSelfPurchase from '../models/shopSelfPurchase';
+import HQDispatch from '../models/hqDispatch';
 import helper from '../utils/helper';
 
 module.exports = {
   init(app) {
-    app.get('/shop/selfPurchase/getGoodsList', this.doGetGoodsList);
-    app.get('/shop/selfPurchase/getShopList', this.doGetShopList);
-    app.get('/shop/selfPurchase/getSupplyList', this.doGetSupplyList);
-    app.post('/shop/selfPurchase/create', this.doCreate);
-    app.post('/shop/selfPurchase/getList', this.doGetList);
-    app.post('/shop/selfPurchase/getDetail', this.doGetDetail);
-    app.post('/shop/selfPurchase/delete', this.doDelete);
-    app.post('/shop/selfPurchase/update', this.doUpdate);
-    app.post('/shop/selfPurchase/withdraw', this.doWithdraw);
+    app.get('/hq/dispatch/getGoodsList', this.doGetGoodsList);
+    app.get('/hq/dispatch/getShopList', this.doGetShopList);
+    app.post('/hq/dispatch/create', this.doCreate);
+    app.post('/hq/dispatch/getList', this.doGetList);
+    app.post('/hq/dispatch/getDetail', this.doGetDetail);
+    app.post('/hq/dispatch/delete', this.doDelete);
+    app.post('/hq/dispatch/update', this.doUpdate);
+    app.post('/hq/dispatch/withdraw', this.doWithdraw);
   },
 
   // 获取物品列表
   doGetGoodsList(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doGetGoodsList((err, data) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doGetGoodsList((err, data) => {
       if (!err) {
         const result = JSON.parse(JSON.stringify(data));
         return res.send({
@@ -50,8 +49,8 @@ module.exports = {
   // 获取门店列表
   doGetShopList(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doGetShopList((err, data) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doGetShopList((err, data) => {
       if (!err) {
         return res.send({
           code: 200,
@@ -67,37 +66,17 @@ module.exports = {
     });
   },
 
-  // 获取供应商列表
-  doGetSupplyList(req, res) {
-    const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doGetSupplyList((err, data) => {
-      if (!err) {
-        return res.send({
-          code: 200,
-          success: true,
-          message: '查询成功',
-          data,
-        });
-      }
-      return res.send({
-        success: false,
-        message: '请求失败',
-      });
-    });
-  },
-
-  // 新增自采单
+  // 新增配送单
   doCreate(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doCreate(req.body, (err, data) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doCreate(req.body, (err, data) => {
       if (!err) {
         console.log('最终返回data', data);
         return res.send({
           code: 200,
           success: true,
-          message: '新增自采单成功',
+          message: '新增配送单成功',
           data: null,
         });
       }
@@ -108,17 +87,17 @@ module.exports = {
     });
   },
 
-  // 获取所有自采单信息
+  // 获取所有配送单信息
   doGetList(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doGetList(req.body, (err, data) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doGetList(req.body, (err, data) => {
       if (!err) {
         const result = JSON.parse(JSON.stringify(data));
         return res.send({
           code: 200,
           success: true,
-          message: '查询自采单成功',
+          message: '查询配送单成功',
           data: result.map(item => ({
             ...item,
             createTime: helper.getTimeString(new Date(item.createTime)),
@@ -133,17 +112,17 @@ module.exports = {
     });
   },
 
-  // 获取自采单据详情
+  // 获取配送单据详情
   doGetDetail(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doGetDetail(req.body, (err, data) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doGetDetail(req.body, (err, data) => {
       const result = JSON.parse(JSON.stringify(data));
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '查询自采单据详情成功',
+          message: '查询配送单据详情成功',
           data: {
             ...result[0][0],
             createTime: helper.getTimeString(new Date(result[0][0].createTime)),
@@ -159,16 +138,16 @@ module.exports = {
     });
   },
 
-  // 删除自采单
+  // 删除配送单
   doDelete(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doDelete(req.body, (err) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doDelete(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '删除自采单成功',
+          message: '删除配送单成功',
         });
       }
       return res.send({
@@ -178,16 +157,16 @@ module.exports = {
     });
   },
 
-  // 更新自采单
+  // 更新配送单
   doUpdate(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doUpdate(req.body, (err) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doUpdate(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '提交自采单成功',
+          message: '提交配送单成功',
         });
       }
       return res.send({
@@ -197,16 +176,16 @@ module.exports = {
     });
   },
 
-  // 撤回已提交的自采单
+  // 撤回已提交的配送单
   doWithdraw(req, res) {
     const props = {};
-    const shopinfo = new ShopSelfPurchase({ props });
-    shopinfo.doWithdraw(req.body, (err) => {
+    const dipatchOrder = new HQDispatch({ props });
+    dipatchOrder.doWithdraw(req.body, (err) => {
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '撤回自采单成功',
+          message: '撤回配送单成功',
         });
       }
       return res.send({
