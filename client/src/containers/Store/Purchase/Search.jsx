@@ -1,12 +1,11 @@
 import React from 'react';
-import { Modal, Form, Row, Col, Button, Input, Select } from 'antd';
+import { Form, Row, Col, Button, Input, Select } from 'antd';
 import PropTypes from 'prop-types';
 
 import '../../../common/theme/search.less';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const confirm = Modal.confirm;
 
 const formItemLayout = {
   labelCol: {
@@ -18,66 +17,19 @@ const formItemLayout = {
 };
 
 const Search = ({
-  selectKeys,
-  selectItems,
   onAdd,
-  onEnable,
-  onDisable,
-  onDelete,
   onClear,
   onSearch,
   form: { validateFields, getFieldDecorator, resetFields },
 }) => {
   const showConfirm = (e) => {
     const info = e.target.value;
-    let supplyNumber = 0;
-    let content = '';
     switch (info) {
       case '+ 创建请购单':
         onAdd();
         break;
-      case '启用':
-        supplyNumber = selectItems.filter(item => item.status === '0').length;
-        content = `当前选中${
-          selectKeys.length
-        }个请购单，可启用${supplyNumber}个请购单！`;
-        break;
-      case '停用':
-        supplyNumber = selectItems.filter(item => item.status === '1').length;
-        content = `当前选中${
-          selectKeys.length
-        }个请购单，可停用${supplyNumber}个请购单！`;
-        break;
-      case '删除请购单':
-        supplyNumber = selectKeys.length;
-        content = `当前选中${selectKeys.length}个请购单，确认删除吗？`;
-        break;
       default:
         break;
-    }
-    if (info !== '+ 创建请购单') {
-      confirm({
-        title: `确定${e.target.value}吗？`,
-        content,
-        cancelText: '取消',
-        okText: '确定',
-        onOk() {
-          switch (info) {
-            case '启用':
-              onEnable();
-              break;
-            case '停用':
-              onDisable();
-              break;
-            case '删除请购单':
-              onDelete();
-              break;
-            default:
-              break;
-          }
-        },
-        onCancel() {},
-      });
     }
   };
 
@@ -124,6 +76,9 @@ const Search = ({
                   <Option key="3" value="3">
                     已完成
                   </Option>
+                  <Option key="4" value="4">
+                    已作废
+                  </Option>
                 </Select>,
               )}
             </FormItem>
@@ -156,20 +111,6 @@ const Search = ({
           >
             + 创建请购单
           </Button>
-          <Button className="opt-btn" onClick={showConfirm} value="启用">
-            启用
-          </Button>
-          <Button className="opt-btn" onClick={showConfirm} value="停用">
-            停用
-          </Button>
-          <Button
-            className="opt-btn"
-            type="danger"
-            onClick={showConfirm}
-            value="删除请购单"
-          >
-            删除请购单
-          </Button>
         </Col>
       </Row>
     </div>
@@ -177,13 +118,8 @@ const Search = ({
 };
 
 Search.propTypes = {
-  selectItems: PropTypes.array,
-  selectKeys: PropTypes.array,
   form: PropTypes.object,
   onAdd: PropTypes.func,
-  onEnable: PropTypes.func,
-  onDisable: PropTypes.func,
-  onDelete: PropTypes.func,
   onClear: PropTypes.func,
   onSearch: PropTypes.func,
 };

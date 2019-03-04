@@ -7,19 +7,20 @@ import {
 } from '../actions/types';
 
 const initState = {
-  modalVisible: false,
+  type: 'edit',
+  orderInfo: {
+    amount: 0, // 请购总金额
+    storeName: '', // 门店信息
+  },
   formVisible: false,
   goodsModalVisible: false,
+  delIds: [], // 删除数组
   selectGoodsKeys: [],
   selectGoodsItems: [],
   formDataList: [],
-  amount: 0, // 请购总金额
-  currentItem: {}, // 当前编辑项
   dataList: [],
   goodsList: [],
   shopList: [],
-  selectKeys: [], // 选中行id
-  selectItems: [], // 选中行内容
   queryParams: {
     page: 1,
     rows: 10,

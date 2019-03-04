@@ -13,10 +13,10 @@ module.exports = {
     app.get('/shop/purchase/getShopList', this.doGetShopList);
     app.post('/shop/purchase/create', this.doCreate);
     app.post('/shop/purchase/getList', this.doGetList);
-    app.post('/shop/purchase/enable', this.doEnable);
-    app.post('/shop/purchase/disable', this.doDisable);
+    app.post('/shop/purchase/getDetail', this.doGetDetail);
     app.post('/shop/purchase/delete', this.doDelete);
     app.post('/shop/purchase/update', this.doUpdate);
+    app.post('/shop/purchase/withdraw', this.doWithdraw);
   },
 
   // 获取物品列表
@@ -112,35 +112,23 @@ module.exports = {
     });
   },
 
-  // 启用请购单
-  doEnable(req, res) {
+  // 获取请购单据详情
+  doGetDetail(req, res) {
     const props = {};
     const shopinfo = new ShopPurchase({ props });
-    shopinfo.doEnable(req.body, (err) => {
+    shopinfo.doGetDetail(req.body, (err, data) => {
+      const result = JSON.parse(JSON.stringify(data));
       if (!err) {
         return res.send({
           code: 200,
           success: true,
-          message: '启用请购单成功',
-        });
-      }
-      return res.send({
-        success: false,
-        message: '请求失败',
-      });
-    });
-  },
-
-  // 停用请购单
-  doDisable(req, res) {
-    const props = {};
-    const shopinfo = new ShopPurchase({ props });
-    shopinfo.doDisable(req.body, (err) => {
-      if (!err) {
-        return res.send({
-          code: 200,
-          success: true,
-          message: '停用请购单成功',
+          message: '查询请购单据详情成功',
+          data: {
+            ...result[0][0],
+            createTime: helper.getTimeString(new Date(result[0][0].createTime)),
+            updateTime: helper.getTimeString(new Date(result[0][0].updateTime)),
+            goodsList: result[1],
+          },
         });
       }
       return res.send({
@@ -178,7 +166,26 @@ module.exports = {
         return res.send({
           code: 200,
           success: true,
-          message: '更新请购单信息成功',
+          message: '提交请购单成功',
+        });
+      }
+      return res.send({
+        success: false,
+        message: '请求失败',
+      });
+    });
+  },
+
+  // 撤回已提交的请购单
+  doWithdraw(req, res) {
+    const props = {};
+    const shopinfo = new ShopPurchase({ props });
+    shopinfo.doWithdraw(req.body, (err) => {
+      if (!err) {
+        return res.send({
+          code: 200,
+          success: true,
+          message: '撤回请购单成功',
         });
       }
       return res.send({

@@ -453,7 +453,7 @@
             {
               "name": "type",
               "type": "ShortString",
-              "remark": "pr->请购单流水号",
+              "remark": "pr->请购单流水号；ps->总部订单号；",
               "chnname": "流水号用途",
               "notNull": true
             }
@@ -593,7 +593,7 @@
             {
               "name": "status",
               "type": "ShortString",
-              "remark": "1->待处理;2->已提交;3->已完成",
+              "remark": "1->待处理;2->已提交;3->已完成;4->已作废",
               "chnname": "单据状态",
               "notNull": true,
               "defaultValue": "1"
@@ -1008,7 +1008,7 @@
             },
             {
               "name": "delivery_order_no",
-              "type": "Integer",
+              "type": "IdOrKey",
               "remark": "",
               "chnname": "配送单号",
               "notNull": true
@@ -1018,13 +1018,6 @@
               "type": "Integer",
               "remark": "配送的物品，在配送单创建时从采购关系中获取",
               "chnname": "物品id",
-              "notNull": true
-            },
-            {
-              "name": "purchase_count",
-              "type": "Double",
-              "remark": "从采购关系表里复制过来的信息，因为这个数据一旦生成不会发生变动，这样可以避免重复跨表取数据",
-              "chnname": "门店物品需求数量",
               "notNull": true
             },
             {
@@ -1691,8 +1684,8 @@
             "id": "4e8c8ebc",
             "controlPoints": [
               {
-                "x": 1550.7890625,
-                "y": -177.63095238095238
+                "x": 1534.3759765625,
+                "y": -167.5921052631579
               },
               {
                 "x": 1595.224609375,
@@ -1824,8 +1817,8 @@
             "id": "a055f199",
             "controlPoints": [
               {
-                "x": 1560.7890625,
-                "y": 182.36904761904762
+                "x": 1549.3798828125,
+                "y": 192.4078947368421
               },
               {
                 "x": 1605.224609375,
@@ -1843,8 +1836,8 @@
             "id": "78c7345c",
             "controlPoints": [
               {
-                "x": 1239.2109375,
-                "y": 162.27380952380952
+                "x": 1250.6201171875,
+                "y": 172.30263157894737
               },
               {
                 "x": 1191.47265625,
@@ -1862,8 +1855,8 @@
             "id": "e9ed7357",
             "controlPoints": [
               {
-                "x": 1229.2109375,
-                "y": -197.72619047619048
+                "x": 1245.6240234375,
+                "y": -187.69736842105263
               },
               {
                 "x": 1166.798828125,
@@ -2227,7 +2220,7 @@
               "type": "Integer",
               "remark": "负责送货的配送中心id",
               "chnname": "配送中心id",
-              "notNull": true
+              "notNull": false
             },
             {
               "name": "order_no",
@@ -2239,7 +2232,7 @@
             {
               "name": "status",
               "type": "ShortString",
-              "remark": "1->待处理;2->已提交;3->已完成",
+              "remark": "1->待处理;2->已提交;3->已完成;4->已撤回;",
               "chnname": "订单处理状态",
               "notNull": true,
               "defaultValue": "1"

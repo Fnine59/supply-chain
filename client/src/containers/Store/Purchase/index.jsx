@@ -6,7 +6,6 @@ import { message } from 'antd';
 import * as action from '../../../redux/actions/purchase';
 import Search from './Search';
 import List from './List';
-import Modal from './Modal';
 import OrderForm from './OrderForm';
 
 class Purchase extends React.PureComponent {
@@ -22,53 +21,29 @@ class Purchase extends React.PureComponent {
   }
   render() {
     const {
+      type,
+      delIds,
       goodsModalVisible,
       formVisible,
-      modalVisible,
-      amount,
+      orderInfo,
       selectGoodsKeys,
       selectGoodsItems,
       formDataList,
       dataList,
-      selectKeys,
-      selectItems,
-      currentItem,
       goodsList,
       shopList,
     } = this.props.purchase;
-    console.warn('index ', shopList);
     const searchProps = {
-      selectKeys,
-      selectItems,
       onAdd: () => {
         const { dispatch } = this.props;
         dispatch({
           type: 'purchase/updateState',
           payload: {
             formVisible: true,
+            type: 'add',
           },
         });
         dispatch(action.getShopList());
-      },
-      onEnable: () => {
-        const { dispatch } = this.props;
-        dispatch(
-          action.doEnable({
-            idsList: selectKeys,
-          }),
-        );
-      },
-      onDisable: () => {
-        const { dispatch } = this.props;
-        dispatch(
-          action.doDisable({
-            idsList: selectKeys,
-          }),
-        );
-      },
-      onDelete: () => {
-        const { dispatch } = this.props;
-        dispatch(action.doDelete({ idsList: selectKeys }));
       },
       onClear: () => {
         const { dispatch } = this.props;
@@ -94,100 +69,46 @@ class Purchase extends React.PureComponent {
         );
       },
     };
-    const modalProps = {
-      title: '新增请购单',
-      visible: modalVisible,
-      currentItem,
-      goodsList,
-      shopList,
-      onSubmit: (data) => {
-        const { dispatch } = this.props;
-        if (!Object.keys(currentItem).length > 0) {
-          dispatch(action.doAdd({ ...data, status: true }));
-          return;
-        }
-        dispatch(action.doUpdate({ ...data }));
-      },
-      onCancel: () => {
-        const { dispatch } = this.props;
-        dispatch({
-          type: 'purchase/updateState',
-          payload: {
-            modalVisible: false,
-            currentItem: {},
-          },
-        });
-      },
-    };
     const listProps = {
       dataSource: dataList,
-      selectKeys,
-      onSelect: (keys, items) => {
-        this.props.dispatch({
-          type: 'purchase/updateState',
-          payload: {
-            selectKeys: keys,
-            selectItems: items,
-          },
-        });
-      },
-      onEnable: (keys) => {
+      onView: (record) => {
         const { dispatch } = this.props;
-        if (keys) {
-          dispatch(
-            action.doEnable({
-              idsList: keys,
-            }),
-          );
-          return;
-        }
         dispatch(
-          action.doEnable({
-            idsList: selectKeys,
+          action.doGetDetail({
+            orderNo: record.orderNo,
+            type: 'view',
           }),
         );
       },
-      onDisable: (keys) => {
-        const { dispatch } = this.props;
-        if (keys) {
-          dispatch(
-            action.doDisable({
-              idsList: keys,
-            }),
-          );
-          return;
-        }
-        dispatch(
-          action.doDisable({
-            idsList: selectKeys,
+      onUpdate: (record) => {
+        this.props.dispatch(
+          action.doGetDetail({
+            orderNo: record.orderNo,
+            type: 'edit',
           }),
         );
       },
-      onDelete: (keys) => {
+      onDelete: (orderNo) => {
         const { dispatch } = this.props;
-        if (keys) {
-          dispatch(
-            action.doDelete({
-              idsList: keys,
-            }),
-          );
-          return;
-        }
-        dispatch(action.doDelete({ idsList: selectKeys }));
+        dispatch(
+          action.doDelete({
+            orderNo,
+          }),
+        );
       },
-      onUpdate: (item) => {
-        this.props.dispatch({
-          type: 'purchase/updateState',
-          payload: {
-            currentItem: item,
-            modalVisible: true,
-          },
-        });
+      onWithdraw: (orderNo) => {
+        const { dispatch } = this.props;
+        dispatch(
+          action.doWithdraw({
+            orderNo,
+          }),
+        );
       },
     };
     const formProps = {
       // OrderForm数据
-      amount,
+      type,
+      orderInfo,
       shopList,
       onAdd: () => {
         this.props.dispatch({
@@ -205,19 +126,36 @@ class Purchase extends React.PureComponent {
         const params = {
           goodsList: formDataList,
           storeId: id,
-          amount,
+          amount: orderInfo.amount,
         };
         this.props.dispatch(action.doAdd(params));
+      },
+      onUpdate: () => {
+        if (formDataList.length === 0) {
+          message.error('请购的物品列表不能为空');
+          return;
+        }
+        const params = {
+          goodsList: formDataList,
+          orderNo: orderInfo.orderNo,
+          amount: orderInfo.amount,
+          delIds,
+        };
+        this.props.dispatch(action.doUpdate(params));
       },
       onBack: () => {
         this.props.dispatch({
           type: 'purchase/updateState',
           payload: {
             formVisible: false,
-            amount: 0,
-            formDataList: [],
             selectGoodsKeys: [],
             selectGoodsItems: [],
+            formDataList: [],
+            orderInfo: {
+              amount: 0, // 请购总金额
+              storeName: '', // 门店信息
+            },
+            delIds: [],
           },
         });
       },
@@ -236,8 +174,8 @@ class Purchase extends React.PureComponent {
             },
           });
         },
-        onClose: (type) => {
-          if (type) {
+        onClose: (t) => {
+          if (t) {
             this.props.dispatch({
               type: 'purchase/updateState',
               payload: {
@@ -284,7 +222,10 @@ class Purchase extends React.PureComponent {
             type: 'purchase/updateState',
             payload: {
               formDataList: newDataList,
-              amount: money,
+              orderInfo: {
+                ...orderInfo,
+                amount: money,
+              },
             },
           });
         },
@@ -297,13 +238,32 @@ class Purchase extends React.PureComponent {
             },
           });
         },
+        onDeleteGoods: (id) => {
+          const { dispatch } = this.props;
+          if (type === 'edit') {
+            const item = formDataList.filter(it => it.id === id);
+            if (item.length > 0) {
+              const arr = delIds;
+              item.forEach((it) => {
+                if (it.detailId) {
+                  arr.push(it.detailId);
+                }
+              });
+              dispatch({
+                type: 'purchase/updateState',
+                payload: {
+                  delIds: arr,
+                },
+              });
+            }
+          }
+        },
       },
     };
     return (
       <div className="purchase">
         {!formVisible && <Search {...searchProps} />}
         {!formVisible && <List {...listProps} />}
-        <Modal {...modalProps} />
         {formVisible && <OrderForm {...formProps} />}
       </div>
     );

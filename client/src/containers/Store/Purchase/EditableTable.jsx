@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table as AntdTable, Popconfirm, Form, Input, InputNumber } from 'antd';
+import { Table as AntdTable, Popconfirm, Form, Icon, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;
@@ -128,7 +128,10 @@ class EditableTable extends React.PureComponent {
         width: '170px',
       },
       {
-        title: '请购数量',
+        title: <div>
+          <span style={{ marginRight: 10 }}>请购数量</span>
+          <Icon type="edit" />
+        </div>,
         dataIndex: 'goodsCount',
         width: '170px',
         editable: true,
@@ -174,6 +177,7 @@ class EditableTable extends React.PureComponent {
       this.props.selectGoodsItems.filter(item => item.id !== id),
     );
     this.props.onSetDataSource(dataSource.filter(item => item.id !== id));
+    this.props.onDeleteGoods(id);
   };
 
   // eslint-disable-next-line no-undef
@@ -239,6 +243,7 @@ EditableTable.propTypes = {
   dataSource: PropTypes.array,
   onSetDataSource: PropTypes.func,
   onSetSelectItems: PropTypes.func,
+  onDeleteGoods: PropTypes.func,
 };
 
 export default EditableTable;

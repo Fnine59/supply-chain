@@ -1,6 +1,10 @@
 import { message } from 'antd';
 import request from '../../common/utils/request';
-import { GETPURCHASEORDERLIST, GETPURCHASEGOODSLIST, GETPURCHASESHOPLIST } from './types';
+import {
+  GETPURCHASEORDERLIST,
+  GETPURCHASEGOODSLIST,
+  GETPURCHASESHOPLIST,
+} from './types';
 
 /**
  * 获取物品列表
@@ -80,6 +84,34 @@ export function getList(payload) {
 }
 
 /**
+ * 获取请购单详情
+ */
+export function doGetDetail(payload) {
+  return async (dispatch) => {
+    const res = await request({
+      url: '/api/shop/purchase/getDetail',
+      method: 'post',
+      data: {
+        orderNo: payload.orderNo,
+      },
+    });
+    if (res) {
+      dispatch({
+        type: 'purchase/updateState',
+        payload: {
+          type: payload.type,
+          formVisible: true,
+          orderInfo: res,
+          formDataList: res.goodsList,
+          selectGoodsKeys: res.goodsList.map(it => it.id),
+          selectGoodsItems: res.goodsList.map(it => it),
+        },
+      });
+    }
+  };
+}
+
+/**
  * 新增请购单
  */
 export function doAdd(payload) {
@@ -98,55 +130,11 @@ export function doAdd(payload) {
           selectGoodsKeys: [],
           selectGoodsItems: [],
           formDataList: [],
-          amount: 0, // 请购总金额
-        },
-      });
-      dispatch(getList());
-    }
-  };
-}
-
-/**
- * 启用请购单
- */
-export function doEnable(payload) {
-  return async (dispatch) => {
-    const res = await request({
-      url: '/api/shop/purchase/enable',
-      method: 'post',
-      data: payload,
-    });
-    if (res) {
-      message.success(res.message, 2);
-      dispatch({
-        type: 'purchase/updateState',
-        payload: {
-          selectKeys: [],
-          selectItems: [],
-        },
-      });
-      dispatch(getList());
-    }
-  };
-}
-
-/**
- * 停用请购单
- */
-export function doDisable(payload) {
-  return async (dispatch) => {
-    const res = await request({
-      url: '/api/shop/purchase/disable',
-      method: 'post',
-      data: payload,
-    });
-    if (res) {
-      message.success(res.message, 2);
-      dispatch({
-        type: 'purchase/updateState',
-        payload: {
-          selectKeys: [],
-          selectItems: [],
+          orderInfo: {
+            amount: 0, // 请购总金额
+            storeName: '', // 门店信息
+          },
+          delIds: [],
         },
       });
       dispatch(getList());
@@ -179,9 +167,28 @@ export function doDelete(payload) {
 }
 
 /**
+ * 撤回请购单
+ */
+export function doWithdraw(payload) {
+  return async (dispatch) => {
+    const res = await request({
+      url: '/api/shop/purchase/withdraw',
+      method: 'post',
+      data: payload,
+    });
+    if (res) {
+      message.success(res.message, 2);
+      dispatch(getList());
+    }
+  };
+}
+
+
+/**
  * 更新请购单信息
  */
 export function doUpdate(payload) {
+  console.log('payload', payload);
   return async (dispatch) => {
     const res = await request({
       url: '/api/shop/purchase/update',
@@ -192,8 +199,15 @@ export function doUpdate(payload) {
       dispatch({
         type: 'purchase/updateState',
         payload: {
-          modalVisible: false,
-          currentItem: {},
+          formVisible: false,
+          selectGoodsKeys: [],
+          selectGoodsItems: [],
+          formDataList: [],
+          orderInfo: {
+            amount: 0, // 请购总金额
+            storeName: '', // 门店信息
+          },
+          delIds: [],
         },
       });
       dispatch(getList());
