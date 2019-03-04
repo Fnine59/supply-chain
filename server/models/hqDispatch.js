@@ -82,6 +82,7 @@ HQDispatch.prototype.doGetDetail = function(params, callback) {
   FROM relations_purchase_goods, baseinfo_goods, relations_delivery_goods
   WHERE relations_purchase_goods.order_no='${params.purchaseOrderNo}'
   AND relations_delivery_goods.delivery_order_no = '${params.orderNo}'
+  AND relations_purchase_goods.goods_id = relations_delivery_goods.goods_id
   AND relations_purchase_goods.goods_id = baseinfo_goods.id`;
   helper.doSqls({
     sql,

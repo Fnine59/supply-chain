@@ -64,7 +64,7 @@ class Purchase extends React.PureComponent {
         dispatch(
           action.doGetDetail({
             orderNo: record.orderNo,
-            purchaseOrderNo: record.purchaseOrderNo,
+            selfPurchaseOrderNo: record.selfPurchaseOrderNo,
             type: 'view',
           }),
         );
@@ -73,7 +73,7 @@ class Purchase extends React.PureComponent {
         this.props.dispatch(
           action.doGetDetail({
             orderNo: record.orderNo,
-            purchaseOrderNo: record.purchaseOrderNo,
+            selfPurchaseOrderNo: record.selfPurchaseOrderNo,
             type: 'edit',
           }),
         );
@@ -96,16 +96,15 @@ class Purchase extends React.PureComponent {
         };
         this.props.dispatch(action.doAdd(params));
       },
-      onUpdate: () => {
-        if (formDataList.length === 0) {
+      onUpdate: (newList, totalAmt) => {
+        if (newList.length === 0) {
           message.error('发货的物品列表不能为空');
           return;
         }
         const params = {
-          goodsList: formDataList,
+          goodsList: newList,
           orderNo: orderInfo.orderNo,
-          amount: orderInfo.amount,
-          delIds,
+          amount: totalAmt,
         };
         this.props.dispatch(action.doUpdate(params));
       },
@@ -114,63 +113,13 @@ class Purchase extends React.PureComponent {
           type: 'sendGoods/updateState',
           payload: {
             formVisible: false,
-            selectGoodsKeys: [],
-            selectGoodsItems: [],
             formDataList: [],
             orderInfo: {
               amount: 0, // 发货总金额
               storeName: '', // 门店信息
             },
-            delIds: [],
           },
         });
-      },
-      // OrderForm中的弹窗数据
-      modalProps: {
-        visible: goodsModalVisible,
-        title: '添加物品',
-        goodsList,
-        selectGoodsKeys,
-        onSelect: (keys, items) => {
-          this.props.dispatch({
-            type: 'sendGoods/updateState',
-            payload: {
-              selectGoodsKeys: keys,
-              selectGoodsItems: items,
-            },
-          });
-        },
-        onClose: (t) => {
-          if (t) {
-            this.props.dispatch({
-              type: 'sendGoods/updateState',
-              payload: {
-                goodsModalVisible: false,
-              },
-            });
-            return;
-          }
-          const newList = [];
-          selectGoodsItems.forEach((s) => {
-            let flag = true;
-            formDataList.forEach((d) => {
-              if (d.id === s.id) {
-                flag = false;
-                newList.push(d);
-              }
-            });
-            if (flag) {
-              newList.push(s);
-            }
-          });
-          this.props.dispatch({
-            type: 'sendGoods/updateState',
-            payload: {
-              formDataList: newList,
-              goodsModalVisible: false,
-            },
-          });
-        },
       },
       // OrderForm中的表格数据
       tableProps: {

@@ -89,7 +89,6 @@ class Purchase extends React.PureComponent {
           orderNo: orderInfo.orderNo,
           amount: orderInfo.amount,
           diffAmount: orderInfo.diffAmount,
-          delIds,
         };
         this.props.dispatch(action.doUpdate(params));
       },
@@ -98,63 +97,13 @@ class Purchase extends React.PureComponent {
           type: 'hqDispatch/updateState',
           payload: {
             formVisible: false,
-            selectGoodsKeys: [],
-            selectGoodsItems: [],
             formDataList: [],
             orderInfo: {
               amount: 0, // 配送总金额
               storeName: '', // 门店信息
             },
-            delIds: [],
           },
         });
-      },
-      // OrderForm中的弹窗数据
-      modalProps: {
-        visible: goodsModalVisible,
-        title: '添加物品',
-        goodsList,
-        selectGoodsKeys,
-        onSelect: (keys, items) => {
-          this.props.dispatch({
-            type: 'hqDispatch/updateState',
-            payload: {
-              selectGoodsKeys: keys,
-              selectGoodsItems: items,
-            },
-          });
-        },
-        onClose: (t) => {
-          if (t) {
-            this.props.dispatch({
-              type: 'hqDispatch/updateState',
-              payload: {
-                goodsModalVisible: false,
-              },
-            });
-            return;
-          }
-          const newList = [];
-          selectGoodsItems.forEach((s) => {
-            let flag = true;
-            formDataList.forEach((d) => {
-              if (d.id === s.id) {
-                flag = false;
-                newList.push(d);
-              }
-            });
-            if (flag) {
-              newList.push(s);
-            }
-          });
-          this.props.dispatch({
-            type: 'hqDispatch/updateState',
-            payload: {
-              formDataList: newList,
-              goodsModalVisible: false,
-            },
-          });
-        },
       },
       // OrderForm中的表格数据
       tableProps: {
@@ -162,14 +111,12 @@ class Purchase extends React.PureComponent {
         selectGoodsKeys,
         selectGoodsItems,
         onSetDataSource: (newDataList) => {
-          console.warn('newDataList', newDataList);
           let money = 0;
           let diffMoney = 0;
           newDataList.forEach((d) => {
             money += d.dispatchGoodsAmount;
             diffMoney += d.dispatchGoodsDiffAmount;
           });
-          console.warn('money', money);
           this.props.dispatch({
             type: 'hqDispatch/updateState',
             payload: {

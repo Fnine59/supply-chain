@@ -45,13 +45,14 @@ export function getList(payload) {
  * 获取发货单详情
  */
 export function doGetDetail(payload) {
+  console.warn('getDetail', payload);
   return async (dispatch) => {
     const res = await request({
       url: '/api/supply/sendGoods/getDetail',
       method: 'post',
       data: {
         orderNo: payload.orderNo,
-        purchaseOrderNo: payload.purchaseOrderNo,
+        selfPurchaseOrderNo: payload.selfPurchaseOrderNo,
       },
     });
     if (res) {

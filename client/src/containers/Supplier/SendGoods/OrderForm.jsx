@@ -1,22 +1,11 @@
 import React from 'react';
-import {
-  Button,
-  Form,
-  Row,
-  Col,
-  InputNumber,
-  Select,
-  Input,
-  Table,
-} from 'antd';
+import { Button, Form, Row, Col, InputNumber, Input, Table } from 'antd';
 import PropTypes from 'prop-types';
 
-import EditableTable from './EditableTable';
 import GoodsModal from './GoodsModal';
 import './index.less';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 const formItemLayout = {
   labelCol: {
@@ -32,21 +21,28 @@ const orderForm = ({
   type,
   tableProps,
   modalProps,
-  shopList,
-  onSubmit,
   onUpdate,
   onBack,
   form: { validateFields, getFieldDecorator },
 }) => {
+  let totalAmt = 0;
+  tableProps.dataSource.forEach((it) => {
+    totalAmt += it.goodsAmount;
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
-    validateFields((err, values) => {
+    validateFields((err) => {
       if (!err) {
-        if (type === 'add') {
-          onSubmit(values);
-        }
         if (type === 'edit') {
-          onUpdate();
+          const newList = [];
+          tableProps.dataSource.forEach((it) => {
+            newList.push({
+              ...it,
+              sendGoodsAmount: it.goodsAmount,
+              sendGoodsCount: it.goodsCount,
+            });
+          });
+          onUpdate(newList, totalAmt);
         }
       }
     });
@@ -59,97 +55,75 @@ const orderForm = ({
       <Form onSubmit={handleSubmit}>
         <div className="header">
           <Row>
-            {type === 'add' && (
-              <Col span={8}>
-                <FormItem label="发货门店" {...formItemLayout}>
-                  {getFieldDecorator('storeId', {
-                    initialValue: '',
-                    rules: [
-                      {
-                        required: true,
-                        message: '请选择发货门店',
-                      },
-                    ],
-                  })(
-                    <Select placeholder="请选择门店">
-                      {shopList.map(d => (
-                        <Option value={d.id}>{d.name}</Option>
-                      ))}
-                    </Select>,
-                  )}
-                </FormItem>
-              </Col>
-            )}
-            {(type === 'view' || type === 'edit') && (
-              <Col span={8}>
-                <FormItem label="发货门店" {...formItemLayout}>
-                  {getFieldDecorator('storeName', {
-                    initialValue: orderInfo.storeName || '',
-                  })(<Input disabled />)}
-                </FormItem>
-              </Col>
-            )}
+            <Col span={8}>
+              <FormItem label="发货门店" {...formItemLayout}>
+                {getFieldDecorator('storeName', {
+                  initialValue: orderInfo.storeName || '',
+                })(<Input disabled />)}
+              </FormItem>
+            </Col>
             <Col span={8}>
               <FormItem label="发货总金额" {...formItemLayout}>
                 <InputNumber
                   disabled
                   precision={2}
                   min={0}
-                  value={orderInfo.amount}
+                  value={type === 'view' ? orderInfo.amount : totalAmt}
                 />
               </FormItem>
             </Col>
           </Row>
         </div>
-        {type !== 'view' && <EditableTable {...tableProps} />}
-        {type === 'view' && (
-          <Table
-            bordered
-            dataSource={tableProps.dataSource}
-            columns={[
-              {
-                title: '物品编码',
-                dataIndex: 'id',
+        <Table
+          bordered
+          dataSource={tableProps.dataSource}
+          columns={[
+            {
+              title: '物品编码',
+              dataIndex: 'id',
+            },
+            {
+              title: '物品名称',
+              dataIndex: 'name',
+            },
+            {
+              title: '物品单位',
+              dataIndex: 'unit',
+            },
+            {
+              title: '物品单价',
+              dataIndex: 'unitPrice',
+            },
+            {
+              title: '自采数量',
+              dataIndex: 'goodsCount',
+            },
+            {
+              title: '自采金额',
+              dataIndex: 'goodsAmount',
+            },
+            {
+              title: '发货数量',
+              dataIndex: 'sendGoodsCount',
+              render: (text, record) => {
+                if (type === 'view') {
+                  return text;
+                }
+                return record.goodsCount;
               },
-              {
-                title: '物品名称',
-                dataIndex: 'name',
+            },
+            {
+              title: '发货金额',
+              dataIndex: 'sendGoodsAmount',
+              render: (text, record) => {
+                if (type === 'view') {
+                  return text;
+                }
+                return record.goodsAmount;
               },
-              {
-                title: '物品单位',
-                dataIndex: 'unit',
-              },
-              {
-                title: '物品单价',
-                dataIndex: 'unitPrice',
-              },
-              {
-                title: '请购数量',
-                dataIndex: 'goodsCount',
-              },
-              {
-                title: '请购金额',
-                dataIndex: 'goodsAmount',
-              },
-              {
-                title: '发货数量',
-                dataIndex: 'dispatchGoodsCount',
-              },
-              {
-                title: '发货金额',
-                dataIndex: 'dispatchGoodsAmount',
-              },
-              {
-                title: '发货差异数量',
-                dataIndex: 'dispatchGoodsDiffCount',
-              },
-              {
-                title: '发货差异金额',
-                dataIndex: 'dispatchGoodsDiffAmount',
-              },
-            ]}
-          />
-        )}
+            },
+          ]}
+        />
         <GoodsModal {...modalProps} />
         <div className="footer">
           <Row>
@@ -176,9 +150,7 @@ orderForm.propTypes = {
   form: PropTypes.object,
   tableProps: PropTypes.object,
   modalProps: PropTypes.object,
-  shopList: PropTypes.array,
   onBack: PropTypes.func,
-  onSubmit: PropTypes.func,
   onUpdate: PropTypes.func,
 };
 

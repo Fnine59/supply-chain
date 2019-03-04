@@ -12,9 +12,6 @@ const initState = {
   },
   formVisible: false,
   goodsModalVisible: false,
-  delIds: [], // 删除数组
-  selectGoodsKeys: [],
-  selectGoodsItems: [],
   formDataList: [],
   dataList: [],
   goodsList: [],

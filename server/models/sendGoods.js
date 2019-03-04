@@ -19,19 +19,18 @@ SendGoods.prototype.doGetList = function(params, callback) {
   // const sql = `select * from supplier_order limit ${start},${params.rows}`;
   const sql = `SELECT
       supplier_order.id,
-      supplier_order.purchase_order_no as purchaseOrderNo,
-      supplier_order.order_no as orderNo,
-      supplier_order.dispatch_id as dispatchId,
+      supplier_order.self_purchase_order_no as selfPurchaseOrderNo,
+      supplier_order.supply_id as supplyId,
       supplier_order.store_id as storeId,
+      supplier_order.order_no as orderNo,
       supplier_order.status,
-      supplier_order.amount,
-      supplier_order.diff_amount as diffAmount,
       supplier_order.create_time as createTime,
       supplier_order.update_time as updateTime,
+      supplier_order.amount,
       baseinfo_store.name AS storeName,
-      baseinfo_dispatch.name AS dispatchName
-      FROM supplier_order,baseinfo_store,baseinfo_dispatch
-      WHERE supplier_order.dispatch_id = baseinfo_dispatch.id
+      baseinfo_supplier.name AS supplyName
+      FROM supplier_order,baseinfo_store,baseinfo_supplier
+      WHERE supplier_order.supply_id = baseinfo_supplier.id
       AND supplier_order.store_id = baseinfo_store.id
       ${
         params.orderNo !== ""
@@ -51,37 +50,35 @@ SendGoods.prototype.doGetList = function(params, callback) {
 SendGoods.prototype.doGetDetail = function(params, callback) {
   const sql = `SELECT
 	supplier_order.id,
-	supplier_order.order_no as orderNo,
-	supplier_order.status,
-  supplier_order.amount,
-  supplier_order.diff_amount as diffAmount,
+  supplier_order.self_purchase_order_no as selfPurchaseOrderNo,
+  supplier_order.supply_id as supplyId,
   supplier_order.store_id as storeId,
-  supplier_order.dispatch_id as dispatchId,
-	supplier_order.create_time as createTime,
-	supplier_order.update_time as updateTime,
-	baseinfo_store.name AS storeName,
-	baseinfo_dispatch.name AS dispatchName
-  FROM supplier_order, baseinfo_store, baseinfo_dispatch WHERE order_no='${
-    params.orderNo
-  }'
+  supplier_order.order_no as orderNo,
+  supplier_order.status,
+  supplier_order.create_time as createTime,
+  supplier_order.update_time as updateTime,
+  supplier_order.amount,
+  baseinfo_store.name AS storeName,
+  baseinfo_supplier.name AS supplyName
+  FROM supplier_order,baseinfo_store,baseinfo_supplier
+  WHERE order_no='${params.orderNo}'
   AND supplier_order.store_id = baseinfo_store.id
-  AND supplier_order.dispatch_id = baseinfo_dispatch.id;
+  AND supplier_order.supply_id = baseinfo_supplier.id;
 
   SELECT
-  baseinfo_goods.id,
   baseinfo_goods.name AS name,
   baseinfo_goods.unit AS unit,
   baseinfo_goods.unit_price AS unitPrice,
 	relations_purchase_goods.goods_count as goodsCount,
   relations_purchase_goods.goods_amount as goodsAmount,
   relations_delivery_goods.id AS detailId,
-  relations_delivery_goods.count as dispatchGoodsCount,
-  relations_delivery_goods.goods_amount as dispatchGoodsAmount,
-  relations_delivery_goods.diff_count as dispatchGoodsDiffCount,
-  relations_delivery_goods.diff_amt as dispatchGoodsDiffAmount
+  relations_delivery_goods.goods_id AS id,
+  relations_delivery_goods.count AS sendGoodsCount,
+  relations_delivery_goods.goods_amount AS sendGoodsAmount
   FROM relations_purchase_goods, baseinfo_goods, relations_delivery_goods
-  WHERE relations_purchase_goods.order_no='${params.purchaseOrderNo}'
+  WHERE relations_purchase_goods.order_no='${params.selfPurchaseOrderNo}'
   AND relations_delivery_goods.delivery_order_no = '${params.orderNo}'
+  AND relations_purchase_goods.goods_id = relations_delivery_goods.goods_id
   AND relations_purchase_goods.goods_id = baseinfo_goods.id`;
   helper.doSqls({
     sql,
@@ -102,7 +99,7 @@ SendGoods.prototype.doGetDetail = function(params, callback) {
 SendGoods.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
-  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='prys'`;
+  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='sfys'`;
   helper.doSql({
     sql,
     name: "getNo",
@@ -116,14 +113,12 @@ SendGoods.prototype.doUpdate = function(params, callback) {
       const updNo =
         "insert into util_order_no(number,date,type) values (?,?,?);";
       sqlParamsEntity.push(
-        helper.getNewSqlParamEntity(updNo, [no, date, "prys"])
+        helper.getNewSqlParamEntity(updNo, [no, date, "sfys"])
       );
 
       // 更新发货订单表，修改单据状态和单据状态更新时间
       const updOrder = `update supplier_order set status='2', amount='${
         params.amount
-      }', diff_amount='${
-        params.diffAmount
       }', update_time='${helper.getTimeString(new Date())}' where order_no='${
         params.orderNo
       }'`;
@@ -132,18 +127,17 @@ SendGoods.prototype.doUpdate = function(params, callback) {
       // 更新物品列表 —— 保存用户对数据的修改
       params.goodsList.forEach(it => {
         const updGoods = `update relations_delivery_goods set count='${
-          it.dispatchGoodsCount
-        }',goods_amount='${it.dispatchGoodsAmount}',diff_count='${
-          it.dispatchGoodsDiffCount
-        }',diff_amt='${it.dispatchGoodsDiffAmount}' where id='${it.detailId}'`;
+          it.sendGoodsCount
+        }',goods_amount='${it.sendGoodsAmount}'
+        where id='${it.detailId}'`;
         sqlParamsEntity.push(helper.getNewSqlParamEntity(updGoods, []));
       });
 
-      // 生成门店请购验收订单
-      const orderNo = `QY${fDate}${helper.formatNumString(no)}`;
+      // 生成门店自采验收订单
+      const orderNo = `ZY${fDate}${helper.formatNumString(no)}`;
       const addOrder =
-        `insert into store_acceptance_order(dispatch_order_no, order_no, create_time, update_time,
-           status, purchase_amount, delivery_diff_amount) values(?,?,?,?,?,?,?)`;
+        `insert into store_self_acceptance_order(supplier_delivery_order_no, order_no,
+          create_time, update_time,status,purchase_amount) values(?,?,?,?,?,?)`;
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(addOrder, [
           params.orderNo,
@@ -151,23 +145,20 @@ SendGoods.prototype.doUpdate = function(params, callback) {
           helper.getTimeString(new Date()),
           helper.getTimeString(new Date()),
           1,
-          params.amount+params.diffAmount,
-          params.diffAmount
+          params.amount
         ])
       );
 
       params.goodsList.forEach(it => {
         const addGoods = `insert into relations_acceptance_goods(goods_id,accept_order_no,type,
-          purchase_count,delivery_count,dispatch_diff_count,dispatch_diff_amount) values(?,?,?,?,?,?,?);`
+          purchase_count,delivery_count) values(?,?,?,?,?);`
         sqlParamsEntity.push(
           helper.getNewSqlParamEntity(addGoods, [
             it.id,
             orderNo,
-            "pr",
+            "sf",
             it.goodsCount,
-            it.dispatchGoodsCount,
-            it.dispatchGoodsDiffCount,
-            it.dispatchGoodsDiffAmount
+            it.sendGoodsCount,
           ])
         );
       })

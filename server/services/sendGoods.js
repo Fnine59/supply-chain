@@ -4,7 +4,7 @@
  * @date 2019-02-24
  */
 
-import sendGoods from '../models/sendGoods';
+import SendGoods from '../models/sendGoods';
 import helper from '../utils/helper';
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
   // 获取所有发货单信息
   doGetList(req, res) {
     const props = {};
-    const sendOrder = new sendGoods({ props });
+    const sendOrder = new SendGoods({ props });
     sendOrder.doGetList(req.body, (err, data) => {
       if (!err) {
         const result = JSON.parse(JSON.stringify(data));
@@ -42,7 +42,7 @@ module.exports = {
   // 获取发货单据详情
   doGetDetail(req, res) {
     const props = {};
-    const sendOrder = new sendGoods({ props });
+    const sendOrder = new SendGoods({ props });
     sendOrder.doGetDetail(req.body, (err, data) => {
       const result = JSON.parse(JSON.stringify(data));
       console.log(result);
@@ -69,7 +69,7 @@ module.exports = {
   // 更新发货单
   doUpdate(req, res) {
     const props = {};
-    const sendOrder = new sendGoods({ props });
+    const sendOrder = new SendGoods({ props });
     sendOrder.doUpdate(req.body, (err) => {
       if (!err) {
         return res.send({
