@@ -1756,7 +1756,7 @@
             "controlPoints": [
               {
                 "x": 843.201171875,
-                "y": -177.72619047619048
+                "y": -187.75
               },
               {
                 "x": 777.78515625,
@@ -1775,7 +1775,7 @@
             "controlPoints": [
               {
                 "x": 1156.798828125,
-                "y": -157.63095238095238
+                "y": -167.66304347826087
               },
               {
                 "x": 1234.9296875,
@@ -1794,7 +1794,7 @@
             "controlPoints": [
               {
                 "x": 818.52734375,
-                "y": 142.30263157894737
+                "y": 132.27380952380952
               },
               {
                 "x": 777.78515625,
@@ -1813,7 +1813,7 @@
             "controlPoints": [
               {
                 "x": 1181.47265625,
-                "y": 162.4078947368421
+                "y": 152.36904761904762
               },
               {
                 "x": 1249.892578125,
@@ -1855,7 +1855,7 @@
               },
               {
                 "x": 1181.47265625,
-                "y": 142.30263157894737
+                "y": 132.27380952380952
               }
             ],
             "sourceAnchor": 2,
@@ -1874,7 +1874,7 @@
               },
               {
                 "x": 1156.798828125,
-                "y": -177.72619047619048
+                "y": -187.75
               }
             ],
             "sourceAnchor": 2,
@@ -1893,11 +1893,11 @@
               },
               {
                 "x": 878.52734375,
-                "y": 912.5131578947369
+                "y": 922.5595238095239
               }
             ],
             "sourceAnchor": 3,
-            "targetAnchor": 6
+            "targetAnchor": 8
           },
           {
             "shape": "erdRelation",
@@ -2027,6 +2027,25 @@
               {
                 "x": 1234.9296875,
                 "y": 22.340909090909086
+              }
+            ],
+            "sourceAnchor": 15,
+            "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "25c3ddfa",
+            "target": "981ae961",
+            "id": "a86b01b1",
+            "controlPoints": [
+              {
+                "x": 777.78515625,
+                "y": 392.9342105263158
+              },
+              {
+                "x": 1249.892578125,
+                "y": 372.28846153846155
               }
             ],
             "sourceAnchor": 15,
@@ -2232,6 +2251,17 @@
             "entity": "baseinfo_dispatch",
             "field": "id"
           }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_self_purchase_order",
+            "field": "supply_id"
+          },
+          "to": {
+            "entity": "baseinfo_supplier",
+            "field": "id"
+          }
         }
       ]
     },
@@ -2264,7 +2294,14 @@
               "type": "Integer",
               "remark": "负责送货的配送中心id",
               "chnname": "配送中心id",
-              "notNull": false
+              "notNull": true
+            },
+            {
+              "name": "store_id",
+              "type": "Integer",
+              "remark": "请购的门店id",
+              "chnname": "门店id",
+              "notNull": true
             },
             {
               "name": "order_no",
@@ -2434,7 +2471,14 @@
               "type": "Integer",
               "remark": "",
               "chnname": "供应商id",
-              "notNull": false
+              "notNull": true
+            },
+            {
+              "name": "store_id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "自采门店id",
+              "notNull": true
             },
             {
               "name": "order_no",

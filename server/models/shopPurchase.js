@@ -164,7 +164,9 @@ ShopPurchase.prototype.doGetDetail = function(params, callback) {
 	store_purchase_order.update_time as updateTime,
 	baseinfo_store.name AS storeName,
 	baseinfo_dispatch.name AS dispatchName
-  FROM store_purchase_order, baseinfo_store, baseinfo_dispatch WHERE store_purchase_order.order_no='${params.orderNo}'
+  FROM store_purchase_order, baseinfo_store, baseinfo_dispatch WHERE store_purchase_order.order_no='${
+    params.orderNo
+  }'
   AND store_purchase_order.store_id = baseinfo_store.id 
   AND store_purchase_order.dispatch_id = baseinfo_dispatch.id;
 
@@ -271,11 +273,12 @@ ShopPurchase.prototype.doUpdate = function(params, callback) {
       // 生成总部订单
       const orderNo = `PS${fDate}${helper.formatNumString(no)}`;
       const addOrder =
-        "insert into hq_order(purchase_order_no, dispatch_id, order_no, status, create_time, update_time) values(?,?,?,?,?,?)";
+        "insert into hq_order(purchase_order_no, dispatch_id, store_id, order_no, status, create_time, update_time) values(?,?,?,?,?,?,?)";
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(addOrder, [
           params.orderNo,
           params.dispatchId,
+          params.storeId,
           orderNo,
           1,
           helper.getTimeString(new Date()),

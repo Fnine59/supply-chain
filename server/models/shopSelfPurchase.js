@@ -236,11 +236,13 @@ ShopSelfPurchase.prototype.doUpdate = function(params, callback) {
       }'`;
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updOrder, []));
 
-      // 更新物品列表 —— 删除用户删除的数据
-      const delGoods = `delete from relations_purchase_goods where id in (${
-        params.delIds
-      })`;
-      sqlParamsEntity.push(helper.getNewSqlParamEntity(delGoods, []));
+      if (params.delIds.length > 0) {
+        // 更新物品列表 —— 删除用户删除的数据
+        const delGoods = `delete from relations_purchase_goods where id in (${
+          params.delIds
+        })`;
+        sqlParamsEntity.push(helper.getNewSqlParamEntity(delGoods, []));
+      }
 
       // 更新物品列表 —— 保存用户对数据的修改
       const changeList = params.goodsList.filter(it => it.detailId);
@@ -267,13 +269,15 @@ ShopSelfPurchase.prototype.doUpdate = function(params, callback) {
         );
       });
 
-      // 生成总部订单
+      // 生成供应商订单
       const orderNo = `FH${fDate}${helper.formatNumString(no)}`;
       const addOrder =
-        "insert into supplier_order(self_purchase_order_no, order_no, status, create_time, update_time) values(?,?,?,?,?)";
+        "insert into supplier_order(self_purchase_order_no,supply_id, store_id, order_no, status, create_time, update_time) values(?,?,?,?,?,?,?)";
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(addOrder, [
           params.orderNo,
+          params.supplyId,
+          params.storeId,
           orderNo,
           1,
           helper.getTimeString(new Date()),

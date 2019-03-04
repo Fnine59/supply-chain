@@ -25,6 +25,16 @@ const List = ({
       key: 'orderNo',
     },
     {
+      title: '关联请购单号',
+      dataIndex: 'purchaseOrderNo',
+      key: 'purchaseOrderNo',
+    },
+    {
+      title: '请购门店',
+      dataIndex: 'storeName',
+      key: 'storeName',
+    },
+    {
       title: '配送机构',
       dataIndex: 'dispatchName',
       key: 'dispatchName',
@@ -50,11 +60,23 @@ const List = ({
       title: '配送金额',
       dataIndex: 'amount',
       key: 'amount',
+      render: (text) => {
+        if (text === undefined || text === null) {
+          return '--';
+        }
+        return text;
+      },
     },
     {
       title: '配送差异金额',
       dataIndex: 'diffAmount',
       key: 'diffAmount',
+      render: (text) => {
+        if (text === undefined || text === null) {
+          return '--';
+        }
+        return text;
+      },
     },
     {
       title: '单据状态',

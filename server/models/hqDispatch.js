@@ -36,74 +36,6 @@ HQDispatch.prototype.doGetShopList = function(callback) {
 };
 
 /**
- * 创建门店配送单，包含如下操作：
- * 1. 获取单据流水号
- * 2. 更新单据流水号
- * 3. 更新门店配送订单表，插入新数据
- * 4. 更新门店物品采购关系表，插入新数据，记录各个物品的配送数量
- */
-HQDispatch.prototype.doCreate = function(params, callback) {
-  const date = helper.getDateString(new Date()); // 形同2019-03-03
-  const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
-  const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='sf'`;
-  helper.doSql({
-    sql,
-    name: "getNo",
-    callback: (error, res) => {
-      const result = JSON.parse(JSON.stringify(res))[0].number;
-      // 拿到当天的流水号中的最大值，如果不存在，本次使用流水号为0；如果存在，本次使用流水号为存在的最大值+1
-      const no = result !== undefined && result !== null ? result + 1 : 0;
-
-      // 更新流水号表
-      const sqlParamsEntity = [];
-      const updNo =
-        "insert into util_order_no(number,date,type) values (?,?,?);";
-      const param1 = [no, date, "sf"];
-      sqlParamsEntity.push(helper.getNewSqlParamEntity(updNo, param1));
-
-      // 更新配送订单表
-      const updOrder =
-        "insert into hq_order(order_no, create_time, status, amount, store_id, update_time) values (?,?,?,?,?,?)";
-      const orderNo = `ZC${fDate}${helper.formatNumString(no)}`;
-      sqlParamsEntity.push(
-        helper.getNewSqlParamEntity(updOrder, [
-          orderNo,
-          helper.getTimeString(new Date()),
-          1,
-          params.amount,
-          params.storeId.storeId,
-          helper.getTimeString(new Date())
-        ])
-      );
-
-      // 更新物品列表
-      params.goodsList.forEach(it => {
-        const updGoods =
-          "insert into relations_purchase_goods(order_no,goods_id,goods_count,goods_amount,type) values (?,?,?,?,?)";
-        sqlParamsEntity.push(
-          helper.getNewSqlParamEntity(updGoods, [
-            orderNo,
-            it.id,
-            it.goodsCount,
-            it.goodsAmount,
-            "sf"
-          ])
-        );
-      });
-
-      helper.execTrans(sqlParamsEntity, (err, info) => {
-        if (err) {
-          console.error("事务执行失败", err);
-        } else {
-          console.log("事务执行成功", info);
-          callback(err, info);
-        }
-      });
-    }
-  });
-};
-
-/**
  * 获取配送单列表
  */
 HQDispatch.prototype.doGetList = function(params, callback) {
@@ -112,15 +44,20 @@ HQDispatch.prototype.doGetList = function(params, callback) {
   const sql = `SELECT
       hq_order.id,
       hq_order.purchase_order_no as purchaseOrderNo,
-      hq_order.dispatch_id as dispatchId,
       hq_order.order_no as orderNo,
+      hq_order.dispatch_id as dispatchId,
+      hq_order.store_id as storeId,
       hq_order.status,
       hq_order.amount,
       hq_order.diff_amount as diffAmount,
       hq_order.create_time as createTime,
       hq_order.update_time as updateTime,
-      baseinfo_dispatch.name AS storeName
-      FROM hq_order, baseinfo_dispatch WHERE hq_order.dispatch_id = baseinfo_dispatch.id ${
+      baseinfo_store.name AS storeName,
+      baseinfo_dispatch.name AS dispatchName
+      FROM hq_order,baseinfo_store,baseinfo_dispatch
+      WHERE hq_order.dispatch_id = baseinfo_dispatch.id
+      AND hq_order.store_id = baseinfo_store.id
+      ${
         params.orderNo !== ""
           ? `AND hq_order.order_no LIKE '%${params.orderNo}%'`
           : ""

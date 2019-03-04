@@ -17,22 +17,10 @@ const formItemLayout = {
 };
 
 const Search = ({
-  onAdd,
   onClear,
   onSearch,
   form: { validateFields, getFieldDecorator, resetFields },
 }) => {
-  const showConfirm = (e) => {
-    const info = e.target.value;
-    switch (info) {
-      case '+ 创建配送单':
-        onAdd();
-        break;
-      default:
-        break;
-    }
-  };
-
   const handleClear = () => {
     resetFields();
     onClear();
@@ -101,18 +89,6 @@ const Search = ({
           </Col>
         </Row>
       </Form>
-      <Row>
-        <Col span={12}>
-          <Button
-            type="primary"
-            className="opt-btn"
-            onClick={showConfirm}
-            value="+ 创建配送单"
-          >
-            + 创建配送单
-          </Button>
-        </Col>
-      </Row>
     </div>
   );
 };

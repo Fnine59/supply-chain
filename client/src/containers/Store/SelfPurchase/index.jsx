@@ -142,6 +142,8 @@ class Purchase extends React.PureComponent {
           goodsList: formDataList,
           orderNo: orderInfo.orderNo,
           amount: orderInfo.amount,
+          storeId: orderInfo.storeId,
+          supplyId: orderInfo.supplyId,
           delIds,
         };
         this.props.dispatch(action.doUpdate(params));

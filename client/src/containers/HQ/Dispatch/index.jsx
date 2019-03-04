@@ -34,17 +34,6 @@ class Purchase extends React.PureComponent {
       shopList,
     } = this.props.hqDispatch;
     const searchProps = {
-      onAdd: () => {
-        const { dispatch } = this.props;
-        dispatch({
-          type: 'hqDispatch/updateState',
-          payload: {
-            formVisible: true,
-            type: 'add',
-          },
-        });
-        dispatch(action.getShopList());
-      },
       onClear: () => {
         const { dispatch } = this.props;
         dispatch(action.getList());
