@@ -285,6 +285,17 @@ ShopSelfPurchase.prototype.doUpdate = function(params, callback) {
         ])
       );
 
+      params.goodsList.forEach(it => {
+        const addGoods = `insert into relations_delivery_goods(delivery_order_no, goods_id, type) values(?,?,?);`
+        sqlParamsEntity.push(
+          helper.getNewSqlParamEntity(addGoods, [
+            orderNo,
+            it.id,
+            "sf"
+          ])
+        );
+      })
+
       helper.execTrans(sqlParamsEntity, (err, info) => {
         if (err) {
           console.error("事务执行失败", err);

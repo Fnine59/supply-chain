@@ -208,6 +208,7 @@ ShopPurchase.prototype.doDelete = function(params, callback) {
  * 2. 更新单据流水号
  * 3. 更新门店请购订单表及门店物品采购关系表，将用户的修改保留，并修改单据状态为已提交
  * 4. 更新总部订单表，生成新的订单
+ * 5. 更新总部/供应商物品配送关系表
  */
 ShopPurchase.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
@@ -285,6 +286,17 @@ ShopPurchase.prototype.doUpdate = function(params, callback) {
           helper.getTimeString(new Date())
         ])
       );
+
+      params.goodsList.forEach(it => {
+        const addGoods = `insert into relations_delivery_goods(delivery_order_no, goods_id, type) values(?,?,?);`
+        sqlParamsEntity.push(
+          helper.getNewSqlParamEntity(addGoods, [
+            orderNo,
+            it.id,
+            "pr"
+          ])
+        );
+      })
 
       helper.execTrans(sqlParamsEntity, (err, info) => {
         if (err) {

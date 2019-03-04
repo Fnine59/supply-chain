@@ -1,16 +1,16 @@
 import { message } from 'antd';
 import request from '../../common/utils/request';
 import {
-  GETDISPATCHORDERLIST,
+  GETSENDGOODSORDERLIST,
 } from './types';
 
 /**
- * 获取配送单列表
+ * 获取发货单列表
  */
 export function getList(payload) {
   return async (dispatch) => {
     const res = await request({
-      url: '/api/hq/dispatch/getList',
+      url: '/api/supply/sendGoods/getList',
       method: 'post',
       data: payload || {
         page: 1,
@@ -21,12 +21,12 @@ export function getList(payload) {
     });
     if (res) {
       dispatch({
-        type: GETDISPATCHORDERLIST,
+        type: GETSENDGOODSORDERLIST,
         payload: res,
       });
       if (!payload) {
         dispatch({
-          type: 'hqDispatch/updateState',
+          type: 'sendGoods/updateState',
           payload: {
             queryParams: {
               page: 1,
@@ -42,12 +42,12 @@ export function getList(payload) {
 }
 
 /**
- * 获取配送单详情
+ * 获取发货单详情
  */
 export function doGetDetail(payload) {
   return async (dispatch) => {
     const res = await request({
-      url: '/api/hq/dispatch/getDetail',
+      url: '/api/supply/sendGoods/getDetail',
       method: 'post',
       data: {
         orderNo: payload.orderNo,
@@ -56,7 +56,7 @@ export function doGetDetail(payload) {
     });
     if (res) {
       dispatch({
-        type: 'hqDispatch/updateState',
+        type: 'sendGoods/updateState',
         payload: {
           type: payload.type,
           formVisible: true,
@@ -71,27 +71,27 @@ export function doGetDetail(payload) {
 }
 
 /**
- * 更新配送单信息
+ * 更新发货单信息
  */
 export function doUpdate(payload) {
   console.log('payload', payload);
   return async (dispatch) => {
     const res = await request({
-      url: '/api/hq/dispatch/update',
+      url: '/api/supply/sendGoods/update',
       method: 'post',
       data: payload,
     });
     if (res) {
       message.success(res.message, 2);
       dispatch({
-        type: 'hqDispatch/updateState',
+        type: 'sendGoods/updateState',
         payload: {
           formVisible: false,
           selectGoodsKeys: [],
           selectGoodsItems: [],
           formDataList: [],
           orderInfo: {
-            amount: 0, // 配送总金额
+            amount: 0, // 发货总金额
             storeName: '', // 门店信息
           },
           delIds: [],

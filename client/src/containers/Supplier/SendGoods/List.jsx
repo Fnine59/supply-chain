@@ -16,7 +16,7 @@ const List = ({
       key: 'id',
     },
     {
-      title: '配送单号',
+      title: '发货单号',
       dataIndex: 'orderNo',
       key: 'orderNo',
     },
@@ -31,7 +31,7 @@ const List = ({
       key: 'storeName',
     },
     {
-      title: '配送机构',
+      title: '发货机构',
       dataIndex: 'dispatchName',
       key: 'dispatchName',
     },
@@ -53,12 +53,12 @@ const List = ({
       key: 'updateTime',
     },
     {
-      title: '配送金额',
+      title: '发货金额',
       dataIndex: 'amount',
       key: 'amount',
     },
     {
-      title: '配送差异金额',
+      title: '发货差异金额',
       dataIndex: 'diffAmount',
       key: 'diffAmount',
     },

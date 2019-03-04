@@ -33,6 +33,7 @@ const orderForm = ({
   tableProps,
   modalProps,
   shopList,
+  onSubmit,
   onUpdate,
   onBack,
   form: { validateFields, getFieldDecorator },
@@ -41,6 +42,9 @@ const orderForm = ({
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
+        if (type === 'add') {
+          onSubmit(values);
+        }
         if (type === 'edit') {
           onUpdate();
         }
@@ -57,13 +61,13 @@ const orderForm = ({
           <Row>
             {type === 'add' && (
               <Col span={8}>
-                <FormItem label="配送门店" {...formItemLayout}>
+                <FormItem label="发货门店" {...formItemLayout}>
                   {getFieldDecorator('storeId', {
                     initialValue: '',
                     rules: [
                       {
                         required: true,
-                        message: '请选择配送门店',
+                        message: '请选择发货门店',
                       },
                     ],
                   })(
@@ -78,7 +82,7 @@ const orderForm = ({
             )}
             {(type === 'view' || type === 'edit') && (
               <Col span={8}>
-                <FormItem label="配送门店" {...formItemLayout}>
+                <FormItem label="发货门店" {...formItemLayout}>
                   {getFieldDecorator('storeName', {
                     initialValue: orderInfo.storeName || '',
                   })(<Input disabled />)}
@@ -86,22 +90,12 @@ const orderForm = ({
               </Col>
             )}
             <Col span={8}>
-              <FormItem label="配送总金额" {...formItemLayout}>
+              <FormItem label="发货总金额" {...formItemLayout}>
                 <InputNumber
                   disabled
                   precision={2}
                   min={0}
                   value={orderInfo.amount}
-                />
-              </FormItem>
-            </Col>
-            <Col span={8}>
-              <FormItem label="配送差异总金额" {...formItemLayout}>
-                <InputNumber
-                  disabled
-                  precision={2}
-                  min={0}
-                  value={orderInfo.diffAmount}
                 />
               </FormItem>
             </Col>
@@ -138,19 +132,19 @@ const orderForm = ({
                 dataIndex: 'goodsAmount',
               },
               {
-                title: '配送数量',
+                title: '发货数量',
                 dataIndex: 'dispatchGoodsCount',
               },
               {
-                title: '配送金额',
+                title: '发货金额',
                 dataIndex: 'dispatchGoodsAmount',
               },
               {
-                title: '配送差异数量',
+                title: '发货差异数量',
                 dataIndex: 'dispatchGoodsDiffCount',
               },
               {
-                title: '配送差异金额',
+                title: '发货差异金额',
                 dataIndex: 'dispatchGoodsDiffAmount',
               },
             ]}
@@ -184,6 +178,7 @@ orderForm.propTypes = {
   modalProps: PropTypes.object,
   shopList: PropTypes.array,
   onBack: PropTypes.func,
+  onSubmit: PropTypes.func,
   onUpdate: PropTypes.func,
 };
 

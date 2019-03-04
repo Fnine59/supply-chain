@@ -453,7 +453,7 @@
             {
               "name": "type",
               "type": "ShortString",
-              "remark": "pr->请购单流水号；ps->总部订单号；sf->门店自采单；fh->供应商发货单",
+              "remark": "pr->请购单流水号；ps->总部订单号；sf->门店自采单；fh->供应商发货单；prys->门店请购验收单",
               "chnname": "流水号用途",
               "notNull": true
             }
@@ -732,19 +732,24 @@
               "name": "delivery_diff_amount",
               "type": "Money",
               "remark": "总部配送差异金额",
-              "chnname": "总部差异金额"
+              "chnname": "总部差异金额",
+              "defaultValue": ""
             },
             {
               "name": "accept_amount",
               "type": "Money",
               "remark": "采购金额-配送差异金额-验收时差异金额=验收金额",
-              "chnname": "验收总金额"
+              "chnname": "验收总金额",
+              "defaultValue": "0",
+              "notNull": true
             },
             {
               "name": "diff_amount",
               "type": "Money",
               "remark": "总部配送差异+运输过程丢失差异",
-              "chnname": "验收时差异金额"
+              "chnname": "验收时差异金额",
+              "defaultValue": "0",
+              "notNull": true
             }
           ],
           "indexs": [],
@@ -1039,13 +1044,15 @@
               "type": "Double",
               "remark": "总部配送及发货的数量",
               "chnname": "配送数量",
-              "notNull": false
+              "notNull": false,
+              "defaultValue": "0"
             },
             {
               "name": "goods_amount",
               "type": "Money",
               "remark": "依据物品单价计算出的该配送数量下的配送金额",
-              "chnname": "配送金额"
+              "chnname": "配送金额",
+              "defaultValue": "0"
             },
             {
               "name": "type",
@@ -1260,7 +1267,15 @@
               "name": "accept_count",
               "type": "IdOrKey",
               "remark": "门店实际验收数量",
-              "chnname": "验收数量"
+              "chnname": "验收数量",
+              "defaultValue": "0"
+            },
+            {
+              "name": "accept_amt",
+              "type": "Money",
+              "remark": "门店实际验收金额",
+              "chnname": "验收金额",
+              "defaultValue": "0"
             },
             {
               "name": "dispatch_diff_count",
@@ -1272,7 +1287,8 @@
               "name": "send_diff_count",
               "type": "Double",
               "remark": "运输过程中的意外导致的差异数量；对于门店请购来说，该差异数量为总差异数量-总部配送差异数量；对于门店自采来说，该差异数量=总差异数量",
-              "chnname": "运输过程差异数量"
+              "chnname": "运输过程差异数量",
+              "defaultValue": "0"
             },
             {
               "name": "dispatch_diff_amount",
@@ -1284,7 +1300,8 @@
               "name": "send_diff_amount",
               "type": "Money",
               "remark": "运输过程中产生的差异部分的具体金额，主要用于追责",
-              "chnname": "运输过程差异金额"
+              "chnname": "运输过程差异金额",
+              "defaultValue": "0"
             }
           ],
           "indexs": [],
@@ -1908,7 +1925,7 @@
             "controlPoints": [
               {
                 "x": 403.3583984375,
-                "y": 532.31
+                "y": 522.2870370370371
               },
               {
                 "x": 467.9814453125,
@@ -1927,7 +1944,7 @@
             "controlPoints": [
               {
                 "x": 403.3583984375,
-                "y": 862.31
+                "y": 852.2870370370371
               },
               {
                 "x": 444.8603515625,
@@ -1946,7 +1963,7 @@
             "controlPoints": [
               {
                 "x": 16.6416015625,
-                "y": 512.23
+                "y": 502.21296296296293
               },
               {
                 "x": -95.224609375,
@@ -1965,7 +1982,7 @@
             "controlPoints": [
               {
                 "x": 16.6416015625,
-                "y": 842.23
+                "y": 832.2129629629629
               },
               {
                 "x": -85.224609375,
@@ -2336,13 +2353,15 @@
               "name": "amount",
               "type": "Money",
               "remark": "总部配送物品的金额，依据配送关系表计算得出，并存储",
-              "chnname": "配送总金额"
+              "chnname": "配送总金额",
+              "defaultValue": "0"
             },
             {
               "name": "diff_amount",
               "type": "Money",
               "remark": "总部少发物资部分的差异金额，最终会退款给门店",
-              "chnname": "差异总金额"
+              "chnname": "差异总金额",
+              "defaultValue": "0"
             }
           ],
           "indexs": [],

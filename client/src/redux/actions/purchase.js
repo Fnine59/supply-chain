@@ -215,6 +215,7 @@ export function doUpdate(payload) {
       data: payload,
     });
     if (res) {
+      message.success(res.message, 2);
       dispatch({
         type: 'purchase/updateState',
         payload: {

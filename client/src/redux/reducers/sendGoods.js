@@ -1,15 +1,14 @@
 import {
   UPDATESTATE,
-  GETDISPATCHORDERLIST,
+  GETSENDGOODSORDERLIST,
   GETSTATE,
 } from '../actions/types';
 
 const initState = {
   type: 'edit',
   orderInfo: {
-    amount: 0, // 配送总金额
+    amount: 0, // 发货总金额
     storeName: '', // 门店信息
-    diffAmount: 0, // 配送差异总金额
   },
   formVisible: false,
   goodsModalVisible: false,
@@ -28,16 +27,16 @@ const initState = {
   },
 };
 
-export default function hqDispatch(state = initState, action) {
+export default function sendGoods(state = initState, action) {
   switch (action.type) {
-    case GETDISPATCHORDERLIST:
+    case GETSENDGOODSORDERLIST:
       console.log(
-        '======================获取到配送单列表======================',
+        '======================获取到发货单列表======================',
       );
       return { ...state, dataList: action.payload };
-    case `hqDispatch/${GETSTATE}`:
+    case `sendGoods/${GETSTATE}`:
       return { ...state };
-    case `hqDispatch/${UPDATESTATE}`:
+    case `sendGoods/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
       console.warn('未匹配到相应的ACTION TYPE');

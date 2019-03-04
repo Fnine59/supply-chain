@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table as AntdTable, Form, Icon, InputNumber } from 'antd';
+import { Table as AntdTable, Popconfirm, Form, Icon, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;
@@ -134,7 +134,7 @@ class EditableTable extends React.PureComponent {
       {
         title: (
           <div>
-            <span style={{ marginRight: 10 }}>配送数量</span>
+            <span style={{ marginRight: 10 }}>发货数量</span>
             <Icon type="edit" />
           </div>
         ),
@@ -142,15 +142,15 @@ class EditableTable extends React.PureComponent {
         editable: true,
       },
       {
-        title: '配送金额',
+        title: '发货金额',
         dataIndex: 'dispatchGoodsAmount',
       },
       {
-        title: '配送差异数量',
+        title: '发货差异数量',
         dataIndex: 'dispatchGoodsDiffCount',
       },
       {
-        title: '配送差异金额',
+        title: '发货差异金额',
         dataIndex: 'dispatchGoodsDiffAmount',
       },
     ];

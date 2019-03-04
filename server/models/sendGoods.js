@@ -1,5 +1,5 @@
 /**
- * @description 配送单表数据模型层
+ * @description 发货单表数据模型层
  * @author NaiyingZhang <fnine59@163.com>
  * @date 2019-02-24
  */
@@ -7,38 +7,38 @@
 import helper from "../utils/helper";
 
 /* 构造方法 */
-const HQDispatch = function(item) {
+const SendGoods = function(item) {
   this.props = item.props;
 };
 
 /**
- * 获取配送单列表
+ * 获取发货单列表
  */
-HQDispatch.prototype.doGetList = function(params, callback) {
+SendGoods.prototype.doGetList = function(params, callback) {
   // const start = (params.page - 1) * params.rows;
-  // const sql = `select * from hq_order limit ${start},${params.rows}`;
+  // const sql = `select * from supplier_order limit ${start},${params.rows}`;
   const sql = `SELECT
-      hq_order.id,
-      hq_order.purchase_order_no as purchaseOrderNo,
-      hq_order.order_no as orderNo,
-      hq_order.dispatch_id as dispatchId,
-      hq_order.store_id as storeId,
-      hq_order.status,
-      hq_order.amount,
-      hq_order.diff_amount as diffAmount,
-      hq_order.create_time as createTime,
-      hq_order.update_time as updateTime,
+      supplier_order.id,
+      supplier_order.purchase_order_no as purchaseOrderNo,
+      supplier_order.order_no as orderNo,
+      supplier_order.dispatch_id as dispatchId,
+      supplier_order.store_id as storeId,
+      supplier_order.status,
+      supplier_order.amount,
+      supplier_order.diff_amount as diffAmount,
+      supplier_order.create_time as createTime,
+      supplier_order.update_time as updateTime,
       baseinfo_store.name AS storeName,
       baseinfo_dispatch.name AS dispatchName
-      FROM hq_order,baseinfo_store,baseinfo_dispatch
-      WHERE hq_order.dispatch_id = baseinfo_dispatch.id
-      AND hq_order.store_id = baseinfo_store.id
+      FROM supplier_order,baseinfo_store,baseinfo_dispatch
+      WHERE supplier_order.dispatch_id = baseinfo_dispatch.id
+      AND supplier_order.store_id = baseinfo_store.id
       ${
         params.orderNo !== ""
-          ? `AND hq_order.order_no LIKE '%${params.orderNo}%'`
+          ? `AND supplier_order.order_no LIKE '%${params.orderNo}%'`
           : ""
       } ${
-    params.status !== "" ? `AND hq_order.status='${params.status}'` : ""
+    params.status !== "" ? `AND supplier_order.status='${params.status}'` : ""
   }`;
   helper.doSql({
     sql,
@@ -47,25 +47,25 @@ HQDispatch.prototype.doGetList = function(params, callback) {
   });
 };
 
-// 获取配送单单据详情
-HQDispatch.prototype.doGetDetail = function(params, callback) {
+// 获取发货单单据详情
+SendGoods.prototype.doGetDetail = function(params, callback) {
   const sql = `SELECT
-	hq_order.id,
-	hq_order.order_no as orderNo,
-	hq_order.status,
-  hq_order.amount,
-  hq_order.diff_amount as diffAmount,
-  hq_order.store_id as storeId,
-  hq_order.dispatch_id as dispatchId,
-	hq_order.create_time as createTime,
-	hq_order.update_time as updateTime,
+	supplier_order.id,
+	supplier_order.order_no as orderNo,
+	supplier_order.status,
+  supplier_order.amount,
+  supplier_order.diff_amount as diffAmount,
+  supplier_order.store_id as storeId,
+  supplier_order.dispatch_id as dispatchId,
+	supplier_order.create_time as createTime,
+	supplier_order.update_time as updateTime,
 	baseinfo_store.name AS storeName,
 	baseinfo_dispatch.name AS dispatchName
-  FROM hq_order, baseinfo_store, baseinfo_dispatch WHERE order_no='${
+  FROM supplier_order, baseinfo_store, baseinfo_dispatch WHERE order_no='${
     params.orderNo
   }'
-  AND hq_order.store_id = baseinfo_store.id
-  AND hq_order.dispatch_id = baseinfo_dispatch.id;
+  AND supplier_order.store_id = baseinfo_store.id
+  AND supplier_order.dispatch_id = baseinfo_dispatch.id;
 
   SELECT
   baseinfo_goods.id,
@@ -91,15 +91,15 @@ HQDispatch.prototype.doGetDetail = function(params, callback) {
 };
 
 /**
- * 提交配送单，包含如下操作：
+ * 提交发货单，包含如下操作：
  * 1. 获取单据流水号用于生成门店验收单
  * 2. 更新单据流水号
- * 3. 更新供应商/总部物品配送关系表
- * 4. 修改配送单据状态为已提交
+ * 3. 更新供应商/总部物品发货关系表
+ * 4. 修改发货单据状态为已提交
  * 5. 更新门店验收订单表，生成新的订单
  * 6. 更新门店验收物品关系表
  */
-HQDispatch.prototype.doUpdate = function(params, callback) {
+SendGoods.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
   const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='prys'`;
@@ -119,8 +119,8 @@ HQDispatch.prototype.doUpdate = function(params, callback) {
         helper.getNewSqlParamEntity(updNo, [no, date, "prys"])
       );
 
-      // 更新配送订单表，修改单据状态和单据状态更新时间
-      const updOrder = `update hq_order set status='2', amount='${
+      // 更新发货订单表，修改单据状态和单据状态更新时间
+      const updOrder = `update supplier_order set status='2', amount='${
         params.amount
       }', diff_amount='${
         params.diffAmount
@@ -184,4 +184,4 @@ HQDispatch.prototype.doUpdate = function(params, callback) {
   });
 };
 
-module.exports = HQDispatch;
+module.exports = SendGoods;
