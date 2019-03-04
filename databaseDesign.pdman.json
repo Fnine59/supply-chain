@@ -453,7 +453,7 @@
             {
               "name": "type",
               "type": "ShortString",
-              "remark": "pr->请购单流水号；ps->总部订单号；",
+              "remark": "pr->请购单流水号；ps->总部订单号；sf->门店自采单；fh->供应商发货单",
               "chnname": "流水号用途",
               "notNull": true
             }
@@ -815,7 +815,7 @@
             {
               "name": "status",
               "type": "ShortString",
-              "remark": "1->待处理;2->已提交;3->已完成",
+              "remark": "1->待处理；2->已提交；3->已完成；4->已作废",
               "chnname": "单据状态",
               "notNull": true,
               "defaultValue": "1"
@@ -1879,11 +1879,11 @@
               },
               {
                 "x": 878.52734375,
-                "y": 972.828947368421
+                "y": 912.5131578947369
               }
             ],
             "sourceAnchor": 3,
-            "targetAnchor": 12
+            "targetAnchor": 6
           },
           {
             "shape": "erdRelation",
@@ -2390,6 +2390,13 @@
               "type": "Integer",
               "remark": "",
               "chnname": "供应商id",
+              "notNull": false
+            },
+            {
+              "name": "order_no",
+              "type": "IdOrKey",
+              "remark": "供应商发货单号",
+              "chnname": "发货单号",
               "notNull": true
             },
             {
@@ -2412,13 +2419,6 @@
               "type": "DateTime",
               "remark": "",
               "chnname": "单据状态更新时间",
-              "notNull": true
-            },
-            {
-              "name": "order_no",
-              "type": "IdOrKey",
-              "remark": "供应商发货单号",
-              "chnname": "发货单号",
               "notNull": true
             },
             {

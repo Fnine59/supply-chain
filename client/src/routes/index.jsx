@@ -13,6 +13,7 @@ import GoodsInfo from '../containers/BaseInfo/GoodsInfo/index';
 
 // 门店管理模块
 import Purchase from '../containers/Store/Purchase/index';
+import SelfPurchase from '../containers/Store/SelfPurchase/index';
 
 const Routes = () => (
   <Router history={history}>
@@ -24,6 +25,7 @@ const Routes = () => (
       <Route path="/baseinfo/supply/info" component={SupplyInfo} />
       <Route path="/baseinfo/goods/info" component={GoodsInfo} />
       <Route path="/shop/pr" component={Purchase} />
+      <Route path="/shop/selfPr" component={SelfPurchase} />
       <Route path="/error404" component={Error404} />
       <Route component={Error404} />
     </Switch>

@@ -5,6 +5,7 @@ import hqinfo from './hqinfo';
 import supplyInfo from './supplyInfo';
 import goodsInfo from './goodsInfo';
 import purchase from './purchase';
+import selfPurchase from './selfPurchase';
 
 export default function createReducer() {
   return combineReducers({
@@ -14,5 +15,6 @@ export default function createReducer() {
     supplyInfo,
     goodsInfo,
     purchase,
+    selfPurchase,
   });
 }
