@@ -38,7 +38,7 @@ SendGoods.prototype.doGetList = function(params, callback) {
           : ""
       } ${
     params.status !== "" ? `AND supplier_order.status='${params.status}'` : ""
-  }`;
+  } ORDER BY create_time desc`;
   helper.doSql({
     sql,
     name: "doGetList",

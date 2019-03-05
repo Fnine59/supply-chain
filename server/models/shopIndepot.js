@@ -35,7 +35,7 @@ ShopIndepot.prototype.doGetList = function(params, callback) {
         params.orderNo !== ""
           ? `AND store_in_depot.accept_order_no LIKE '%${params.orderNo}%'`
           : ""
-      }`;
+      } ORDER BY create_time desc`;
   helper.doSql({
     sql,
     name: "doGetList",
