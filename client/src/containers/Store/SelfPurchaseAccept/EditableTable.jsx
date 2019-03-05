@@ -62,7 +62,7 @@ class EditableCell extends React.PureComponent {
                     rules: [
                       {
                         required: true,
-                        message: `请输入${title}`,
+                        message: `请输入${title ? title.props.children[0].props.children : '必填项'}`,
                       },
                     ],
                     initialValue: record[dataIndex],
@@ -73,6 +73,7 @@ class EditableCell extends React.PureComponent {
                       onBlur={this.save}
                       precision={2}
                       min={0}
+                      max={record.deliveryCount}
                     />,
                   )}
                 </FormItem>
@@ -128,7 +129,7 @@ class EditableTable extends React.PureComponent {
         dataIndex: 'purchaseCount',
       },
       {
-        title: '总部配送数量',
+        title: '供应商发货数量',
         dataIndex: 'deliveryCount',
       },
       {
