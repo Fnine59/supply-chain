@@ -86,7 +86,7 @@ const List = ({
       title: (
         <div>
           <span style={{ marginRight: 10 }}>操作</span>
-          <Tooltip title={introduction.options}>
+          <Tooltip title={introduction.acceptOpt}>
             <Icon type="question-circle" />
           </Tooltip>
         </div>

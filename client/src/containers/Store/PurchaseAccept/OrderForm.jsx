@@ -170,7 +170,7 @@ const orderForm = ({
             <Col span={8}>
               {type !== 'view' && (
                 <Button className="footer-opt" type="primary" htmlType="submit">
-                  提交
+                  验收
                 </Button>
               )}
               <Button className="footer-opt" onClick={handleBack}>
