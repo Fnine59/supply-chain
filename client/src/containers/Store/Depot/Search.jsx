@@ -41,7 +41,7 @@ const Search = ({
       <Form onSubmit={handleSearch}>
         <Row>
           <Col span={8}>
-            <FormItem label="所属门店" {...formItemLayout}>
+            <FormItem label="入库门店" {...formItemLayout}>
               {getFieldDecorator('storeId', {
                 initialValue: '',
               })(

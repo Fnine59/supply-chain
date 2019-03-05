@@ -16,29 +16,26 @@ const ShopIndepot = function(item) {
  */
 ShopIndepot.prototype.doGetList = function(params, callback) {
   // const start = (params.page - 1) * params.rows;
-  // const sql = `select * from supplier_order limit ${start},${params.rows}`;
+  // const sql = `select * from store_in_depot limit ${start},${params.rows}`;
   const sql = `SELECT
-      supplier_order.id,
-      supplier_order.self_purchase_order_no as selfPurchaseOrderNo,
-      supplier_order.supply_id as supplyId,
-      supplier_order.store_id as storeId,
-      supplier_order.order_no as orderNo,
-      supplier_order.status,
-      supplier_order.create_time as createTime,
-      supplier_order.update_time as updateTime,
-      supplier_order.amount,
-      baseinfo_store.name AS storeName,
-      baseinfo_supplier.name AS supplyName
-      FROM supplier_order,baseinfo_store,baseinfo_supplier
-      WHERE supplier_order.supply_id = baseinfo_supplier.id
-      AND supplier_order.store_id = baseinfo_store.id
+      store_in_depot.id,
+      store_in_depot.accept_order_no as acceptOrderNo,
+      store_in_depot.type,
+      store_in_depot.create_time as createTime,
+      store_in_depot.store_id as storeId,
+      baseinfo_store.name AS storeName
+      FROM store_in_depot,baseinfo_store
+      WHERE store_in_depot.store_id = baseinfo_store.id
+      ${
+        params.storeId !== ""
+          ? `AND store_in_depot.store_id LIKE '%${params.storeId}%'`
+          : ""
+      }
       ${
         params.orderNo !== ""
-          ? `AND supplier_order.order_no LIKE '%${params.orderNo}%'`
+          ? `AND store_in_depot.accept_order_no LIKE '%${params.orderNo}%'`
           : ""
-      } ${
-    params.status !== "" ? `AND supplier_order.status='${params.status}'` : ""
-  }`;
+      }`;
   helper.doSql({
     sql,
     name: "doGetList",
@@ -49,37 +46,26 @@ ShopIndepot.prototype.doGetList = function(params, callback) {
 // 获取入库单单据详情
 ShopIndepot.prototype.doGetDetail = function(params, callback) {
   const sql = `SELECT
-	supplier_order.id,
-  supplier_order.self_purchase_order_no as selfPurchaseOrderNo,
-  supplier_order.supply_id as supplyId,
-  supplier_order.store_id as storeId,
-  supplier_order.order_no as orderNo,
-  supplier_order.status,
-  supplier_order.create_time as createTime,
-  supplier_order.update_time as updateTime,
-  supplier_order.amount,
-  baseinfo_store.name AS storeName,
-  baseinfo_supplier.name AS supplyName
-  FROM supplier_order,baseinfo_store,baseinfo_supplier
-  WHERE order_no='${params.orderNo}'
-  AND supplier_order.store_id = baseinfo_store.id
-  AND supplier_order.supply_id = baseinfo_supplier.id;
+	store_in_depot.id,
+  store_in_depot.accept_order_no as acceptOrderNo,
+  store_in_depot.type,
+  store_in_depot.create_time as createTime,
+  store_in_depot.store_id as storeId,
+  baseinfo_store.name AS storeName
+  FROM store_in_depot,baseinfo_store
+  WHERE store_in_depot.accept_order_no='${params.orderNo}'
+  AND store_in_depot.store_id = baseinfo_store.id;
 
   SELECT
   baseinfo_goods.name AS name,
   baseinfo_goods.unit AS unit,
   baseinfo_goods.unit_price AS unitPrice,
-	relations_purchase_goods.goods_count as goodsCount,
-  relations_purchase_goods.goods_amount as goodsAmount,
-  relations_delivery_goods.id AS detailId,
-  relations_delivery_goods.goods_id AS id,
-  relations_delivery_goods.count AS sendGoodsCount,
-  relations_delivery_goods.goods_amount AS sendGoodsAmount
-  FROM relations_purchase_goods, baseinfo_goods, relations_delivery_goods
-  WHERE relations_purchase_goods.order_no='${params.selfPurchaseOrderNo}'
-  AND relations_delivery_goods.delivery_order_no = '${params.orderNo}'
-  AND relations_purchase_goods.goods_id = relations_delivery_goods.goods_id
-  AND relations_purchase_goods.goods_id = baseinfo_goods.id`;
+  relations_acceptance_goods.goods_id as goodsId,
+	relations_acceptance_goods.accept_count as goodsCount,
+  relations_acceptance_goods.accept_amt as goodsAmount
+  FROM baseinfo_goods, relations_acceptance_goods
+  WHERE relations_acceptance_goods.accept_order_no='${params.orderNo}'
+  AND relations_acceptance_goods.goods_id = baseinfo_goods.id`;
   helper.doSqls({
     sql,
     name: "doGetDetail",

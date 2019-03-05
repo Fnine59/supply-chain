@@ -131,9 +131,9 @@ SelfPurchaseAccept.prototype.doUpdate = function(params, callback) {
 
   // 更新入库记录表
   params.goodsList.forEach(it => {
-    const addIndepot = `insert into store_in_depot(accept_order_no,type,create_time) values(?,?,?);`;
+    const addIndepot = `insert into store_in_depot(accept_order_no,type,create_time, store_id) values(?,?,?,?);`;
     sqlParamsEntity.push(
-      helper.getNewSqlParamEntity(addIndepot, [params.orderNo, "sf", time])
+      helper.getNewSqlParamEntity(addIndepot, [params.orderNo, "sf", time, params.storeId])
     );
   });
 

@@ -3,43 +3,42 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { message } from 'antd';
 
-import * as action from '../../../redux/actions/sendGoods';
+import * as action from '../../../redux/actions/indepot';
 import Search from './Search';
 import List from './List';
 import OrderForm from './OrderForm';
 
-class SendGoods extends React.PureComponent {
+class Indepot extends React.PureComponent {
   constructor() {
     super();
     this.state = {};
   }
   componentDidMount() {
-    const { dispatch, sendGoods } = this.props;
-    const { queryParams } = sendGoods;
+    const { dispatch, indepot } = this.props;
+    const { queryParams } = indepot;
     dispatch(action.getList(queryParams));
+    dispatch(action.getShopList());
   }
   render() {
     const {
       type,
-      delIds,
       formVisible,
       orderInfo,
-      selectGoodsKeys,
-      selectGoodsItems,
       formDataList,
       dataList,
       shopList,
-    } = this.props.sendGoods;
+    } = this.props.indepot;
     const searchProps = {
+      shopList,
       onClear: () => {
         const { dispatch } = this.props;
         dispatch(action.getList());
       },
       onSearch: (props) => {
-        const { dispatch, sendGoods } = this.props;
-        const { queryParams } = sendGoods;
+        const { dispatch, indepot } = this.props;
+        const { queryParams } = indepot;
         dispatch({
-          type: 'sendGoods/updateState',
+          type: 'indepot/updateState',
           payload: {
             queryParams: {
               ...queryParams,
@@ -61,8 +60,7 @@ class SendGoods extends React.PureComponent {
         const { dispatch } = this.props;
         dispatch(
           action.doGetDetail({
-            orderNo: record.orderNo,
-            selfPurchaseOrderNo: record.selfPurchaseOrderNo,
+            orderNo: record.acceptOrderNo,
             type: 'view',
           }),
         );
@@ -73,33 +71,9 @@ class SendGoods extends React.PureComponent {
       type,
       orderInfo,
       shopList,
-      onSubmit: (id) => {
-        if (formDataList.length === 0) {
-          message.error('入库的物品列表不能为空');
-          return;
-        }
-        const params = {
-          goodsList: formDataList,
-          storeId: id,
-          amount: orderInfo.amount,
-        };
-        this.props.dispatch(action.doAdd(params));
-      },
-      onUpdate: (newList, totalAmt) => {
-        if (newList.length === 0) {
-          message.error('入库的物品列表不能为空');
-          return;
-        }
-        const params = {
-          goodsList: newList,
-          orderNo: orderInfo.orderNo,
-          amount: totalAmt,
-        };
-        this.props.dispatch(action.doUpdate(params));
-      },
       onBack: () => {
         this.props.dispatch({
-          type: 'sendGoods/updateState',
+          type: 'indepot/updateState',
           payload: {
             formVisible: false,
             formDataList: [],
@@ -113,62 +87,10 @@ class SendGoods extends React.PureComponent {
       // OrderForm中的表格数据
       tableProps: {
         dataSource: formDataList,
-        selectGoodsKeys,
-        selectGoodsItems,
-        onSetDataSource: (newDataList) => {
-          console.warn('newDataList', newDataList);
-          let money = 0;
-          let diffMoney = 0;
-          newDataList.forEach((d) => {
-            money += d.dispatchGoodsAmount;
-            diffMoney += d.dispatchGoodsDiffAmount;
-          });
-          console.warn('money', money);
-          this.props.dispatch({
-            type: 'sendGoods/updateState',
-            payload: {
-              formDataList: newDataList,
-              orderInfo: {
-                ...orderInfo,
-                amount: money,
-                diffAmount: diffMoney,
-              },
-            },
-          });
-        },
-        onSetSelectItems: (newKeys, newItems) => {
-          this.props.dispatch({
-            type: 'sendGoods/updateState',
-            payload: {
-              selectGoodsKeys: newKeys,
-              selectGoodsItems: newItems,
-            },
-          });
-        },
-        onDeleteGoods: (id) => {
-          const { dispatch } = this.props;
-          if (type === 'edit') {
-            const item = formDataList.filter(it => it.id === id);
-            if (item.length > 0) {
-              const arr = delIds;
-              item.forEach((it) => {
-                if (it.detailId) {
-                  arr.push(it.detailId);
-                }
-              });
-              dispatch({
-                type: 'sendGoods/updateState',
-                payload: {
-                  delIds: arr,
-                },
-              });
-            }
-          }
-        },
       },
     };
     return (
-      <div className="sendGoods">
+      <div className="indepot">
         {!formVisible && <Search {...searchProps} />}
         {!formVisible && <List {...listProps} />}
         {formVisible && <OrderForm {...formProps} />}
@@ -179,12 +101,12 @@ class SendGoods extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    sendGoods: state.sendGoods,
+    indepot: state.indepot,
   };
 }
 
-SendGoods.propTypes = {
-  sendGoods: PropTypes.object,
+Indepot.propTypes = {
+  indepot: PropTypes.object,
   dispatch: PropTypes.func,
 };
-export default connect(mapStateToProps)(SendGoods);
+export default connect(mapStateToProps)(Indepot);

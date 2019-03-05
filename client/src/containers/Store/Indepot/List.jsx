@@ -1,19 +1,12 @@
 import React from 'react';
-import { Table, Badge, Icon, Tooltip } from 'antd';
+import { Table } from 'antd';
 import PropTypes from 'prop-types';
-
-import { introduction } from '../../../common/utils/enums';
 
 const List = ({
   dataSource,
   onView,
 }) => {
   const columns = [
-    {
-      title: '单据编码',
-      dataIndex: 'id',
-      key: 'id',
-    },
     {
       title: '入库来源单号',
       dataIndex: 'acceptOrderNo',
@@ -25,41 +18,26 @@ const List = ({
       key: 'storeName',
     },
     {
-      title: '供应商',
-      dataIndex: 'supplyName',
-      key: 'supplyName',
-    },
-    {
       title: '入库时间',
       dataIndex: 'createTime',
       key: 'createTime',
     },
     {
-      title: (
-        <div>
-          <span style={{ marginRight: 10 }}>更新时间</span>
-          <Tooltip title={introduction.updateTime}>
-            <Icon type="question-circle" />
-          </Tooltip>
-        </div>
-      ),
-      dataIndex: 'updateTime',
-      key: 'updateTime',
+      title: '入库类型',
+      dataIndex: 'type',
+      key: 'type',
+      render: (text) => {
+        if (text === 'pr') {
+          return '门店请购';
+        }
+        if (text === 'sf') {
+          return '门店自采';
+        }
+        return '--';
+      },
     },
     {
-      title: '入库金额',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: (
-        <div>
-          <span style={{ marginRight: 10 }}>操作</span>
-          <Tooltip title={introduction.options}>
-            <Icon type="question-circle" />
-          </Tooltip>
-        </div>
-      ),
+      title: '操作',
       key: 'action',
       render: (text, record) => (
         <span>

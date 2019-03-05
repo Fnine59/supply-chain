@@ -17,6 +17,7 @@ const formItemLayout = {
 };
 
 const Search = ({
+  shopList,
   onClear,
   onSearch,
   form: { validateFields, getFieldDecorator, resetFields },
@@ -40,35 +41,28 @@ const Search = ({
       <Form onSubmit={handleSearch}>
         <Row>
           <Col span={8}>
-            <FormItem label="入库单号" {...formItemLayout}>
-              {getFieldDecorator('orderNo', {
-                initialValue: '',
-              })(<Input.Search allowClear placeholder="请输入入库单号" />)}
-            </FormItem>
-          </Col>
-          <Col span={8}>
-            <FormItem label="单据状态" {...formItemLayout}>
-              {getFieldDecorator('status', {
+            <FormItem label="入库门店" {...formItemLayout}>
+              {getFieldDecorator('storeId', {
                 initialValue: '',
               })(
                 <Select>
                   <Option key="0" value="">
-                    所有状态
+                    全部门店
                   </Option>
-                  <Option key="1" value="1">
-                    待处理
-                  </Option>
-                  <Option key="2" value="2">
-                    已提交
-                  </Option>
-                  <Option key="3" value="3">
-                    已完成
-                  </Option>
-                  <Option key="4" value="4">
-                    已作废
-                  </Option>
+                  {shopList.map(it => (
+                    <Option key={it.id} value={it.id}>
+                      {it.name}
+                    </Option>
+                  ))}
                 </Select>,
               )}
+            </FormItem>
+          </Col>
+          <Col span={8}>
+            <FormItem label="入库来源单号" {...formItemLayout}>
+              {getFieldDecorator('orderNo', {
+                initialValue: '',
+              })(<Input.Search allowClear placeholder="请输入入库来源单号" />)}
             </FormItem>
           </Col>
         </Row>
@@ -94,8 +88,8 @@ const Search = ({
 };
 
 Search.propTypes = {
+  shopList: PropTypes.array,
   form: PropTypes.object,
-  onAdd: PropTypes.func,
   onClear: PropTypes.func,
   onSearch: PropTypes.func,
 };

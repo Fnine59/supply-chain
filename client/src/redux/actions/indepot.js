@@ -1,6 +1,7 @@
 import request from '../../common/utils/request';
 import {
   GETSHOPINDEPOTORDERLIST,
+  GETSHOPINDEPOTSHOPLIST,
 } from './types';
 
 /**
@@ -16,6 +17,7 @@ export function getList(payload) {
         rows: 10,
         orderNo: '',
         status: '',
+        storeId: '',
       },
     });
     if (res) {
@@ -32,6 +34,7 @@ export function getList(payload) {
               rows: 10,
               name: '',
               status: '',
+              storeId: '',
             },
           },
         });
@@ -65,6 +68,25 @@ export function doGetDetail(payload) {
           selectGoodsKeys: res.goodsList.map(it => it.id),
           selectGoodsItems: res.goodsList.map(it => it),
         },
+      });
+    }
+  };
+}
+
+/**
+ * 获取门店列表
+ */
+export function getShopList() {
+  return async (dispatch) => {
+    const res = await request({
+      // TODO: 业务模块中使用门店列表的接口可以是同一个，后期合并
+      url: '/api/shop/purchase/getShopList',
+      method: 'get',
+    });
+    if (res) {
+      dispatch({
+        type: GETSHOPINDEPOTSHOPLIST,
+        payload: res,
       });
     }
   };

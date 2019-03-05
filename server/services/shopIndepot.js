@@ -53,7 +53,6 @@ module.exports = {
           data: {
             ...result[0][0],
             createTime: helper.getTimeString(new Date(result[0][0].createTime)),
-            updateTime: helper.getTimeString(new Date(result[0][0].updateTime)),
             goodsList: result[1],
           },
         });

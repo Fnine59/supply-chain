@@ -1,6 +1,7 @@
 import {
   UPDATESTATE,
   GETSHOPINDEPOTORDERLIST,
+  GETSHOPINDEPOTSHOPLIST,
   GETSTATE,
 } from '../actions/types';
 
@@ -11,16 +12,15 @@ const initState = {
     storeName: '', // 门店信息
   },
   formVisible: false,
-  goodsModalVisible: false,
   formDataList: [],
   dataList: [],
-  goodsList: [],
   shopList: [],
   queryParams: {
     page: 1,
     rows: 10,
     orderNo: '',
     status: '',
+    storeId: '',
   },
 };
 
@@ -31,6 +31,11 @@ export default function indepot(state = initState, action) {
         '======================获取到入库单列表======================',
       );
       return { ...state, dataList: action.payload };
+    case GETSHOPINDEPOTSHOPLIST:
+      console.log(
+          '======================获取到入库单列表======================',
+        );
+      return { ...state, shopList: action.payload };
     case `indepot/${GETSTATE}`:
       return { ...state };
     case `indepot/${UPDATESTATE}`:

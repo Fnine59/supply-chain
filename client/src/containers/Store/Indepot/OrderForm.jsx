@@ -18,41 +18,17 @@ const formItemLayout = {
 
 const orderForm = ({
   orderInfo,
-  type,
   tableProps,
   modalProps,
-  onUpdate,
   onBack,
-  form: { validateFields, getFieldDecorator },
+  form: { getFieldDecorator },
 }) => {
-  let totalAmt = 0;
-  tableProps.dataSource.forEach((it) => {
-    totalAmt += it.goodsAmount;
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validateFields((err) => {
-      if (!err) {
-        if (type === 'edit') {
-          const newList = [];
-          tableProps.dataSource.forEach((it) => {
-            newList.push({
-              ...it,
-              sendGoodsAmount: it.goodsAmount,
-              sendGoodsCount: it.goodsCount,
-            });
-          });
-          onUpdate(newList, totalAmt);
-        }
-      }
-    });
-  };
   const handleBack = () => {
     onBack();
   };
   return (
     <div className="form">
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <div className="header">
           <Row>
             <Col span={8}>
@@ -63,13 +39,19 @@ const orderForm = ({
               </FormItem>
             </Col>
             <Col span={8}>
-              <FormItem label="入库总金额" {...formItemLayout}>
-                <InputNumber
-                  disabled
-                  precision={2}
-                  min={0}
-                  value={type === 'view' ? orderInfo.amount : totalAmt}
-                />
+              <FormItem label="入库类型" {...formItemLayout}>
+                {getFieldDecorator('type', {
+                  initialValue:
+                    (() => {
+                      if (orderInfo.type === 'pr') {
+                        return '门店请购';
+                      }
+                      if (orderInfo.type === 'sf') {
+                        return '门店自采';
+                      }
+                      return '--';
+                    })() || '',
+                })(<Input disabled />)}
               </FormItem>
             </Col>
           </Row>
@@ -80,7 +62,7 @@ const orderForm = ({
           columns={[
             {
               title: '物品编码',
-              dataIndex: 'id',
+              dataIndex: 'goodsId',
             },
             {
               title: '物品名称',
@@ -95,32 +77,12 @@ const orderForm = ({
               dataIndex: 'unitPrice',
             },
             {
-              title: '自采数量',
+              title: '入库数量',
               dataIndex: 'goodsCount',
             },
             {
-              title: '自采金额',
-              dataIndex: 'goodsAmount',
-            },
-            {
-              title: '入库数量',
-              dataIndex: 'sendGoodsCount',
-              render: (text, record) => {
-                if (type === 'view') {
-                  return text;
-                }
-                return record.goodsCount;
-              },
-            },
-            {
               title: '入库金额',
-              dataIndex: 'sendGoodsAmount',
-              render: (text, record) => {
-                if (type === 'view') {
-                  return text;
-                }
-                return record.goodsAmount;
-              },
+              dataIndex: 'goodsAmount',
             },
           ]}
         />
@@ -128,11 +90,6 @@ const orderForm = ({
         <div className="footer">
           <Row>
             <Col span={8}>
-              {type !== 'view' && (
-                <Button className="footer-opt" type="primary" htmlType="submit">
-                  提交
-                </Button>
-              )}
               <Button className="footer-opt" onClick={handleBack}>
                 返回
               </Button>
@@ -145,13 +102,11 @@ const orderForm = ({
 };
 
 orderForm.propTypes = {
-  type: PropTypes.string,
   orderInfo: PropTypes.object,
   form: PropTypes.object,
   tableProps: PropTypes.object,
   modalProps: PropTypes.object,
   onBack: PropTypes.func,
-  onUpdate: PropTypes.func,
 };
 
 export default Form.create()(orderForm);
