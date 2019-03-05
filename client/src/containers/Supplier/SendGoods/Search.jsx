@@ -59,7 +59,7 @@ const Search = ({
                     待处理
                   </Option>
                   <Option key="2" value="2">
-                    已提交
+                    已发货
                   </Option>
                   <Option key="3" value="3">
                     已完成

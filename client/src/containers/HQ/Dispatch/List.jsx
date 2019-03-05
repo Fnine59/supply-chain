@@ -71,7 +71,7 @@ const List = ({
           case '1':
             return <Badge status="processing" text="待处理" />;
           case '2':
-            return <Badge status="warning" text="已提交" />;
+            return <Badge status="warning" text="已发货" />;
           case '3':
             return <Badge status="success" text="已完成" />;
           case '4':
