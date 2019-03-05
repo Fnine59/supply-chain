@@ -17,6 +17,7 @@ const formItemLayout = {
 };
 
 const Search = ({
+  shopList,
   onClear,
   onSearch,
   form: { validateFields, getFieldDecorator, resetFields },
@@ -40,15 +41,28 @@ const Search = ({
       <Form onSubmit={handleSearch}>
         <Row>
           <Col span={8}>
+            <FormItem label="所属门店" {...formItemLayout}>
+              {getFieldDecorator('storeId', {
+                initialValue: '',
+              })(
+                <Select>
+                  <Option key="0" value="">
+                    全部门店
+                  </Option>
+                  {shopList.map(it => (
+                    <Option key={it.id} value={it.id}>
+                      {it.name}
+                    </Option>
+                  ))}
+                </Select>,
+              )}
+            </FormItem>
+          </Col>
+          <Col span={8}>
             <FormItem label="名称" {...formItemLayout}>
               {getFieldDecorator('name', {
                 initialValue: '',
-              })(
-                <Input.Search
-                  allowClear
-                  placeholder="请输入物品名称"
-                />,
-              )}
+              })(<Input.Search allowClear placeholder="请输入物品名称" />)}
             </FormItem>
           </Col>
           <Col span={8}>
@@ -58,14 +72,14 @@ const Search = ({
               })(
                 <Select>
                   <Option key="0" value="">
-                  所有状态
-                </Option>
+                    所有状态
+                  </Option>
                   <Option key="1" value="1">
-                  已启用
-                </Option>
+                    已启用
+                  </Option>
                   <Option key="2" value="0">
-                  已停用
-                </Option>
+                    已停用
+                  </Option>
                 </Select>,
               )}
             </FormItem>
@@ -93,6 +107,7 @@ const Search = ({
 };
 
 Search.propTypes = {
+  shopList: PropTypes.array,
   form: PropTypes.object,
   onClear: PropTypes.func,
   onSearch: PropTypes.func,

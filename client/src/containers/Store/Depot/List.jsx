@@ -10,13 +10,13 @@ const List = ({
   const columns = [
     {
       title: '物品编码',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'goodsId',
+      key: 'goodsId',
     },
     {
       title: '物品名称',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'goodsName',
+      key: 'goodsName',
     },
     {
       title: '物品单位',
@@ -42,6 +42,11 @@ const List = ({
             return '---';
         }
       },
+    },
+    {
+      title: '所属门店',
+      dataIndex: 'storeName',
+      key: 'storeName',
     },
     {
       title: '库存数量',

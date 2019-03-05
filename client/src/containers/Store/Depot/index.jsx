@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import getList from '../../../redux/actions/depot';
+import * as action from '../../../redux/actions/depot';
 import Search from './Search';
 import List from './List';
 
@@ -14,16 +14,19 @@ class Depot extends React.PureComponent {
   componentDidMount() {
     const { dispatch, depot } = this.props;
     const { queryParams } = depot;
-    dispatch(getList(queryParams));
+    dispatch(action.getList(queryParams));
+    dispatch(action.getShopList());
   }
   render() {
     const {
       dataList,
+      shopList,
     } = this.props.depot;
     const searchProps = {
+      shopList,
       onClear: () => {
         const { dispatch } = this.props;
-        dispatch(getList());
+        dispatch(action.getList());
       },
       onSearch: (props) => {
         const { dispatch, depot } = this.props;
@@ -38,7 +41,7 @@ class Depot extends React.PureComponent {
           },
         });
         dispatch(
-          getList({
+          action.getList({
             ...queryParams,
             ...props,
           }),

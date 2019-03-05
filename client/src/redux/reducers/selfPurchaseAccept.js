@@ -1,6 +1,6 @@
 import {
   UPDATESTATE,
-  GETPURCHASEACCEPTORDERLIST,
+  GETSELFPURCHASEACCEPTORDERLIST,
   GETSTATE,
 } from '../actions/types';
 
@@ -27,7 +27,7 @@ const initState = {
 
 export default function selfPurchaseAccept(state = initState, action) {
   switch (action.type) {
-    case GETPURCHASEACCEPTORDERLIST:
+    case GETSELFPURCHASEACCEPTORDERLIST:
       console.log(
         '======================获取到验收单列表======================',
       );

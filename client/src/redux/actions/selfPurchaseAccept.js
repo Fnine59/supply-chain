@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import request from '../../common/utils/request';
 import {
-  GETPURCHASEACCEPTORDERLIST,
+  GETSELFPURCHASEACCEPTORDERLIST,
 } from './types';
 
 /**
@@ -21,7 +21,7 @@ export function getList(payload) {
     });
     if (res) {
       dispatch({
-        type: GETPURCHASEACCEPTORDERLIST,
+        type: GETSELFPURCHASEACCEPTORDERLIST,
         payload: res,
       });
       if (!payload) {
