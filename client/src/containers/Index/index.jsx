@@ -131,9 +131,10 @@ class Main extends React.PureComponent {
               >
                 <Menu.Item key="/shop/pr">请购</Menu.Item>
                 <Menu.Item key="/shop/selfPr">自采</Menu.Item>
-                <Menu.Item key="/shop/selfPrAcceptance">自采验收</Menu.Item>
                 <Menu.Item key="/shop/purchaseAcceptance">请购验收</Menu.Item>
-                <Menu.Item key="/shop/inDepot">入库管理</Menu.Item>
+                <Menu.Item key="/shop/selfPrAcceptance">自采验收</Menu.Item>
+                <Menu.Item key="/shop/inDepot">入库流水</Menu.Item>
+                <Menu.Item key="/shop/depot">库存管理</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub3"

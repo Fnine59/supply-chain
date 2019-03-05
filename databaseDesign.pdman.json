@@ -40,6 +40,14 @@
               "notNull": true
             },
             {
+              "name": "depot_count",
+              "type": "Double",
+              "remark": "",
+              "chnname": "库存数量",
+              "notNull": true,
+              "defaultValue": "0"
+            },
+            {
               "name": "status",
               "type": "YesNo",
               "remark": "true->已启用;false->已停用",
@@ -1356,7 +1364,7 @@
           "chnname": "门店验收物品关系表"
         },
         {
-          "title": "store_depot",
+          "title": "store_in_depot",
           "fields": [
             {
               "name": "id",
@@ -1369,13 +1377,6 @@
               "defaultValue": ""
             },
             {
-              "name": "goods_id",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "物品id",
-              "notNull": true
-            },
-            {
               "name": "accept_order_no",
               "type": "IdOrKey",
               "remark": "",
@@ -1383,18 +1384,17 @@
               "notNull": true
             },
             {
-              "name": "count",
-              "type": "BigInt",
-              "remark": "",
-              "chnname": "库存数量",
-              "notNull": true,
-              "defaultValue": "0"
+              "name": "type",
+              "type": "ShortString",
+              "remark": "pr->请购验收；sf->自采验收",
+              "chnname": "入库类型",
+              "notNull": true
             },
             {
-              "name": "accept_type",
-              "type": "ShortString",
-              "remark": "1->请购验收；2->自采验收",
-              "chnname": "验收类型"
+              "name": "create_time",
+              "type": "DateTime",
+              "remark": "验收单提交并入库的时间",
+              "chnname": "入库时间"
             }
           ],
           "indexs": [],
@@ -1440,8 +1440,8 @@
               "relationNoShow": true
             }
           ],
-          "chnname": "门店库存表",
-          "remark": "根据验收单号，查询到门店验收物品关系表中存储的物品详细数量信息，然后逐条进行入库。"
+          "chnname": "入库记录表",
+          "remark": "记录产生物品入库数量的验收单信息"
         }
       ],
       "graphCanvas": {
@@ -1624,7 +1624,7 @@
           },
           {
             "shape": "table",
-            "title": "store_depot",
+            "title": "store_in_depot",
             "moduleName": false,
             "x": 620,
             "y": 1270,
@@ -1668,8 +1668,8 @@
                 "y": -37.48333333333332
               },
               {
-                "x": 94.775390625,
-                "y": -67.71153846153847
+                "x": 101.7890625,
+                "y": -77.75
               }
             ],
             "sourceAnchor": 4,
@@ -1687,30 +1687,11 @@
                 "y": 312.51666666666665
               },
               {
-                "x": 104.775390625,
-                "y": 282.28846153846155
+                "x": 111.7890625,
+                "y": 272.25
               }
             ],
             "sourceAnchor": 4,
-            "targetAnchor": 1
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "6c01a493",
-            "target": "8164c9cf",
-            "id": "23497ed2",
-            "controlPoints": [
-              {
-                "x": 474.2080078125,
-                "y": 1262.4423076923076
-              },
-              {
-                "x": 354.775390625,
-                "y": 1232.2884615384614
-              }
-            ],
-            "sourceAnchor": 2,
             "targetAnchor": 1
           },
           {
@@ -1725,8 +1706,8 @@
                 "y": -167.5921052631579
               },
               {
-                "x": 1595.224609375,
-                "y": -147.71153846153845
+                "x": 1588.2109375,
+                "y": -157.75
               }
             ],
             "sourceAnchor": 5,
@@ -1858,8 +1839,8 @@
                 "y": 192.4078947368421
               },
               {
-                "x": 1605.224609375,
-                "y": 182.28846153846155
+                "x": 1598.2109375,
+                "y": 172.25
               }
             ],
             "sourceAnchor": 5,
@@ -1972,8 +1953,8 @@
                 "y": 502.21296296296293
               },
               {
-                "x": -95.224609375,
-                "y": 522.2884615384615
+                "x": -88.2109375,
+                "y": 512.25
               }
             ],
             "sourceAnchor": 2,
@@ -1991,8 +1972,8 @@
                 "y": 832.2129629629629
               },
               {
-                "x": -85.224609375,
-                "y": 842.2884615384615
+                "x": -78.2109375,
+                "y": 832.25
               }
             ],
             "sourceAnchor": 2,
@@ -2006,15 +1987,15 @@
             "id": "0aeccd4f",
             "controlPoints": [
               {
-                "x": 765.7919921875,
-                "y": 1282.5961538461538
+                "x": 470.2060546875,
+                "y": 1272.5227272727273
               },
               {
                 "x": 877.9814453125,
                 "y": 1142.336956521739
               }
             ],
-            "sourceAnchor": 5,
+            "sourceAnchor": 2,
             "targetAnchor": 4
           },
           {
@@ -2025,15 +2006,15 @@
             "id": "5e8762ec",
             "controlPoints": [
               {
-                "x": 765.7919921875,
-                "y": 1282.5961538461538
+                "x": 470.2060546875,
+                "y": 1272.5227272727273
               },
               {
                 "x": 874.8603515625,
                 "y": 1422.3690476190477
               }
             ],
-            "sourceAnchor": 5,
+            "sourceAnchor": 2,
             "targetAnchor": 4
           },
           {
@@ -2073,6 +2054,25 @@
             ],
             "sourceAnchor": 15,
             "targetAnchor": 0
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "cad20b86",
+            "target": "225c5817",
+            "id": "683a2513",
+            "controlPoints": [
+              {
+                "x": 812.0185546875,
+                "y": 532.25
+              },
+              {
+                "x": 863.201171875,
+                "y": 582.5108695652174
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 8
           }
         ]
       },
@@ -2081,17 +2081,6 @@
           "relation": "0,n:1",
           "from": {
             "entity": "relations_purchase_goods",
-            "field": "goods_id"
-          },
-          "to": {
-            "entity": "baseinfo_goods",
-            "field": "id"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_depot",
             "field": "goods_id"
           },
           "to": {
@@ -2245,7 +2234,7 @@
         {
           "relation": "0,n:1",
           "from": {
-            "entity": "store_depot",
+            "entity": "store_in_depot",
             "field": "accept_order_no"
           },
           "to": {
@@ -2256,7 +2245,7 @@
         {
           "relation": "0,n:1",
           "from": {
-            "entity": "store_depot",
+            "entity": "store_in_depot",
             "field": "accept_order_no"
           },
           "to": {
@@ -2284,6 +2273,17 @@
           "to": {
             "entity": "baseinfo_supplier",
             "field": "id"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_acceptance_order",
+            "field": "dispatch_order_no"
+          },
+          "to": {
+            "entity": "hq_order",
+            "field": "order_no"
           }
         }
       ]

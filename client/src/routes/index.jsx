@@ -14,6 +14,7 @@ import GoodsInfo from '../containers/BaseInfo/GoodsInfo/index';
 // 门店管理模块
 import Purchase from '../containers/Store/Purchase/index';
 import SelfPurchase from '../containers/Store/SelfPurchase/index';
+import purchaseAcceptance from '../containers/Store/PurchaseAccept/index';
 
 // 总部管理模块
 import Dispatch from '../containers/HQ/Dispatch/index';
@@ -32,6 +33,7 @@ const Routes = () => (
       <Route path="/baseinfo/goods/info" component={GoodsInfo} />
       <Route path="/shop/pr" component={Purchase} />
       <Route path="/shop/selfPr" component={SelfPurchase} />
+      <Route path="/shop/purchaseAcceptance" component={purchaseAcceptance} />
       <Route path="/hq/orders" component={Dispatch} />
       <Route path="/supply/orders" component={SendGoods} />
       <Route path="/error404" component={Error404} />

@@ -8,7 +8,7 @@ import Search from './Search';
 import List from './List';
 import OrderForm from './OrderForm';
 
-class Purchase extends React.PureComponent {
+class Self extends React.PureComponent {
   constructor() {
     super();
     this.state = {};
@@ -281,8 +281,8 @@ function mapStateToProps(state) {
   };
 }
 
-Purchase.propTypes = {
+Self.propTypes = {
   selfPurchase: PropTypes.object,
   dispatch: PropTypes.func,
 };
-export default connect(mapStateToProps)(Purchase);
+export default connect(mapStateToProps)(Self);

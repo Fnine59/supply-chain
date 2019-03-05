@@ -7,7 +7,7 @@ import Search from './Search';
 import List from './List';
 import OrderForm from './OrderForm';
 
-class Purchase extends React.PureComponent {
+class Dispatch extends React.PureComponent {
   constructor() {
     super();
     this.state = {};
@@ -21,14 +21,12 @@ class Purchase extends React.PureComponent {
     const {
       type,
       delIds,
-      goodsModalVisible,
       formVisible,
       orderInfo,
       selectGoodsKeys,
       selectGoodsItems,
       formDataList,
       dataList,
-      goodsList,
       shopList,
     } = this.props.hqDispatch;
     const searchProps = {
@@ -176,8 +174,8 @@ function mapStateToProps(state) {
   };
 }
 
-Purchase.propTypes = {
+Dispatch.propTypes = {
   hqDispatch: PropTypes.object,
   dispatch: PropTypes.func,
 };
-export default connect(mapStateToProps)(Purchase);
+export default connect(mapStateToProps)(Dispatch);
