@@ -141,7 +141,11 @@ SelfPurchaseAccept.prototype.doUpdate = function(params, callback) {
   params.goodsList.forEach(it => {
     const updGoods = `insert into store_depots(goods_id,store_id,depot_count) values(?,?,?)
     ON DUPLICATE KEY update depot_count=depot_count + ${it.acceptCount}`;
-    sqlParamsEntity.push(helper.getNewSqlParamEntity(updGoods, []));
+    sqlParamsEntity.push(helper.getNewSqlParamEntity(updGoods, [
+      it.id,
+      params.storeId,
+      it.acceptCount
+    ]));
   });
 
   helper.execTrans(sqlParamsEntity, (err, info) => {
