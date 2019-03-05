@@ -7,7 +7,6 @@ import { introduction } from '../../../common/utils/enums';
 const List = ({
   dataSource,
   onView,
-  onUpdate,
 }) => {
   const columns = [
     {
@@ -16,17 +15,12 @@ const List = ({
       key: 'id',
     },
     {
-      title: '发货单号',
-      dataIndex: 'orderNo',
-      key: 'orderNo',
+      title: '入库来源单号',
+      dataIndex: 'acceptOrderNo',
+      key: 'acceptOrderNo',
     },
     {
-      title: '关联自采单号',
-      dataIndex: 'selfPurchaseOrderNo',
-      key: 'selfPurchaseOrderNo',
-    },
-    {
-      title: '自采门店',
+      title: '入库门店',
       dataIndex: 'storeName',
       key: 'storeName',
     },
@@ -36,7 +30,7 @@ const List = ({
       key: 'supplyName',
     },
     {
-      title: '创建时间',
+      title: '入库时间',
       dataIndex: 'createTime',
       key: 'createTime',
     },
@@ -53,28 +47,9 @@ const List = ({
       key: 'updateTime',
     },
     {
-      title: '发货金额',
+      title: '入库金额',
       dataIndex: 'amount',
       key: 'amount',
-    },
-    {
-      title: '单据状态',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status) => {
-        switch (status) {
-          case '1':
-            return <Badge status="processing" text="待处理" />;
-          case '2':
-            return <Badge status="warning" text="已提交" />;
-          case '3':
-            return <Badge status="success" text="已完成" />;
-          case '4':
-            return <Badge status="default" text="已作废" />;
-          default:
-            return '---';
-        }
-      },
     },
     {
       title: (
@@ -96,16 +71,6 @@ const List = ({
           >
             查看
           </button>
-          {record.status === '1' && (
-            <button
-              className="btn-link"
-              onClick={(e) => {
-                onUpdate(record);
-              }}
-            >
-              编辑
-            </button>
-          )}
         </span>
       ),
     },
@@ -124,7 +89,6 @@ const List = ({
 List.propTypes = {
   dataSource: PropTypes.array,
   onView: PropTypes.func,
-  onUpdate: PropTypes.func,
 };
 
 export default List;

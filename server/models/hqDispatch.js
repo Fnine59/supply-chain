@@ -52,6 +52,7 @@ HQDispatch.prototype.doGetDetail = function(params, callback) {
   const sql = `SELECT
 	hq_order.id,
 	hq_order.order_no as orderNo,
+  hq_order.purchase_order_no as purchaseOrderNo,
 	hq_order.status,
   hq_order.amount,
   hq_order.diff_amount as diffAmount,
@@ -96,13 +97,14 @@ HQDispatch.prototype.doGetDetail = function(params, callback) {
  * 1. 获取单据流水号用于生成门店验收单
  * 2. 更新单据流水号
  * 3. 更新供应商/总部物品配送关系表
- * 4. 修改配送单据状态为已提交
+ * 4. 修改配送单据状态为已提交，修改门店请购单状态为已完成
  * 5. 更新门店验收订单表，生成新的订单
  * 6. 更新门店验收物品关系表
  */
 HQDispatch.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
+  const time = helper.getTimeString(new Date());
   const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='prys'`;
   helper.doSql({
     sql,
@@ -125,10 +127,17 @@ HQDispatch.prototype.doUpdate = function(params, callback) {
         params.amount
       }', diff_amount='${
         params.diffAmount
-      }', update_time='${helper.getTimeString(new Date())}' where order_no='${
+      }', update_time='${time}' where order_no='${
         params.orderNo
       }'`;
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updOrder, []));
+
+      // 更新门店请购单，修改单据状态为已完成
+      const updPrOrder = `update store_purchase_order set status='3', update_time='${time}'
+      where order_no='${
+        params.purchaseOrderNo
+      }'`;
+      sqlParamsEntity.push(helper.getNewSqlParamEntity(updPrOrder, []));
 
       // 更新物品列表 —— 保存用户对数据的修改
       params.goodsList.forEach(it => {
@@ -142,24 +151,23 @@ HQDispatch.prototype.doUpdate = function(params, callback) {
 
       // 生成门店请购验收订单
       const orderNo = `QY${fDate}${helper.formatNumString(no)}`;
-      const addOrder =
-        `insert into store_acceptance_order(dispatch_order_no, order_no, create_time, update_time,
+      const addOrder = `insert into store_acceptance_order(dispatch_order_no, order_no, create_time, update_time,
            status, purchase_amount, delivery_diff_amount) values(?,?,?,?,?,?,?)`;
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(addOrder, [
           params.orderNo,
           orderNo,
-          helper.getTimeString(new Date()),
-          helper.getTimeString(new Date()),
+          time,
+          time,
           1,
-          params.amount+params.diffAmount,
+          params.amount + params.diffAmount,
           params.diffAmount
         ])
       );
 
       params.goodsList.forEach(it => {
         const addGoods = `insert into relations_acceptance_goods(goods_id,accept_order_no,type,
-          purchase_count,delivery_count,dispatch_diff_count,dispatch_diff_amount) values(?,?,?,?,?,?,?);`
+          purchase_count,delivery_count,dispatch_diff_count,dispatch_diff_amount) values(?,?,?,?,?,?,?);`;
         sqlParamsEntity.push(
           helper.getNewSqlParamEntity(addGoods, [
             it.id,
@@ -171,7 +179,7 @@ HQDispatch.prototype.doUpdate = function(params, callback) {
             it.dispatchGoodsDiffAmount
           ])
         );
-      })
+      });
 
       helper.execTrans(sqlParamsEntity, (err, info) => {
         if (err) {

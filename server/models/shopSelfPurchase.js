@@ -57,6 +57,7 @@ ShopSelfPurchase.prototype.doGetSupplyList = function(callback) {
 ShopSelfPurchase.prototype.doCreate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
+  const time = helper.getTimeString(new Date());
   const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='sf'`;
   helper.doSql({
     sql,
@@ -81,11 +82,11 @@ ShopSelfPurchase.prototype.doCreate = function(params, callback) {
         helper.getNewSqlParamEntity(updOrder, [
           orderNo,
           params.supplyId,
-          helper.getTimeString(new Date()),
+          time,
           1,
           params.amount,
           params.storeId,
-          helper.getTimeString(new Date())
+          time
         ])
       );
 
@@ -211,6 +212,7 @@ ShopSelfPurchase.prototype.doDelete = function(params, callback) {
 ShopSelfPurchase.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
+  const time = helper.getTimeString(new Date());
   const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='fh'`;
   helper.doSql({
     sql,
@@ -231,7 +233,7 @@ ShopSelfPurchase.prototype.doUpdate = function(params, callback) {
       // 更新自采订单表，修改单据状态和单据状态更新时间
       const updOrder = `update store_self_purchase_order set status='2', amount='${
         params.amount
-      }', update_time='${helper.getTimeString(new Date())}' where order_no='${
+      }', update_time='${time}' where order_no='${
         params.orderNo
       }'`;
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updOrder, []));
@@ -280,8 +282,8 @@ ShopSelfPurchase.prototype.doUpdate = function(params, callback) {
           params.storeId,
           orderNo,
           1,
-          helper.getTimeString(new Date()),
-          helper.getTimeString(new Date())
+          time,
+          time
         ])
       );
 

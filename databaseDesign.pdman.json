@@ -40,14 +40,6 @@
               "notNull": true
             },
             {
-              "name": "depot_count",
-              "type": "Double",
-              "remark": "",
-              "chnname": "库存数量",
-              "notNull": true,
-              "defaultValue": "0"
-            },
-            {
               "name": "status",
               "type": "YesNo",
               "remark": "true->已启用;false->已停用",
@@ -1442,6 +1434,88 @@
           ],
           "chnname": "入库记录表",
           "remark": "记录产生物品入库数量的验收单信息"
+        },
+        {
+          "title": "store_depots",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "autoIncrement": true,
+              "defaultValue": ""
+            },
+            {
+              "name": "goods_id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "物品id",
+              "notNull": true
+            },
+            {
+              "name": "store_id",
+              "type": "Integer",
+              "remark": "",
+              "chnname": "门店id",
+              "notNull": true
+            },
+            {
+              "name": "depot_count",
+              "type": "Double",
+              "remark": "",
+              "chnname": "在库数量",
+              "notNull": true,
+              "defaultValue": "0"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "门店库存表",
+          "remark": "记录门店物品库存信息的表"
         }
       ],
       "graphCanvas": {
@@ -1632,14 +1706,6 @@
           },
           {
             "shape": "table",
-            "title": "baseinfo_goods:2",
-            "moduleName": "baseinfo",
-            "x": 240,
-            "y": 1260,
-            "id": "8164c9cf"
-          },
-          {
-            "shape": "table",
             "title": "store_self_acceptance_order:1",
             "moduleName": false,
             "x": 1070,
@@ -1653,6 +1719,14 @@
             "x": 1000,
             "y": 180,
             "id": "db33dff6"
+          },
+          {
+            "shape": "table",
+            "title": "store_depots",
+            "moduleName": false,
+            "x": 270,
+            "y": 1270,
+            "id": "b064f447"
           }
         ],
         "edges": [
@@ -1668,8 +1742,8 @@
                 "y": -37.48333333333332
               },
               {
-                "x": 101.7890625,
-                "y": -77.75
+                "x": 94.775390625,
+                "y": -67.71153846153847
               }
             ],
             "sourceAnchor": 4,
@@ -1687,8 +1761,8 @@
                 "y": 312.51666666666665
               },
               {
-                "x": 111.7890625,
-                "y": 272.25
+                "x": 104.775390625,
+                "y": 282.28846153846155
               }
             ],
             "sourceAnchor": 4,
@@ -1706,8 +1780,8 @@
                 "y": -167.5921052631579
               },
               {
-                "x": 1588.2109375,
-                "y": -157.75
+                "x": 1595.224609375,
+                "y": -147.71153846153845
               }
             ],
             "sourceAnchor": 5,
@@ -1839,8 +1913,8 @@
                 "y": 192.4078947368421
               },
               {
-                "x": 1598.2109375,
-                "y": 172.25
+                "x": 1605.224609375,
+                "y": 182.28846153846155
               }
             ],
             "sourceAnchor": 5,
@@ -1953,8 +2027,8 @@
                 "y": 502.21296296296293
               },
               {
-                "x": -88.2109375,
-                "y": 512.25
+                "x": -95.224609375,
+                "y": 522.2884615384615
               }
             ],
             "sourceAnchor": 2,
@@ -1972,50 +2046,12 @@
                 "y": 832.2129629629629
               },
               {
-                "x": -78.2109375,
-                "y": 832.25
+                "x": -85.224609375,
+                "y": 842.2884615384615
               }
             ],
             "sourceAnchor": 2,
             "targetAnchor": 1
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "6c01a493",
-            "target": "7741989f",
-            "id": "0aeccd4f",
-            "controlPoints": [
-              {
-                "x": 470.2060546875,
-                "y": 1272.5227272727273
-              },
-              {
-                "x": 877.9814453125,
-                "y": 1142.336956521739
-              }
-            ],
-            "sourceAnchor": 2,
-            "targetAnchor": 4
-          },
-          {
-            "shape": "erdRelation",
-            "relation": "0,n:1",
-            "source": "6c01a493",
-            "target": "803b0c9e",
-            "id": "5e8762ec",
-            "controlPoints": [
-              {
-                "x": 470.2060546875,
-                "y": 1272.5227272727273
-              },
-              {
-                "x": 874.8603515625,
-                "y": 1422.3690476190477
-              }
-            ],
-            "sourceAnchor": 2,
-            "targetAnchor": 4
           },
           {
             "shape": "erdRelation",
@@ -2073,6 +2109,44 @@
             ],
             "sourceAnchor": 3,
             "targetAnchor": 8
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "6c01a493",
+            "target": "7741989f",
+            "id": "78a390ce",
+            "controlPoints": [
+              {
+                "x": 769.7939453125,
+                "y": 1272.5227272727273
+              },
+              {
+                "x": 877.9814453125,
+                "y": 1142.336956521739
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 4
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "6c01a493",
+            "target": "803b0c9e",
+            "id": "d08f42a8",
+            "controlPoints": [
+              {
+                "x": 769.7939453125,
+                "y": 1272.5227272727273
+              },
+              {
+                "x": 874.8603515625,
+                "y": 1422.3690476190477
+              }
+            ],
+            "sourceAnchor": 3,
+            "targetAnchor": 4
           }
         ]
       },
@@ -2234,28 +2308,6 @@
         {
           "relation": "0,n:1",
           "from": {
-            "entity": "store_in_depot",
-            "field": "accept_order_no"
-          },
-          "to": {
-            "entity": "store_acceptance_order",
-            "field": "order_no"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
-            "entity": "store_in_depot",
-            "field": "accept_order_no"
-          },
-          "to": {
-            "entity": "store_self_acceptance_order",
-            "field": "order_no"
-          }
-        },
-        {
-          "relation": "0,n:1",
-          "from": {
             "entity": "store_purchase_order",
             "field": "dispatch_id"
           },
@@ -2283,6 +2335,28 @@
           },
           "to": {
             "entity": "hq_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_in_depot",
+            "field": "accept_order_no"
+          },
+          "to": {
+            "entity": "store_acceptance_order",
+            "field": "order_no"
+          }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_in_depot",
+            "field": "accept_order_no"
+          },
+          "to": {
+            "entity": "store_self_acceptance_order",
             "field": "order_no"
           }
         }

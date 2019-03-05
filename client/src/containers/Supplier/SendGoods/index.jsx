@@ -91,6 +91,7 @@ class SendGoods extends React.PureComponent {
           goodsList: formDataList,
           storeId: id,
           amount: orderInfo.amount,
+          selfPurchaseOrderNo: orderInfo.selfPurchaseOrderNo,
         };
         this.props.dispatch(action.doAdd(params));
       },
@@ -103,6 +104,7 @@ class SendGoods extends React.PureComponent {
           goodsList: newList,
           orderNo: orderInfo.orderNo,
           amount: totalAmt,
+          selfPurchaseOrderNo: orderInfo.selfPurchaseOrderNo,
         };
         this.props.dispatch(action.doUpdate(params));
       },

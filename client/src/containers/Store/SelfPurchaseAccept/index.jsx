@@ -85,6 +85,8 @@ class SelfPurchaseAccept extends React.PureComponent {
           orderNo: orderInfo.orderNo,
           amount: orderInfo.amount,
           diffAmount: orderInfo.diffAmount,
+          storeId: orderInfo.storeId,
+          sendOrderNo: orderInfo.sendOrderNo,
         };
         this.props.dispatch(action.doUpdate(params));
       },

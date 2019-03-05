@@ -92,13 +92,14 @@ SendGoods.prototype.doGetDetail = function(params, callback) {
  * 1. 获取单据流水号用于生成门店验收单
  * 2. 更新单据流水号
  * 3. 更新供应商/总部物品发货关系表
- * 4. 修改发货单据状态为已提交
+ * 4. 修改发货单据状态为已提交，修改门店自采单据状态为已完成
  * 5. 更新门店验收订单表，生成新的订单
  * 6. 更新门店验收物品关系表
  */
 SendGoods.prototype.doUpdate = function(params, callback) {
   const date = helper.getDateString(new Date()); // 形同2019-03-03
   const fDate = helper.formatDateString(new Date()); // 形同20190303，用于插入在单号中
+  const time = helper.getTimeString(new Date());
   const sql = `select MAX(number) as number from util_order_no where date='${date}' and type='sfys'`;
   helper.doSql({
     sql,
@@ -119,10 +120,13 @@ SendGoods.prototype.doUpdate = function(params, callback) {
       // 更新发货订单表，修改单据状态和单据状态更新时间
       const updOrder = `update supplier_order set status='2', amount='${
         params.amount
-      }', update_time='${helper.getTimeString(new Date())}' where order_no='${
-        params.orderNo
-      }'`;
+      }', update_time='${time}' where order_no='${params.orderNo}'`;
       sqlParamsEntity.push(helper.getNewSqlParamEntity(updOrder, []));
+
+      // 更新门店自采订单表，修改单据状态和单据状态更新时间
+      const updSfOrder = `update store_self_purchase_order set status='3',
+       update_time='${time}' where order_no='${params.selfPurchaseOrderNo}'`;
+      sqlParamsEntity.push(helper.getNewSqlParamEntity(updSfOrder, []));
 
       // 更新物品列表 —— 保存用户对数据的修改
       params.goodsList.forEach(it => {
@@ -135,15 +139,14 @@ SendGoods.prototype.doUpdate = function(params, callback) {
 
       // 生成门店自采验收订单
       const orderNo = `ZY${fDate}${helper.formatNumString(no)}`;
-      const addOrder =
-        `insert into store_self_acceptance_order(supplier_delivery_order_no, order_no,
+      const addOrder = `insert into store_self_acceptance_order(supplier_delivery_order_no, order_no,
           create_time, update_time,status,purchase_amount) values(?,?,?,?,?,?)`;
       sqlParamsEntity.push(
         helper.getNewSqlParamEntity(addOrder, [
           params.orderNo,
           orderNo,
-          helper.getTimeString(new Date()),
-          helper.getTimeString(new Date()),
+          time,
+          time,
           1,
           params.amount
         ])
@@ -151,17 +154,17 @@ SendGoods.prototype.doUpdate = function(params, callback) {
 
       params.goodsList.forEach(it => {
         const addGoods = `insert into relations_acceptance_goods(goods_id,accept_order_no,type,
-          purchase_count,delivery_count) values(?,?,?,?,?);`
+          purchase_count,delivery_count) values(?,?,?,?,?);`;
         sqlParamsEntity.push(
           helper.getNewSqlParamEntity(addGoods, [
             it.id,
             orderNo,
             "sf",
             it.goodsCount,
-            it.sendGoodsCount,
+            it.sendGoodsCount
           ])
         );
-      })
+      });
 
       helper.execTrans(sqlParamsEntity, (err, info) => {
         if (err) {

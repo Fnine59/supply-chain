@@ -56,14 +56,14 @@ const orderForm = ({
         <div className="header">
           <Row>
             <Col span={8}>
-              <FormItem label="发货门店" {...formItemLayout}>
+              <FormItem label="入库门店" {...formItemLayout}>
                 {getFieldDecorator('storeName', {
                   initialValue: orderInfo.storeName || '',
                 })(<Input disabled />)}
               </FormItem>
             </Col>
             <Col span={8}>
-              <FormItem label="发货总金额" {...formItemLayout}>
+              <FormItem label="入库总金额" {...formItemLayout}>
                 <InputNumber
                   disabled
                   precision={2}
@@ -103,7 +103,7 @@ const orderForm = ({
               dataIndex: 'goodsAmount',
             },
             {
-              title: '发货数量',
+              title: '入库数量',
               dataIndex: 'sendGoodsCount',
               render: (text, record) => {
                 if (type === 'view') {
@@ -113,7 +113,7 @@ const orderForm = ({
               },
             },
             {
-              title: '发货金额',
+              title: '入库金额',
               dataIndex: 'sendGoodsAmount',
               render: (text, record) => {
                 if (type === 'view') {

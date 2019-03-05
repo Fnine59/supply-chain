@@ -67,15 +67,6 @@ class SendGoods extends React.PureComponent {
           }),
         );
       },
-      onUpdate: (record) => {
-        this.props.dispatch(
-          action.doGetDetail({
-            orderNo: record.orderNo,
-            selfPurchaseOrderNo: record.selfPurchaseOrderNo,
-            type: 'edit',
-          }),
-        );
-      },
     };
     const formProps = {
       // OrderForm数据
@@ -84,7 +75,7 @@ class SendGoods extends React.PureComponent {
       shopList,
       onSubmit: (id) => {
         if (formDataList.length === 0) {
-          message.error('发货的物品列表不能为空');
+          message.error('入库的物品列表不能为空');
           return;
         }
         const params = {
@@ -96,7 +87,7 @@ class SendGoods extends React.PureComponent {
       },
       onUpdate: (newList, totalAmt) => {
         if (newList.length === 0) {
-          message.error('发货的物品列表不能为空');
+          message.error('入库的物品列表不能为空');
           return;
         }
         const params = {
@@ -113,7 +104,7 @@ class SendGoods extends React.PureComponent {
             formVisible: false,
             formDataList: [],
             orderInfo: {
-              amount: 0, // 发货总金额
+              amount: 0, // 入库总金额
               storeName: '', // 门店信息
             },
           },

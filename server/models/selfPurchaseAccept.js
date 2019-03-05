@@ -97,7 +97,7 @@ SelfPurchaseAccept.prototype.doGetDetail = function(params, callback) {
 
 /**
  * 提交验收单，包含如下操作：
- * 1. 修改验收单据状态为已入库，更新单据状态更新时间
+ * 1. 修改验收单据状态为已入库，更新单据状态更新时间，更新供应商发货订单表状态为已完成，并更新时间
  * 2. 更新供应商/总部物品验收关系表
  * 3. 更新入库流水记录
  * 4. 更新物品表中物品库存数量，进行入库
@@ -113,6 +113,11 @@ SelfPurchaseAccept.prototype.doUpdate = function(params, callback) {
     params.diffAmount
   }', update_time='${time}' where order_no='${params.orderNo}'`;
   sqlParamsEntity.push(helper.getNewSqlParamEntity(updOrder, []));
+  
+  // 更新供应商发货订单表，修改单据状态和单据状态更新时间
+  const updPsOrder = `update supplier_order set status='3',
+   update_time='${time}' where order_no='${params.sendOrderNo}'`;
+  sqlParamsEntity.push(helper.getNewSqlParamEntity(updPsOrder, []));
 
   // 更新物品列表 —— 保存用户对数据的修改
   params.goodsList.forEach(it => {
@@ -132,11 +137,10 @@ SelfPurchaseAccept.prototype.doUpdate = function(params, callback) {
     );
   });
 
-  // 更新物品表 —— 增加库存
+  // 更新物品库存表 —— 增加库存
   params.goodsList.forEach(it => {
-    const updGoods = `update baseinfo_goods set depot_count=depot_count + ${
-      it.acceptCount
-    } where id='${it.id}'`;
+    const updGoods = `insert into store_depots(goods_id,store_id,depot_count) values(?,?,?)
+    ON DUPLICATE KEY update depot_count=depot_count + ${it.acceptCount}`;
     sqlParamsEntity.push(helper.getNewSqlParamEntity(updGoods, []));
   });
 

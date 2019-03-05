@@ -87,6 +87,7 @@ class Dispatch extends React.PureComponent {
           orderNo: orderInfo.orderNo,
           amount: orderInfo.amount,
           diffAmount: orderInfo.diffAmount,
+          purchaseOrderNo: orderInfo.purchaseOrderNo,
         };
         this.props.dispatch(action.doUpdate(params));
       },

@@ -85,6 +85,8 @@ class PurchaseAccept extends React.PureComponent {
           orderNo: orderInfo.orderNo,
           amount: orderInfo.amount,
           diffAmount: orderInfo.diffAmount,
+          storeId: orderInfo.storeId,
+          dispatchOrderNo: orderInfo.dispatchOrderNo,
         };
         this.props.dispatch(action.doUpdate(params));
       },

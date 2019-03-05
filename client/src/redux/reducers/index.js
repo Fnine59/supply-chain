@@ -10,6 +10,7 @@ import hqDispatch from './hqDispatch';
 import sendGoods from './sendGoods';
 import purchaseAccept from './purchaseAccept';
 import selfPurchaseAccept from './selfPurchaseAccept';
+import indepot from './indepot';
 import depot from './depot';
 
 export default function createReducer() {
@@ -26,5 +27,6 @@ export default function createReducer() {
     purchaseAccept,
     selfPurchaseAccept,
     depot,
+    indepot,
   });
 }

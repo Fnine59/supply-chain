@@ -40,10 +40,10 @@ const Search = ({
       <Form onSubmit={handleSearch}>
         <Row>
           <Col span={8}>
-            <FormItem label="发货单号" {...formItemLayout}>
+            <FormItem label="入库单号" {...formItemLayout}>
               {getFieldDecorator('orderNo', {
                 initialValue: '',
-              })(<Input.Search allowClear placeholder="请输入发货单号" />)}
+              })(<Input.Search allowClear placeholder="请输入入库单号" />)}
             </FormItem>
           </Col>
           <Col span={8}>
