@@ -10,7 +10,7 @@ import {
 export function getList(payload) {
   return async (dispatch) => {
     const res = await request({
-      url: '/api/shop/purchaseAccept/getList',
+      url: '/api/shop/selfPurchaseAccept/getList',
       method: 'post',
       data: payload || {
         page: 1,
@@ -26,7 +26,7 @@ export function getList(payload) {
       });
       if (!payload) {
         dispatch({
-          type: 'purchaseAccept/updateState',
+          type: 'selfPurchaseAccept/updateState',
           payload: {
             queryParams: {
               page: 1,
@@ -47,7 +47,7 @@ export function getList(payload) {
 export function doGetDetail(payload) {
   return async (dispatch) => {
     const res = await request({
-      url: '/api/shop/purchaseAccept/getDetail',
+      url: '/api/shop/selfPurchaseAccept/getDetail',
       method: 'post',
       data: {
         orderNo: payload.orderNo,
@@ -55,7 +55,7 @@ export function doGetDetail(payload) {
     });
     if (res) {
       dispatch({
-        type: 'purchaseAccept/updateState',
+        type: 'selfPurchaseAccept/updateState',
         payload: {
           type: payload.type,
           formVisible: true,
@@ -76,14 +76,14 @@ export function doUpdate(payload) {
   console.log('payload', payload);
   return async (dispatch) => {
     const res = await request({
-      url: '/api/shop/purchaseAccept/update',
+      url: '/api/shop/selfPurchaseAccept/update',
       method: 'post',
       data: payload,
     });
     if (res) {
       message.success(res.message, 2);
       dispatch({
-        type: 'purchaseAccept/updateState',
+        type: 'selfPurchaseAccept/updateState',
         payload: {
           formVisible: false,
           selectGoodsKeys: [],

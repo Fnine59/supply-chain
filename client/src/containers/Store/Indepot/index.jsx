@@ -1,20 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { message } from 'antd';
 
-import * as action from '../../../redux/actions/purchaseAccept';
+import * as action from '../../../redux/actions/sendGoods';
 import Search from './Search';
 import List from './List';
 import OrderForm from './OrderForm';
 
-class PurchaseAccept extends React.PureComponent {
+class SendGoods extends React.PureComponent {
   constructor() {
     super();
     this.state = {};
   }
   componentDidMount() {
-    const { dispatch, purchaseAccept } = this.props;
-    const { queryParams } = purchaseAccept;
+    const { dispatch, sendGoods } = this.props;
+    const { queryParams } = sendGoods;
     dispatch(action.getList(queryParams));
   }
   render() {
@@ -28,17 +29,17 @@ class PurchaseAccept extends React.PureComponent {
       formDataList,
       dataList,
       shopList,
-    } = this.props.purchaseAccept;
+    } = this.props.sendGoods;
     const searchProps = {
       onClear: () => {
         const { dispatch } = this.props;
         dispatch(action.getList());
       },
       onSearch: (props) => {
-        const { dispatch, purchaseAccept } = this.props;
-        const { queryParams } = purchaseAccept;
+        const { dispatch, sendGoods } = this.props;
+        const { queryParams } = sendGoods;
         dispatch({
-          type: 'purchaseAccept/updateState',
+          type: 'sendGoods/updateState',
           payload: {
             queryParams: {
               ...queryParams,
@@ -61,6 +62,7 @@ class PurchaseAccept extends React.PureComponent {
         dispatch(
           action.doGetDetail({
             orderNo: record.orderNo,
+            selfPurchaseOrderNo: record.selfPurchaseOrderNo,
             type: 'view',
           }),
         );
@@ -69,6 +71,7 @@ class PurchaseAccept extends React.PureComponent {
         this.props.dispatch(
           action.doGetDetail({
             orderNo: record.orderNo,
+            selfPurchaseOrderNo: record.selfPurchaseOrderNo,
             type: 'edit',
           }),
         );
@@ -79,23 +82,38 @@ class PurchaseAccept extends React.PureComponent {
       type,
       orderInfo,
       shopList,
-      onUpdate: () => {
+      onSubmit: (id) => {
+        if (formDataList.length === 0) {
+          message.error('发货的物品列表不能为空');
+          return;
+        }
         const params = {
           goodsList: formDataList,
-          orderNo: orderInfo.orderNo,
+          storeId: id,
           amount: orderInfo.amount,
-          diffAmount: orderInfo.diffAmount,
+        };
+        this.props.dispatch(action.doAdd(params));
+      },
+      onUpdate: (newList, totalAmt) => {
+        if (newList.length === 0) {
+          message.error('发货的物品列表不能为空');
+          return;
+        }
+        const params = {
+          goodsList: newList,
+          orderNo: orderInfo.orderNo,
+          amount: totalAmt,
         };
         this.props.dispatch(action.doUpdate(params));
       },
       onBack: () => {
         this.props.dispatch({
-          type: 'purchaseAccept/updateState',
+          type: 'sendGoods/updateState',
           payload: {
             formVisible: false,
             formDataList: [],
             orderInfo: {
-              amount: 0, // 验收总金额
+              amount: 0, // 发货总金额
               storeName: '', // 门店信息
             },
           },
@@ -107,14 +125,16 @@ class PurchaseAccept extends React.PureComponent {
         selectGoodsKeys,
         selectGoodsItems,
         onSetDataSource: (newDataList) => {
+          console.warn('newDataList', newDataList);
           let money = 0;
           let diffMoney = 0;
           newDataList.forEach((d) => {
-            money += d.acceptAmount;
-            diffMoney += d.sendDiffAmount + d.dispatchDiffAmount;
+            money += d.dispatchGoodsAmount;
+            diffMoney += d.dispatchGoodsDiffAmount;
           });
+          console.warn('money', money);
           this.props.dispatch({
-            type: 'purchaseAccept/updateState',
+            type: 'sendGoods/updateState',
             payload: {
               formDataList: newDataList,
               orderInfo: {
@@ -127,7 +147,7 @@ class PurchaseAccept extends React.PureComponent {
         },
         onSetSelectItems: (newKeys, newItems) => {
           this.props.dispatch({
-            type: 'purchaseAccept/updateState',
+            type: 'sendGoods/updateState',
             payload: {
               selectGoodsKeys: newKeys,
               selectGoodsItems: newItems,
@@ -146,7 +166,7 @@ class PurchaseAccept extends React.PureComponent {
                 }
               });
               dispatch({
-                type: 'purchaseAccept/updateState',
+                type: 'sendGoods/updateState',
                 payload: {
                   delIds: arr,
                 },
@@ -157,7 +177,7 @@ class PurchaseAccept extends React.PureComponent {
       },
     };
     return (
-      <div className="purchaseAccept">
+      <div className="sendGoods">
         {!formVisible && <Search {...searchProps} />}
         {!formVisible && <List {...listProps} />}
         {formVisible && <OrderForm {...formProps} />}
@@ -168,12 +188,12 @@ class PurchaseAccept extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    purchaseAccept: state.purchaseAccept,
+    sendGoods: state.sendGoods,
   };
 }
 
-PurchaseAccept.propTypes = {
-  purchaseAccept: PropTypes.object,
+SendGoods.propTypes = {
+  sendGoods: PropTypes.object,
   dispatch: PropTypes.func,
 };
-export default connect(mapStateToProps)(PurchaseAccept);
+export default connect(mapStateToProps)(SendGoods);

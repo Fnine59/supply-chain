@@ -21,9 +21,9 @@ const List = ({
       key: 'orderNo',
     },
     {
-      title: '关联配送单号',
-      dataIndex: 'dispatchOrderNo',
-      key: 'dispatchOrderNo',
+      title: '关联发货单号',
+      dataIndex: 'sendOrderNo',
+      key: 'sendOrderNo',
     },
     {
       title: '请购门店',
@@ -31,9 +31,9 @@ const List = ({
       key: 'storeName',
     },
     {
-      title: '配送中心',
-      dataIndex: 'dispatchName',
-      key: 'dispatchName',
+      title: '供应商',
+      dataIndex: 'supplyName',
+      key: 'supplyName',
     },
     {
       title: '创建时间',
@@ -56,11 +56,6 @@ const List = ({
       title: '采购总金额',
       dataIndex: 'purchaseAmount',
       key: 'purchaseAmount',
-    },
-    {
-      title: '总部差异金额',
-      dataIndex: 'deliveryDiffAmount',
-      key: 'deliveryDiffAmount',
     },
     {
       title: '验收金额',

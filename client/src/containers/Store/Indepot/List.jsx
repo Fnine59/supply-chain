@@ -16,24 +16,24 @@ const List = ({
       key: 'id',
     },
     {
-      title: '验收单号',
+      title: '发货单号',
       dataIndex: 'orderNo',
       key: 'orderNo',
     },
     {
-      title: '关联配送单号',
-      dataIndex: 'dispatchOrderNo',
-      key: 'dispatchOrderNo',
+      title: '关联自采单号',
+      dataIndex: 'selfPurchaseOrderNo',
+      key: 'selfPurchaseOrderNo',
     },
     {
-      title: '请购门店',
+      title: '自采门店',
       dataIndex: 'storeName',
       key: 'storeName',
     },
     {
-      title: '配送中心',
-      dataIndex: 'dispatchName',
-      key: 'dispatchName',
+      title: '供应商',
+      dataIndex: 'supplyName',
+      key: 'supplyName',
     },
     {
       title: '创建时间',
@@ -53,24 +53,9 @@ const List = ({
       key: 'updateTime',
     },
     {
-      title: '采购总金额',
-      dataIndex: 'purchaseAmount',
-      key: 'purchaseAmount',
-    },
-    {
-      title: '总部差异金额',
-      dataIndex: 'deliveryDiffAmount',
-      key: 'deliveryDiffAmount',
-    },
-    {
-      title: '验收金额',
+      title: '发货金额',
       dataIndex: 'amount',
       key: 'amount',
-    },
-    {
-      title: '验收差异金额',
-      dataIndex: 'diffAmount',
-      key: 'diffAmount',
     },
     {
       title: '单据状态',
@@ -79,9 +64,13 @@ const List = ({
       render: (status) => {
         switch (status) {
           case '1':
-            return <Badge status="processing" text="待验收" />;
+            return <Badge status="processing" text="待处理" />;
           case '2':
-            return <Badge status="success" text="已入库" />;
+            return <Badge status="warning" text="已提交" />;
+          case '3':
+            return <Badge status="success" text="已完成" />;
+          case '4':
+            return <Badge status="default" text="已作废" />;
           default:
             return '---';
         }

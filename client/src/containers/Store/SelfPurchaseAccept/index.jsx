@@ -2,19 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as action from '../../../redux/actions/purchaseAccept';
+import * as action from '../../../redux/actions/selfPurchaseAccept';
 import Search from './Search';
 import List from './List';
 import OrderForm from './OrderForm';
 
-class PurchaseAccept extends React.PureComponent {
+class SelfPurchaseAccept extends React.PureComponent {
   constructor() {
     super();
     this.state = {};
   }
   componentDidMount() {
-    const { dispatch, purchaseAccept } = this.props;
-    const { queryParams } = purchaseAccept;
+    const { dispatch, selfPurchaseAccept } = this.props;
+    const { queryParams } = selfPurchaseAccept;
     dispatch(action.getList(queryParams));
   }
   render() {
@@ -28,17 +28,17 @@ class PurchaseAccept extends React.PureComponent {
       formDataList,
       dataList,
       shopList,
-    } = this.props.purchaseAccept;
+    } = this.props.selfPurchaseAccept;
     const searchProps = {
       onClear: () => {
         const { dispatch } = this.props;
         dispatch(action.getList());
       },
       onSearch: (props) => {
-        const { dispatch, purchaseAccept } = this.props;
-        const { queryParams } = purchaseAccept;
+        const { dispatch, selfPurchaseAccept } = this.props;
+        const { queryParams } = selfPurchaseAccept;
         dispatch({
-          type: 'purchaseAccept/updateState',
+          type: 'selfPurchaseAccept/updateState',
           payload: {
             queryParams: {
               ...queryParams,
@@ -90,7 +90,7 @@ class PurchaseAccept extends React.PureComponent {
       },
       onBack: () => {
         this.props.dispatch({
-          type: 'purchaseAccept/updateState',
+          type: 'selfPurchaseAccept/updateState',
           payload: {
             formVisible: false,
             formDataList: [],
@@ -111,10 +111,10 @@ class PurchaseAccept extends React.PureComponent {
           let diffMoney = 0;
           newDataList.forEach((d) => {
             money += d.acceptAmount;
-            diffMoney += d.sendDiffAmount + d.dispatchDiffAmount;
+            diffMoney += d.sendDiffAmount;
           });
           this.props.dispatch({
-            type: 'purchaseAccept/updateState',
+            type: 'selfPurchaseAccept/updateState',
             payload: {
               formDataList: newDataList,
               orderInfo: {
@@ -127,7 +127,7 @@ class PurchaseAccept extends React.PureComponent {
         },
         onSetSelectItems: (newKeys, newItems) => {
           this.props.dispatch({
-            type: 'purchaseAccept/updateState',
+            type: 'selfPurchaseAccept/updateState',
             payload: {
               selectGoodsKeys: newKeys,
               selectGoodsItems: newItems,
@@ -146,7 +146,7 @@ class PurchaseAccept extends React.PureComponent {
                 }
               });
               dispatch({
-                type: 'purchaseAccept/updateState',
+                type: 'selfPurchaseAccept/updateState',
                 payload: {
                   delIds: arr,
                 },
@@ -157,7 +157,7 @@ class PurchaseAccept extends React.PureComponent {
       },
     };
     return (
-      <div className="purchaseAccept">
+      <div className="selfPurchaseAccept">
         {!formVisible && <Search {...searchProps} />}
         {!formVisible && <List {...listProps} />}
         {formVisible && <OrderForm {...formProps} />}
@@ -168,12 +168,12 @@ class PurchaseAccept extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    purchaseAccept: state.purchaseAccept,
+    selfPurchaseAccept: state.selfPurchaseAccept,
   };
 }
 
-PurchaseAccept.propTypes = {
-  purchaseAccept: PropTypes.object,
+SelfPurchaseAccept.propTypes = {
+  selfPurchaseAccept: PropTypes.object,
   dispatch: PropTypes.func,
 };
-export default connect(mapStateToProps)(PurchaseAccept);
+export default connect(mapStateToProps)(SelfPurchaseAccept);
