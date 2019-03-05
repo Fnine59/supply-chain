@@ -1,12 +1,11 @@
 import React from 'react';
-import { Modal, Form, Row, Col, Button, Input, Select } from 'antd';
+import { Form, Row, Col, Button, Input, Select } from 'antd';
 import PropTypes from 'prop-types';
 
 import '../../../common/theme/search.less';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const confirm = Modal.confirm;
 
 const formItemLayout = {
   labelCol: {
@@ -18,69 +17,10 @@ const formItemLayout = {
 };
 
 const Search = ({
-  selectKeys,
-  selectItems,
-  onAdd,
-  onEnable,
-  onDisable,
-  onDelete,
   onClear,
   onSearch,
   form: { validateFields, getFieldDecorator, resetFields },
 }) => {
-  const showConfirm = (e) => {
-    const info = e.target.value;
-    let supplyNumber = 0;
-    let content = '';
-    switch (info) {
-      case '+ 新增物品':
-        onAdd();
-        break;
-      case '启用':
-        supplyNumber = selectItems.filter(item => item.status === '0').length;
-        content = `当前选中${
-          selectKeys.length
-        }个物品，可启用${supplyNumber}个物品！`;
-        break;
-      case '停用':
-        supplyNumber = selectItems.filter(item => item.status === '1').length;
-        content = `当前选中${
-          selectKeys.length
-        }个物品，可停用${supplyNumber}个物品！`;
-        break;
-      case '删除物品':
-        supplyNumber = selectKeys.length;
-        content = `当前选中${selectKeys.length}个物品，确认删除吗？`;
-        break;
-      default:
-        break;
-    }
-    if (info !== '+ 新增物品') {
-      confirm({
-        title: `确定${e.target.value}吗？`,
-        content,
-        cancelText: '取消',
-        okText: '确定',
-        onOk() {
-          switch (info) {
-            case '启用':
-              onEnable();
-              break;
-            case '停用':
-              onDisable();
-              break;
-            case '删除物品':
-              onDelete();
-              break;
-            default:
-              break;
-          }
-        },
-        onCancel() {},
-      });
-    }
-  };
-
   const handleClear = () => {
     resetFields();
     onClear();
@@ -148,44 +88,12 @@ const Search = ({
           </Col>
         </Row>
       </Form>
-      <Row>
-        <Col span={12}>
-          <Button
-            type="primary"
-            className="opt-btn"
-            onClick={showConfirm}
-            value="+ 新增物品"
-          >
-            + 新增物品
-          </Button>
-          <Button className="opt-btn" onClick={showConfirm} value="启用">
-            启用
-          </Button>
-          <Button className="opt-btn" onClick={showConfirm} value="停用">
-            停用
-          </Button>
-          <Button
-            className="opt-btn"
-            type="danger"
-            onClick={showConfirm}
-            value="删除物品"
-          >
-            删除物品
-          </Button>
-        </Col>
-      </Row>
     </div>
   );
 };
 
 Search.propTypes = {
-  selectItems: PropTypes.array,
-  selectKeys: PropTypes.array,
   form: PropTypes.object,
-  onAdd: PropTypes.func,
-  onEnable: PropTypes.func,
-  onDisable: PropTypes.func,
-  onDelete: PropTypes.func,
   onClear: PropTypes.func,
   onSearch: PropTypes.func,
 };

@@ -1,11 +1,7 @@
 import { UPDATESTATE, GETGOODSDEPOTLIST, GETSTATE } from '../actions/types';
 
 const initState = {
-  modalVisible: false,
-  currentItem: {}, // 当前编辑想
   dataList: [],
-  selectKeys: [], // 选中行id
-  selectItems: [], // 选中行内容
   queryParams: {
     page: 1,
     rows: 10,

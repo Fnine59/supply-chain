@@ -16,6 +16,7 @@ import Purchase from '../containers/Store/Purchase/index';
 import SelfPurchase from '../containers/Store/SelfPurchase/index';
 import PurchaseAcceptance from '../containers/Store/PurchaseAccept/index';
 import SelfPurchaseAccept from '../containers/Store/SelfPurchaseAccept/index';
+import Depot from '../containers/Store/Depot/index';
 
 // 总部管理模块
 import Dispatch from '../containers/HQ/Dispatch/index';
@@ -36,6 +37,7 @@ const Routes = () => (
       <Route path="/shop/selfPr" component={SelfPurchase} />
       <Route path="/shop/purchaseAcceptance" component={PurchaseAcceptance} />
       <Route path="/shop/selfPrAcceptance" component={SelfPurchaseAccept} />
+      <Route path="/shop/depot" component={Depot} />
       <Route path="/hq/orders" component={Dispatch} />
       <Route path="/supply/orders" component={SendGoods} />
       <Route path="/error404" component={Error404} />
