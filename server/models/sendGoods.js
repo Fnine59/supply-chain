@@ -33,7 +33,7 @@ SendGoods.prototype.doGetList = function(params, callback) {
       WHERE supplier_order.supply_id = baseinfo_supplier.id
       AND supplier_order.store_id = baseinfo_store.id
       ${
-        params.orderNo !== ""
+        params.orderNo !== "" && params.orderNo !== undefined
           ? `AND supplier_order.order_no LIKE '%${params.orderNo}%'`
           : ""
       } ${

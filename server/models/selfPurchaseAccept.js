@@ -36,7 +36,7 @@ SelfPurchaseAccept.prototype.doGetList = function(params, callback) {
       AND supplier_order.store_id = baseinfo_store.id
       AND supplier_order.order_no = store_self_acceptance_order.supplier_delivery_order_no
       ${
-        params.orderNo !== ""
+        params.orderNo !== "" && params.orderNo !== undefined
           ? `AND store_self_acceptance_order.order_no LIKE '%${params.orderNo}%'`
           : ""
       } ${

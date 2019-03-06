@@ -34,7 +34,7 @@ HQDispatch.prototype.doGetList = function(params, callback) {
       WHERE hq_order.dispatch_id = baseinfo_dispatch.id
       AND hq_order.store_id = baseinfo_store.id
       ${
-        params.orderNo !== ""
+        params.orderNo !== "" && params.orderNo !== undefined
           ? `AND hq_order.order_no LIKE '%${params.orderNo}%'`
           : ""
       } ${

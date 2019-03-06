@@ -33,7 +33,7 @@ ShopIndepot.prototype.doGetList = function(params, callback) {
           : ""
       }
       ${
-        params.orderNo !== ""
+        params.orderNo !== "" && params.orderNo !== undefined
           ? `AND store_in_depot.accept_order_no LIKE '%${params.orderNo}%'`
           : ""
       } GROUP BY store_in_depot.accept_order_no ORDER BY create_time desc`;

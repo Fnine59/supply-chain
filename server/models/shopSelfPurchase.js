@@ -137,7 +137,7 @@ ShopSelfPurchase.prototype.doGetList = function(params, callback) {
   FROM store_self_purchase_order, baseinfo_store, baseinfo_supplier 
   WHERE store_self_purchase_order.store_id = baseinfo_store.id 
   AND store_self_purchase_order.supply_id = baseinfo_supplier.id ${
-    params.orderNo !== ""
+    params.orderNo !== "" && params.orderNo !== undefined
       ? `AND store_self_purchase_order.order_no LIKE '%${params.orderNo}%'`
       : ""
   } ${
