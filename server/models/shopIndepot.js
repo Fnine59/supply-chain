@@ -23,7 +23,8 @@ ShopIndepot.prototype.doGetList = function(params, callback) {
       store_in_depot.type,
       store_in_depot.create_time as createTime,
       store_in_depot.store_id as storeId,
-      baseinfo_store.name AS storeName
+      baseinfo_store.name AS storeName,
+      COUNT(DISTINCT store_in_depot.accept_order_no)
       FROM store_in_depot,baseinfo_store
       WHERE store_in_depot.store_id = baseinfo_store.id
       ${
@@ -35,7 +36,7 @@ ShopIndepot.prototype.doGetList = function(params, callback) {
         params.orderNo !== ""
           ? `AND store_in_depot.accept_order_no LIKE '%${params.orderNo}%'`
           : ""
-      } ORDER BY create_time desc`;
+      } GROUP BY store_in_depot.accept_order_no ORDER BY create_time desc`;
   helper.doSql({
     sql,
     name: "doGetList",
