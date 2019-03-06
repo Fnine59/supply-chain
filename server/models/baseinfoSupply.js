@@ -27,7 +27,7 @@ BaseInfoSupply.prototype.doGetList = function (params, callback) {
   // const start = (params.page - 1) * params.rows;
   // const sql = `select * from baseinfo_supplier limit ${start},${params.rows}`;
   const sql = `select * from baseinfo_supplier where name LIKE '%${
-    params.name
+    params.name || ''
   }%' ${params.status !== '' ? `AND status='${params.status}'` : ''} ${
     params.type !== '' ? `AND type='${params.type}'` : ''
   }`;

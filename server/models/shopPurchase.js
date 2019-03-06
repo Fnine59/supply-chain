@@ -137,7 +137,7 @@ ShopPurchase.prototype.doGetList = function(params, callback) {
   FROM store_purchase_order, baseinfo_store, baseinfo_dispatch 
   WHERE store_purchase_order.store_id = baseinfo_store.id 
   AND store_purchase_order.dispatch_id = baseinfo_dispatch.id ${
-    params.orderNo !== ""
+    params.orderNo !== "" && params.orderNo !== undefined
       ? `AND store_purchase_order.order_no LIKE '%${params.orderNo}%'`
       : ""
   } ${

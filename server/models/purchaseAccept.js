@@ -37,7 +37,7 @@ PurchaseAccept.prototype.doGetList = function(params, callback) {
       AND hq_order.store_id = baseinfo_store.id
       AND hq_order.order_no = store_acceptance_order.dispatch_order_no
       ${
-        params.orderNo !== ""
+        params.orderNo !== "" && params.orderNo !== undefined
           ? `AND store_acceptance_order.order_no LIKE '%${params.orderNo}%'`
           : ""
       } ${
