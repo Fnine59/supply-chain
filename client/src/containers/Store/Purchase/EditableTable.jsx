@@ -63,7 +63,7 @@ class EditableCell extends React.PureComponent {
                     rules: [
                       {
                         required: true,
-                        message: `请输入${title}`,
+                        message: `请输入${title ? title.props.children[0].props.children : '必填项'}`,
                       },
                     ],
                     initialValue: record[dataIndex],
