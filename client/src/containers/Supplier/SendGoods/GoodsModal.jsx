@@ -87,6 +87,9 @@ goodsModal.propTypes = {
   visible: PropTypes.bool,
   title: PropTypes.string,
   goodsList: PropTypes.array,
+  selectGoodsKeys: PropTypes.array,
+  onSelect: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 export default goodsModal;
