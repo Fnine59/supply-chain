@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Badge, Modal, Table as AntdTable, Select } from 'antd';
+import { Badge, Modal, Table as AntdTable } from 'antd';
 import PropTypes from 'prop-types';
 
 const goodsModal = ({

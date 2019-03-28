@@ -1628,7 +1628,7 @@
             "title": "relations_delivery_goods:1",
             "moduleName": false,
             "x": 1400,
-            "y": 210,
+            "y": 220,
             "id": "ea1d2732"
           },
           {
@@ -1643,16 +1643,16 @@
             "shape": "table",
             "title": "relations_acceptance_goods",
             "moduleName": false,
-            "x": 210,
-            "y": 580,
+            "x": 220,
+            "y": 590,
             "id": "16ff2c7f"
           },
           {
             "shape": "table",
             "title": "hq_order:1",
             "moduleName": "hq",
-            "x": 1020,
-            "y": 580,
+            "x": 1030,
+            "y": 590,
             "id": "225c5817"
           },
           {
@@ -1724,15 +1724,15 @@
             "title": "supplier_order",
             "moduleName": "supplier",
             "x": 1000,
-            "y": 180,
+            "y": 240,
             "id": "db33dff6"
           },
           {
             "shape": "table",
             "title": "store_depots",
             "moduleName": false,
-            "x": 590,
-            "y": 1650,
+            "x": 320,
+            "y": 1270,
             "id": "b064f447"
           }
         ],
@@ -1879,7 +1879,7 @@
             "controlPoints": [
               {
                 "x": 818.52734375,
-                "y": 132.27380952380952
+                "y": 192.27380952380952
               },
               {
                 "x": 777.78515625,
@@ -1898,7 +1898,7 @@
             "controlPoints": [
               {
                 "x": 1181.47265625,
-                "y": 152.36904761904762
+                "y": 212.36904761904762
               },
               {
                 "x": 1249.892578125,
@@ -1917,7 +1917,7 @@
             "controlPoints": [
               {
                 "x": 1549.3798828125,
-                "y": 192.4078947368421
+                "y": 202.4078947368421
               },
               {
                 "x": 1605.224609375,
@@ -1936,11 +1936,11 @@
             "controlPoints": [
               {
                 "x": 1250.6201171875,
-                "y": 172.30263157894737
+                "y": 182.30263157894737
               },
               {
                 "x": 1181.47265625,
-                "y": 132.27380952380952
+                "y": 192.27380952380952
               }
             ],
             "sourceAnchor": 2,
@@ -1992,8 +1992,8 @@
             "id": "f8c011d9",
             "controlPoints": [
               {
-                "x": 403.3583984375,
-                "y": 522.2870370370371
+                "x": 413.3583984375,
+                "y": 532.2870370370371
               },
               {
                 "x": 467.9814453125,
@@ -2030,8 +2030,8 @@
             "id": "cbf98cef",
             "controlPoints": [
               {
-                "x": 16.6416015625,
-                "y": 502.21296296296293
+                "x": 26.6416015625,
+                "y": 512.2129629629629
               },
               {
                 "x": -95.224609375,
@@ -2110,8 +2110,8 @@
                 "y": 532.25
               },
               {
-                "x": 863.201171875,
-                "y": 582.5108695652174
+                "x": 873.201171875,
+                "y": 592.5108695652174
               }
             ],
             "sourceAnchor": 3,
@@ -2154,6 +2154,25 @@
             ],
             "sourceAnchor": 3,
             "targetAnchor": 4
+          },
+          {
+            "shape": "erdRelation",
+            "relation": "0,n:1",
+            "source": "6c01a493",
+            "target": "b064f447",
+            "id": "ea08670f",
+            "controlPoints": [
+              {
+                "x": 470.2060546875,
+                "y": 1322.9038461538462
+              },
+              {
+                "x": 434.041015625,
+                "y": 1292.7045454545455
+              }
+            ],
+            "sourceAnchor": 8,
+            "targetAnchor": 5
           }
         ]
       },
@@ -2366,6 +2385,17 @@
             "entity": "store_self_acceptance_order",
             "field": "order_no"
           }
+        },
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "store_in_depot",
+            "field": "store_id"
+          },
+          "to": {
+            "entity": "store_depots",
+            "field": "store_id"
+          }
         }
       ]
     },
@@ -2534,7 +2564,7 @@
             "controlPoints": [
               {
                 "x": 443.201171875,
-                "y": 342.9038461538462
+                "y": 252.33695652173913
               },
               {
                 "x": 345.0703125,
@@ -2546,7 +2576,19 @@
           }
         ]
       },
-      "associations": []
+      "associations": [
+        {
+          "relation": "0,n:1",
+          "from": {
+            "entity": "hq_order",
+            "field": "dispatch_id"
+          },
+          "to": {
+            "entity": "baseinfo_dispatch",
+            "field": "id"
+          }
+        }
+      ]
     },
     {
       "name": "supplier",
