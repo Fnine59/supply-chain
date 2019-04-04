@@ -3,6 +3,7 @@ import { Route, Switch, Router } from 'react-router-dom';
 import history from '../common/utils/history';
 import Login from '../containers/Login/index';
 import Main from '../containers/Index/index';
+import UserCenter from '../containers/UserCenter/index';
 import Error404 from '../containers/Error404/index';
 
 // 基础信息模块
@@ -30,6 +31,7 @@ const Routes = () => (
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/index" component={Main} />
+      <Route path="/userCenter" component={UserCenter} />
       <Route path="/baseinfo/shop/info" component={ShopInfo} />
       <Route path="/baseinfo/hq/info" component={HQInfo} />
       <Route path="/baseinfo/supply/info" component={SupplyInfo} />

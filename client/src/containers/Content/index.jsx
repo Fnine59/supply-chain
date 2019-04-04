@@ -29,7 +29,7 @@ class Content extends React.Component {
         // ref={(node) => { this.frameRef = node; return null; }}
         src={`${window.baseUrl}${this.props.src || '/'}` || '#'}
         width="100%"
-        height={'100%'}
+        height="100%"
         scrolling="auto"
         frameBorder="0"
       />

@@ -30,7 +30,6 @@ export default function depot(state = initState, action) {
     case `depot/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
-      console.warn('未匹配到相应的ACTION TYPE');
       return { ...state };
   }
 }

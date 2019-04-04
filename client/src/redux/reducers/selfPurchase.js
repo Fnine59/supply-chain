@@ -52,7 +52,6 @@ export default function selfPurchase(state = initState, action) {
     case `selfPurchase/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
-      console.warn('未匹配到相应的ACTION TYPE');
       return { ...state };
   }
 }

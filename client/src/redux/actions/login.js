@@ -42,7 +42,7 @@ export function register(payload) {
 export function logout() {
   localStorage.removeItem('userInfo');
   // TODO: 后期想办法清空页面栈
-  history.push('/login');
+  history.replace('/login');
   return {
     type: LOGOUT,
   };

@@ -10,6 +10,7 @@ module.exports = {
   init(app) {
     app.post('/login', this.doLogin);
     app.post('/register', this.doRegister);
+    app.post('/modify', this.doModify);
   },
   // 获取所有用户信息
   doLogin(req, res) {
@@ -54,6 +55,34 @@ module.exports = {
           success: true,
           message: '注册成功',
           data: null,
+        });
+      }
+      return res.send({
+        success: false,
+        message: '请求失败',
+      });
+    });
+  },
+
+  // 修改用户信息
+  doModify(req, res) {
+    const props = {};
+    const users = new Users({ props });
+    users.doModify(req.body, (err, data) => {
+      if (!err) {
+        console.log('res', data);
+        console.log('datdsfdskfsdfsdf', data.affectedRows);
+        if (data.affectedRows > 0) {
+          return res.send({
+            code: 200,
+            success: true,
+            message: '修改成功',
+          });
+        }
+        return res.send({
+          code: 1001,
+          success: true,
+          message: '用户不存在或密码错误，请检查后重试',
         });
       }
       return res.send({

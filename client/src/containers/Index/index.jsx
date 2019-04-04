@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Icon, Breadcrumb } from 'antd';
+import { connect } from 'react-redux';
+import { Menu, Icon, Breadcrumb, Switch } from 'antd';
 import PropTypes from 'prop-types';
 import Content from '../Content/index';
 import * as action from '../../redux/actions/login';
@@ -12,6 +13,7 @@ class Main extends React.PureComponent {
   constructor() {
     super();
     this.state = {
+      theme: 'light',
       url: '/baseinfo/shop/info',
       breadCrumb: (
         <Breadcrumb>
@@ -27,7 +29,6 @@ class Main extends React.PureComponent {
 
   render() {
     const { dispatch, history } = this.props;
-    console.log(history);
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
     const handleClick = (e) => {
       console.log('menu click', e);
@@ -46,7 +47,11 @@ class Main extends React.PureComponent {
               <Icon type="home" />
             </Breadcrumb.Item>
             <Breadcrumb.Item>{rules[e.key.split("/")[1]]}</Breadcrumb.Item>
-            <Breadcrumb.Item>{e.item.props.children}</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              {typeof e.item.props.children === "object"
+                ? e.item.props.children[e.item.props.children.length - 1]
+                : e.item.props.children}
+            </Breadcrumb.Item>
           </Breadcrumb>
         )
       });
@@ -60,11 +65,30 @@ class Main extends React.PureComponent {
       history.push("/login");
     };
 
+    const changeMode = () => {
+      const theme = this.state.theme;
+      this.setState({
+        theme: theme === "light" ? "dark" : "light"
+      });
+    };
+
     return (
       <div className="main">
         <div className="top">
-          <Menu mode="horizontal" className="main-top-bar">
+          <Menu
+            mode="horizontal"
+            className="main-top-bar"
+            theme={this.state.theme}
+          >
             <span className="main-top-bar-title">餐饮供应链系统</span>
+            <span>
+              <Switch
+                onChange={changeMode}
+                checkedChildren="light"
+                unCheckedChildren="dark"
+                defaultChecked
+              />
+            </span>
             <SubMenu
               title={
                 <span className="submenu-title-wrapper">
@@ -75,7 +99,7 @@ class Main extends React.PureComponent {
             >
               {userInfo.nickname && (
                 <MenuItemGroup>
-                  <Menu.Item key="userCenter">
+                  <Menu.Item key="userCenter" onClick={handleClick}>
                     <Icon type="home" />
                     个人中心
                   </Menu.Item>
@@ -87,7 +111,7 @@ class Main extends React.PureComponent {
               )}
               {!userInfo.nickname && (
                 <MenuItemGroup>
-                  <Menu.Item key="userCenter" onClick={doLogin}>
+                  <Menu.Item key="login" onClick={doLogin}>
                     <Icon type="login" />
                     去登陆
                   </Menu.Item>
@@ -105,6 +129,7 @@ class Main extends React.PureComponent {
               defaultOpenKeys={["sub1"]}
               mode="inline"
               className="body-menu"
+              theme={this.state.theme}
             >
               <SubMenu
                 key="sub1"
@@ -162,7 +187,7 @@ class Main extends React.PureComponent {
           </div>
           <div className="main-body-cont">
             <div className="breadcrumb">{this.state.breadCrumb}</div>
-            <Content src={this.state.url} />
+            {Object.keys(userInfo).length > 0 && <Content src={this.state.url} />}
           </div>
         </div>
       </div>
@@ -170,8 +195,14 @@ class Main extends React.PureComponent {
   }
 }
 
-Main.propTypes = {
-  dispatch: PropTypes.func
-};
+function mapStateToProps(dispatch) {
+  return {
+    dispatch
+  };
+}
 
-export default Main;
+Main.propTypes = {
+  dispatch: PropTypes.func,
+  history: PropTypes.object
+};
+export default connect(mapStateToProps)(Main);

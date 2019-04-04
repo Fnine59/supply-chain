@@ -41,7 +41,6 @@ export default function indepot(state = initState, action) {
     case `indepot/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
-      console.warn('未匹配到相应的ACTION TYPE');
       return { ...state };
   }
 }
