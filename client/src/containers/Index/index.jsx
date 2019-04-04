@@ -29,7 +29,6 @@ class Main extends React.PureComponent {
 
   render() {
     const { dispatch, history } = this.props;
-    console.warn('this.props', this.props);
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
     const handleClick = (e) => {
       console.log('menu click', e);
@@ -188,7 +187,7 @@ class Main extends React.PureComponent {
           </div>
           <div className="main-body-cont">
             <div className="breadcrumb">{this.state.breadCrumb}</div>
-            <Content src={this.state.url} />
+            {Object.keys(userInfo).length > 0 && <Content src={this.state.url} />}
           </div>
         </div>
       </div>
@@ -203,6 +202,7 @@ function mapStateToProps(dispatch) {
 }
 
 Main.propTypes = {
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  history: PropTypes.object
 };
 export default connect(mapStateToProps)(Main);
