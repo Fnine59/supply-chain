@@ -2,36 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as action from '../../redux/actions/login';
-import changeForm from './changeForm';
+import * as action from '../../redux/actions/userCenter';
+import ChangeForm from './ChangeForm';
 
 import './index.less';
 
-const UserCenter = ({ login, dispatch }) => {
+const UserCenter = ({ userCenter, dispatch }) => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
-
-  const loginProps = {
+  const formProps = {
     userInfo,
-    onLogin: (user) => {
-      dispatch(action.login(user));
+    onModify: (user) => {
+      dispatch(action.modify(user));
     },
   };
 
   return (
     <div className="userCenter">
-      <changeForm {...loginProps} />
+      <ChangeForm {...formProps} />
     </div>
   );
 };
 
 function mapStateToProps(state) {
   return {
-    login: state.login,
+    userCenter: state.userCenter,
   };
 }
 
 UserCenter.propTypes = {
-  login: PropTypes.object,
+  userCenter: PropTypes.object,
   dispatch: PropTypes.func,
 };
 export default connect(mapStateToProps)(UserCenter);

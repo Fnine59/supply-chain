@@ -6,15 +6,14 @@ const FormItem = Form.Item;
 
 const changeForm = ({
   userInfo,
-  onLogin,
+  onModify,
   form: { getFieldDecorator, validateFields },
 }) => {
-  console.log('userINfo', userInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
-        onLogin(values);
+        onModify({ ...userInfo, ...values });
       }
     });
   };
@@ -115,7 +114,7 @@ const changeForm = ({
 changeForm.propTypes = {
   userInfo: PropTypes.object,
   form: PropTypes.object,
-  onLogin: PropTypes.func,
+  onModify: PropTypes.func,
 };
 
 export default Form.create()(changeForm);
