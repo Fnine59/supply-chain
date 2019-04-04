@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import login from './login';
+import userCenter from './userCenter';
 import shopinfo from './shopinfo';
 import hqinfo from './hqinfo';
 import supplyInfo from './supplyInfo';
@@ -16,6 +17,7 @@ import depot from './depot';
 export default function createReducer() {
   return combineReducers({
     login,
+    userCenter,
     shopinfo,
     hqinfo,
     supplyInfo,

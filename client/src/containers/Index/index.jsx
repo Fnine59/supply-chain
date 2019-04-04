@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Menu, Icon, Breadcrumb, Switch } from 'antd';
 import PropTypes from 'prop-types';
 import Content from '../Content/index';
@@ -28,6 +29,7 @@ class Main extends React.PureComponent {
 
   render() {
     const { dispatch, history } = this.props;
+    console.warn('this.props', this.props);
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
     const handleClick = (e) => {
       console.log('menu click', e);
@@ -194,8 +196,13 @@ class Main extends React.PureComponent {
   }
 }
 
+function mapStateToProps(dispatch) {
+  return {
+    dispatch
+  };
+}
+
 Main.propTypes = {
   dispatch: PropTypes.func
 };
-
-export default Main;
+export default connect(mapStateToProps)(Main);

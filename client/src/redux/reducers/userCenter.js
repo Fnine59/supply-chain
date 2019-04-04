@@ -17,7 +17,7 @@ export default function login(state = initState, action) {
     case LOGOUT:
       console.log('======================退出登录======================');
       return { ...state, userInfo: {} };
-    case `login/${UPDATESTATE}`:
+    case `userCenter/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
       return { ...state };

@@ -7,6 +7,9 @@ export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
 
+// 个人中心模块
+export const CHANGEPASS = 'CHANGEPASS';
+
 // 基础信息模块 —— 门店档案
 export const GETSHOPLIST = 'GETSHOPLIST';
 

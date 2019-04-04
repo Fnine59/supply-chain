@@ -24,7 +24,6 @@ export default function hqinfo(state = initState, action) {
     case `hqinfo/${UPDATESTATE}`:
       return { ...state, ...action.payload };
     default:
-      console.warn('未匹配到相应的ACTION TYPE');
       return { ...state };
   }
 }
