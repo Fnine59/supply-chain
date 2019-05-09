@@ -14,6 +14,7 @@ class Main extends React.PureComponent {
     super();
     this.state = {
       theme: 'light',
+      titleTheme: 'main-top-bar-title',
       url: '/baseinfo/shop/info',
       breadCrumb: (
         <Breadcrumb>
@@ -66,29 +67,30 @@ class Main extends React.PureComponent {
     };
 
     const changeMode = () => {
-      const theme = this.state.theme;
+      const { theme, titleTheme } = this.state;
       this.setState({
-        theme: theme === "light" ? "dark" : "light"
+        theme: theme === "light" ? "dark" : "light",
+        titleTheme: titleTheme === 'main-top-bar-title' ? 'main-top-bar-title main-top-bar-title-dark' : 'main-top-bar-title'
       });
     };
 
     return (
       <div className="main">
         <div className="top">
+          <span className={this.state.titleTheme}>餐饮供应链系统</span>
+          <span className="main-switch">
+            <Switch
+              onChange={changeMode}
+              checkedChildren="light"
+              unCheckedChildren="dark"
+              defaultChecked
+            />
+          </span>
           <Menu
             mode="horizontal"
             className="main-top-bar"
             theme={this.state.theme}
           >
-            <span className="main-top-bar-title">餐饮供应链系统</span>
-            <span>
-              <Switch
-                onChange={changeMode}
-                checkedChildren="light"
-                unCheckedChildren="dark"
-                defaultChecked
-              />
-            </span>
             <SubMenu
               title={
                 <span className="submenu-title-wrapper">
